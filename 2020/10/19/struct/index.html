@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="小川,1179798460@qq.com"><meta name="copyright" content="小川"><meta name="generator" content="Hexo 5.2.0"><meta name="theme" content="hexo-theme-yun"><title>初步了解区块链与微服务 | 小川的博客</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.21/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_ed8vp4atwoj.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><script>document.addEventListener(
+  "pjax:success",
+  function() {
+    if (window.aplayers) {
+      loadMeting();
+    }
+  },
+  !1
+);</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"github.com","root":"/","title":"小川的博客","version":"1.2.0","mode":"auto","copycode":true,"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="preconnect" href="https://www.google-analytics.com" crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-121354150-1"></script><script>if (CONFIG.hostname === location.hostname) {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-121354150-1');
+}</script><script data-ad-client="ca-pub-2245427233262012" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M9KWR9L');</script><!-- End Google Tag Manager --><meta name="description" content="因为对于个人而言，我经常搞混区块链和分布式，所以便狠下决心写了这篇文章 区块链 概念：从科技层面来看，区块链涉及数学、密码学、互联网和计算机编程等很多科学技术问题。从应用视角来看，简单来说，区块链是一个分布式的共享账本和数据库，具有去中心化、不可篡改、全程留痕、可以追溯、集体维护、公开透明等特点【摘自百度百科】 主要运用于金融、物联网和物流领域、公共服务领域等  1.要了解区块链，我们先来了解一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初步了解区块链与微服务">
+<meta property="og:url" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/struct/index.html">
+<meta property="og:site_name" content="小川的博客">
+<meta property="og:description" content="因为对于个人而言，我经常搞混区块链和分布式，所以便狠下决心写了这篇文章 区块链 概念：从科技层面来看，区块链涉及数学、密码学、互联网和计算机编程等很多科学技术问题。从应用视角来看，简单来说，区块链是一个分布式的共享账本和数据库，具有去中心化、不可篡改、全程留痕、可以追溯、集体维护、公开透明等特点【摘自百度百科】 主要运用于金融、物联网和物流领域、公共服务领域等  1.要了解区块链，我们先来了解一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/images/image-20201019164746708.png">
+<meta property="og:image" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/images/image-20201019170407750.png">
+<meta property="og:image" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/images/image-20201019175418301.png">
+<meta property="og:image" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/images/image-20201019182922942.png">
+<meta property="og:image" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/images/image-20201019210932838.png">
+<meta property="article:published_time" content="2020-10-19T13:53:49.000Z">
+<meta property="article:modified_time" content="2020-10-19T14:03:18.710Z">
+<meta property="article:author" content="小川">
+<meta property="article:tag" content="架构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/images/image-20201019164746708.png"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info mickey-mouse"><a class="site-author-avatar" href="/about/" title="小川"><img width="96" loading="lazy" src="/images/jmy.jpg" alt="小川"><span class="site-author-status" title="不想上学">😭</span></a><div class="site-author-name"><a href="/about/">小川</a></div><a class="site-name" href="/about/site.html">小川的博客</a><sub class="site-subtitle"></sub><div class="site-desciption">后端开发，前端学习ing</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">2</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">3</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/170119487" title="哔哩哔哩动画" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a><a class="links-item hty-icon-button" href="/girls/" title="喜欢的女孩子" style="color:hotpink"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-women-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="toc-number">1.</span> <span class="toc-text">区块链</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%A6%81%E4%BA%86%E8%A7%A3%E5%8C%BA%E5%9D%97%E9%93%BE%EF%BC%8C%E6%88%91%E4%BB%AC%E5%85%88%E6%9D%A5%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%AA%E6%A6%82%E5%BF%B5-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96"><span class="toc-number">1.1.</span> <span class="toc-text">1.要了解区块链，我们先来了解一个概念 去中心化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%84%B6%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8C%BA%E5%9D%97%E9%93%BE%E8%BF%99%E4%B8%AA%E4%B8%9C%E8%A5%BF%E5%91%A2%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2.然后，为什么需要区块链这个东西呢？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="toc-number">1.3.</span> <span class="toc-text">3.去中心化服务的区块链</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AD%A5%E5%BC%8F%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">分步式服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.1.</span> <span class="toc-text">1.为什么要有分布式服务?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">2.什么是分布式架构模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">3.微服务架构模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">2.4.</span> <span class="toc-text">4.总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">参考链接：</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/struct/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="小川,1179798460@qq.com"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="小川的博客"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">初步了解区块链与微服务<a class="post-edit-link" href="https://github.com/z-anshun/z-anshun.github.io/source/_post_posts/struct.md" target="_blank" title="编辑" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit-line"></use></svg></a></h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-10-19 21:53:49" itemprop="dateCreated datePublished" datetime="2020-10-19T21:53:49+08:00">2020-10-19</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">1.9k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">6m</span></span></span><span class="leancloud_visitors" id="/2020/10/19/struct/" data-flag-title="初步了解区块链与微服务"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E9%9A%8F%E7%AC%94/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">随笔</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/%E6%9E%B6%E6%9E%84/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">架构</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><p>因为对于个人而言，我经常搞混区块链和分布式，所以便狠下决心写了这篇文章</p>
+<h3 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h3><blockquote>
+<p>概念：从科技层面来看，区块链涉及数学、密码学、互联网和计算机编程等很多<strong>科学技术问题</strong>。从应用视角来看，简单来说，区块链是一个分布式的<strong>共享账本和数据库</strong>，具有去中心化、不可篡改、全程留痕、可以追溯、集体维护、公开透明等特点【摘自百度百科】</p>
+<p>主要运用于金融、物联网和物流领域、公共服务领域等</p>
+</blockquote>
+<h4 id="1-要了解区块链，我们先来了解一个概念-去中心化"><a href="#1-要了解区块链，我们先来了解一个概念-去中心化" class="headerlink" title="1.要了解区块链，我们先来了解一个概念 去中心化"></a>1.要了解区块链，我们先来了解一个概念 <strong>去中心化</strong></h4><p><strong>去中心化</strong></p>
+<blockquote>
+<p>在一个分布有众多节点的系统中，每个节点都具有<strong>高度自治</strong>的特征。节点之间彼此可以<strong>自由连接</strong>，形成新的连接单元。<strong>任何一个节点都可能成为阶段性的中心</strong>，但不具备强制性的中心控制功能。节点与节点之间的影响，会通过网络而形成非线性因果关系。这种开放式、扁平化、平等性的系统现象或结构，我们称之为去中心化【摘自百度百科】</p>
+</blockquote>
+<p>简单的来说，去中心化，就是不要中心，人人都可能成为中心的意思。（例如：Facebook，博客这类）</p>
+<h4 id="2-然后，为什么需要区块链这个东西呢？"><a href="#2-然后，为什么需要区块链这个东西呢？" class="headerlink" title="2.然后，为什么需要区块链这个东西呢？"></a>2.然后，为什么需要区块链这个东西呢？</h4><p>咱们以支付包转账举例：</p>
+<img src="..\images\image-20201019164746708.png" alt="image-20201019164746708" style="zoom:50%;" / loading="lazy">
+
+<p>这里，假设用户A购买了用户B的商品，支付宝便是第三方负责这个交易的。但，假设我们使用跑代码的方法进行入账和出账（这里补充一点，支付宝一开始人工处理这些交易的），怎么才能保证绝对的安全呢？很明显这点很难做到</p>
+<p>这便是传统的中心化（所有的用户都以支付宝为中心）：</p>
+<img src="..\images\image-20201019170407750.png" alt="image-20201019170407750" style="zoom:50%;" / loading="lazy">
+
+<h4 id="3-去中心化服务的区块链"><a href="#3-去中心化服务的区块链" class="headerlink" title="3.去中心化服务的区块链"></a>3.去中心化服务的区块链</h4><p>为了解决人工，安全等问题，支付宝便使用了区块链网络</p>
+<img src="..\images\image-20201019175418301.png" alt="image-20201019175418301" style="zoom:50%;" / loading="lazy">
+
+<p>用户各自为节点，各自为中心，每一个人都拥有各自的一个<strong>密钥</strong>，每个人都拥有着同一个账本，而不是由支付宝一个人账了。</p>
+<p>这里可能又有人要问了，如果我修改了自己的拥有的那一份账本上自己的数据（假设你给自己账户+2 000 000），会造成什么影响呢？</p>
+<p>假设你修改了，但是其它51%的人的账户都还是显示的你是原来账户上的数据所以并不会改变（这也是传说中的比特币为什么那么难以攻破它市值的原因）</p>
+<p>（如果大家看过“硅谷“这个电视剧，有一个片段就是将的一个攻防战，讲的就是一个去中心化的服务，谁先占有51%的用户，就拥有网络的操作权）</p>
+<h3 id="分步式服务"><a href="#分步式服务" class="headerlink" title="分步式服务"></a>分步式服务</h3><p>略微了解了区块链后，现在我们来了解下分布式服务框架（因为这两个对于刚开始了解的人很容易搞混）</p>
+<blockquote>
+<p>概念：当计算机的程序和数据通过网络分布在多于一个的计算机上时，计算就成为“分布式的”</p>
+</blockquote>
+<p>简单来说，就是一个硬件或软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统，常见的消息传递就是通过HTTP的RESTful API进行传输</p>
+<h4 id="1-为什么要有分布式服务"><a href="#1-为什么要有分布式服务" class="headerlink" title="1.为什么要有分布式服务?"></a>1.为什么要有分布式服务?</h4><p>首先，假设我们有个抢票系统的服务，并且这个使用的是单架构模式</p>
+<img src="..\images\image-20201019182922942.png" alt="image-20201019182922942" style="zoom:33%;" / loading="lazy">
+
+<p>若一个用户购票后，我们需要对数据库进行进行用户信息的处理和影票信息的处理</p>
+<p>这里需要先了解：一个tomcat通常能够承载200~300并发（取决于硬件及网络等外界条件），一个mysql默认并发数100</p>
+<p>所以，如果有大量用户同时购买，对数据库的压力就会很大，若其中用户信息溢出或影票信息的临时更新，都会导致整个服务不可用。</p>
+<h4 id="2-什么是分布式架构模式"><a href="#2-什么是分布式架构模式" class="headerlink" title="2.什么是分布式架构模式"></a>2.什么是分布式架构模式</h4><blockquote>
+<p>概念：整个系统的功能单位<strong>分散到不同的进程,**然后够个进程共同</strong>提供不同的业务能力**,我们称之为”分布式架构”(Distributed Architecture)</p>
+</blockquote>
+<p>光看概念肯定是难以理解，下面还是借用上面那个例子来举例</p>
+<img src="..\images\image-20201019210932838.png" alt="image-20201019210932838" style="zoom:33%;" / loading="lazy">
+
+
+
+<p>很明显两个数据库各储存各的，即是一个宕机了，也不会影响另一个。虽然我们看似分开处理比合并着处理好多了。但这也是有缺点的，一是数据库多了。维护成本自然大了，二则是对资源的要求也增加了。</p>
+<h4 id="3-微服务架构模式"><a href="#3-微服务架构模式" class="headerlink" title="3.微服务架构模式"></a>3.微服务架构模式</h4><p>这里只做点了解，why？（因为我也不是很会）</p>
+<p>首先先来了解什么是微服务</p>
+<blockquote>
+<p>简单来说微服务就是很小的服务，小到一个服务只对应一个单一的功能，只做一件事。这个服务可以单独部署运行，服务之间可以通过RPC来相互交互，每个微服务都是由独立的小团队开发，测试，部署，上线，负责它的整个生命周期</p>
+</blockquote>
+<p>那微服务架构又是啥？</p>
+<blockquote>
+<p>在做架构设计的时候，先做逻辑架构，再做物理架构，当你拿到需求后，估算过最大用户量和并发量后，计算单个应用服务器能否满足需求，如果用户量只有几百人的小应用，单体应用就能搞定，即所有应用部署在一个应用服务器里，如果是很大用户量，且某些功能会被频繁访问，或者某些功能计算量很大，建议将应用拆解为多个子系统，各自负责各自功能，这就是微服务架构。</p>
+</blockquote>
+<p>分布式和微服务的区别：</p>
+<p>​    1.生产环境下的微服务肯定<strong>是分布式部署</strong>的，分布式部署的应用<strong>不一定是微服务架构</strong>的，比如集群部署，它是把相同应用复制到不同服务器上，但是逻辑功能上还是单体应用。</p>
+<p>​    2.微服务架构模式很像分布式，但它的<strong>粒度更小</strong>，服务之间<strong>耦合度更低</strong>，由于每个微服务都由独立的小团队负责，因此它敏捷性更高，但维护起来也更麻烦</p>
+<h4 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h4><table>
+<thead>
+<tr>
+<th></th>
+<th>单体架构</th>
+<th>分布式架构</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>优点</td>
+<td>1.易于开发 <br />2.易于部署 <br />3.易于扩展（后续可扩展多个副本）</td>
+<td>1.吞吐量大 <br />2.单个服务维护成本低 <br />3.可靠性强（即是单个服务宕机了，其它服务也能正常运行）</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>1.可靠性差 <br />2.维护成本高 <br />3.吞吐量小</td>
+<td>1.对技术要求高 <br />2.人力成本大 <br />3.资源要求大</td>
+</tr>
+</tbody></table>
+<p><strong>总的来说区块链与分布式的联系并不是很大，但区块链使用了分布式架构的想法，实现去中心化，把每个用户都当作一个体，各自可为中心，而分布式则是面向的服务，把服务细分，各管各的。（更多关于区块链的可以去了解传说中的比特币）</strong></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45393094/article/details/104632343">https://blog.csdn.net/weixin_45393094/article/details/104632343</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22228902">https://zhuanlan.zhihu.com/p/22228902</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhonglunsheng/article/details/83153451">https://blog.csdn.net/zhonglunsheng/article/details/83153451</a></p>
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>小川,1179798460@qq.com</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/struct/" title="初步了解区块链与微服务">https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/struct/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2020/10/15/competition/" rel="next" title="基本信息"><span class="post-nav-text">基本信息</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>尝试使用 Disqus 评论系统。</span><br><span>您可以点击下方按钮切换对应评论系统。</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/z-anshun/z-anshun.github.io/issues?q=is:issue+初步了解区块链与微服务">GitHub Issues</a><div class="toggle-comment-system" style="margin: 1rem auto"><a class="toggle-comment-btn hty-button hty-button--raised text-uppercase" data-target="#valine-container" onclick="showComment(this.dataset.target)">valine</a><style>#disqus_thread {
+  display: none;
+}</style><a class="toggle-comment-btn hty-button hty-button--raised text-uppercase" data-target="#disqus_thread" onclick="showComment(this.dataset.target)">disqusjs</a><script>function hideAllComment() {
+  //- hide all
+  document.querySelectorAll('.toggle-comment-btn').forEach((btn) => {
+    const container = document.querySelector(btn.dataset.target);
+    if (container) {
+      container.style.display = "none";
+    }
+  });
+}
+function showComment(target) {
+  hideAllComment();
+  //- show target
+  const targetContainer = document.querySelector(target);
+  if (targetContainer) {
+    targetContainer.style.display = "block";
+  }
+}
+</script></div></div><div id="disqus_thread"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@latest/dist/disqusjs.css"><script src="https://cdn.jsdelivr.net/npm/disqusjs@latest/dist/disqus.js"></script><script>const dsqjs = new DisqusJS({
+  shortname: 'z-anshun',
+  apikey: '',
+  url: 'https://github.com/z-anshun/z-anshun.github.io/tree/master/2020/10/19/struct/'
+})
+</script><div id="valine-container"></div><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function initValine() {
+  const valineConfig = {"enable":true,"appId":"rYHNRHyKhGBA3K3lL3qjAKpT-gzGzoHsz","appKey":"vvJ9GwqLjWDxXvoowT9QsHSv","placeholder":"大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = window.location.pathname
+  new Valine(valineConfig)
+}
+setTimeout(initValine, 1000)</script></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">苏ICP备17038157号</a></div><div class="copyright"><span>&copy; 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> 小川</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.2.0</span></div><div class="live_time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  window.setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-10-08T12:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = " " + passDay + " 天 " + passHour + " 小时 " + passMinute + " 分 " + passSecond + " 秒";
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><div class="aplayer no-destroy" id="aplayer" data-id="308168565" data-server="netease" data-type="playlist" data-fixed="true" data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listmaxheight="340px" data-storagename="metingjs"></div></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
