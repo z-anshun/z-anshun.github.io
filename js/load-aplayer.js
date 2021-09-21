@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>document.addEventListener("DOMContentLoaded", function() {
   let apContainer = document.createElement("div");
   apContainer.id = "aplayer";
   document.body.append(apContainer);
