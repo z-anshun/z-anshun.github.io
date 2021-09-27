@@ -498,8 +498,6 @@
 	i <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
 <p>在这里，理论上来说本应该打印<code>[1]</code>，因为切片为一个指针，在<code>try</code>函数对其进行了<code>append</code>，其本来指向的地址也应该改变。但是，这里却为空</p>
 <h2 id="Golang的值传递"><a href="#Golang的值传递" class="headerlink" title="Golang的值传递"></a>Golang的值传递</h2><p>首先，Go这门语言对参数的传递都是值传递的，也就是说，在传递切片<code>i</code>的时候，函数只是复制了它本身的引用（其本身是个指针），如：</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
