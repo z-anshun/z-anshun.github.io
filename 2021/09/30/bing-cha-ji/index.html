@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Manacher, 面条二两">
+    <meta name="keywords" content="并查集, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Manacher | Noodels2hg的博客</title>
+    <title>并查集 | Noodels2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Manacher</h1>
+                    <h1 class="description center-align post-title">并查集</h1>
                 </div>
             </div>
         </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-27
+                    2021-09-30
                 </div>
                 
 
@@ -484,69 +484,118 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>题目：给定一段字符串，求该其最长的回文子串</p>
+<p>对于一组数据，当要求我们检查某两个数据是否在同一集合内时，就需要并查集去实现了</p>
+<p>如：&lt;a,b&gt;,&lt;b,c&gt;，那么很明显a、b、c都在同一集合内</p>
 </blockquote>
-<p>主要思路：</p>
-<ul>
-<li><p>我们创建一个将目标字符穿进行扩充，然后使用<code>#</code>进行填充，并在前后分别添加<code>^</code>和<code>$</code>方便后续操作</p>
-</li>
-<li><p>再创建一个数组<code>T</code>记录当前节点的半径</p>
-<p>如何构造？假设当前该设置下标为<code>i</code>的值了，<code>i</code>的左边有一个下标<code>c</code>的，其半径能到达的最右边为当前<strong>最大</strong></p>
-<p>那么，如果<code>i</code>关于<code>c</code>对称的点在<code>c</code>的半径里面，那么<code>i</code>的半径一定大于等于其对称点的半径，即可以设置为对称点的半径，如果不在，就先假设当前<code>i</code>的半径为0</p>
-<p>然后我们再对<code>i</code>加上当前已知<code>i</code>半径的左右比较，如果相等则将<code>T[i]</code>+1，反之就已经找到当前半径最大</p>
-<p>构造完之后如下，这里的目标字符串为<code>aba</code>，</p>
-<p>比如：我在构造<code>i=4</code>的时候，也就是如下的<code>b</code>点时，当前的中心为<code>a</code>，其<code>a</code>的半径为1，即右边最大可达3，是小于当前<code>b</code>的下标的，所以<code>T[4]=0</code>，然后再向<code>b</code>的左右遍历，直到<code>T[4]=3</code>的时候，不再对称，退出</p>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/09/27/olswUMEaFQ49z7e.png" alt="20210927230449.jpg"></p>
-<p>代码实现：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 获得s的最长回文子串长度</span>
-<span class="token keyword">func</span> <span class="token function">Manacher</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-	str <span class="token operator">:=</span> <span class="token string">"^#"</span>
-	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">{</span>
-		str <span class="token operator">+=</span> <span class="token function">string</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
-		str <span class="token operator">+=</span> <span class="token string">"#"</span>
-	<span class="token punctuation">}</span>
-	str <span class="token operator">+=</span> <span class="token string">"$"</span>
-	T <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 保存当前节点的半径长</span>
-	center <span class="token operator">:=</span> <span class="token number">0</span>
-	maxRadius <span class="token operator">:=</span> <span class="token number">0</span>
-	maxLen <span class="token operator">:=</span> <span class="token number">0</span>
-	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-		<span class="token comment">// 在当前最长的范围内</span>
-		<span class="token keyword">if</span> i <span class="token operator">&lt;</span> center<span class="token operator">+</span>maxRadius <span class="token punctuation">{</span>
-			<span class="token comment">// 寻找对称的左边点，但也有可能右边没那么长，所以取最小</span>
-			T<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>T<span class="token punctuation">[</span>center<span class="token operator">*</span><span class="token number">2</span><span class="token operator">-</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> center<span class="token operator">+</span>maxRadius<span class="token operator">-</span>i<span class="token punctuation">)</span>
-		<span class="token punctuation">}</span>
-		<span class="token comment">// 对应右边一个和左边一个比较，因为最后一个一定不匹配，所以这不用担心指针溢出</span>
-		<span class="token keyword">for</span> str<span class="token punctuation">[</span>i<span class="token operator">+</span>T<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> str<span class="token punctuation">[</span>i<span class="token operator">-</span>T<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
-			T<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+=</span><span class="token number">1</span>
-		<span class="token punctuation">}</span>
+<p>实现思路：</p>
+<p>如果我们先将输入的a、b指向自己，再将a指向b，即a令父亲为b</p>
+<p>那么：</p>
+<img src="https://i.loli.net/2021/09/30/svnbNtfzORegA6S.png" style="zoom:67%;">
 
-		<span class="token comment">// 如果当前的右边的临界比原来的大，</span>
-		<span class="token keyword">if</span> i<span class="token operator">+</span>T<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&gt;</span> center<span class="token operator">+</span>maxRadius <span class="token punctuation">{</span>
-			nowLen <span class="token operator">:=</span> maxRadius<span class="token operator">*</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span>
-			<span class="token keyword">if</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'#'</span> <span class="token punctuation">{</span>
-				nowLen<span class="token operator">--</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">if</span> nowLen <span class="token operator">&gt;</span> maxLen <span class="token punctuation">{</span>
-				maxLen <span class="token operator">=</span> nowLen
-			<span class="token punctuation">}</span>
-			center <span class="token operator">=</span> i
-			maxRadius <span class="token operator">=</span> T<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> maxLen
-<span class="token punctuation">}</span>
+<p>当我们再输入b，c后，跟上面一样的操作：</p>
+<img src="https://i.loli.net/2021/09/30/4e3BX18EqZp2HWz.png" style="zoom:67%;">
 
-<span class="token keyword">func</span> <span class="token function">min</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-	<span class="token keyword">if</span> x <span class="token operator">&lt;</span> y <span class="token punctuation">{</span>
+<p>很明显，我们就可以通过a，b，c是否拥有统一父亲确定是否为同集合了</p>
+<p>理解这个思路很简单，那么代码如何实现？</p>
+<p>首先，设置两个<code>map</code>进行数据的存储</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> fa <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token comment">// 父节点</span>
+<span class="token keyword">var</span> cnt <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// 子节点数量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>我们需要一个函数来进行查找，某个点的父亲</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">find</span><span class="token punctuation">(</span>x <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	i<span class="token punctuation">,</span> ok <span class="token operator">:=</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
+	<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+		<span class="token comment">// 如果没有</span>
+		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> x
+		cnt<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
 		<span class="token keyword">return</span> x
 	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> y
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token comment">// 当前节点为父节点</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> x <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> x
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 不是父节点，继续寻找</span>
+		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>时间复杂度：<br>$$<br>O(n^2)<br>$$</p>
+<p>有了寻找父节点的函数后，其联合，便简单了，只需要将一个节点的父亲设置为另一个节点父亲的父亲节点</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 联合</span>
+<span class="token keyword">func</span> <span class="token function">Union</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fx <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+	fy <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span>
+	fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span> <span class="token operator">=</span> fy <span class="token comment">// x的父亲的父亲就是y的父亲,</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>例题：</p>
+<p>现在有107个用户，编号为1- 107，现在已知有m对关系，每一对关系给你两个数x和y，代表编号为x的用户和编号为y的用户是在一个圈子中，例如：A和B在一个圈子中，B和C在一个圈子中，那么A,B,C就在一个圈子中。现在想知道最多的一个圈子内有多少个用户。 </p>
+<p>链接：<a target="_blank" rel="noopener" href="https://www.nowcoder.com/questionTerminal/11ee0516a988421abf40b315a2b28d08">https://www.nowcoder.com/questionTerminal/11ee0516a988421abf40b315a2b28d08</a><br>来源：牛客网</p>
+</blockquote>
+<p>代码实现</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> dom07
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">var</span> fa <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token comment">// 父节点</span>
+<span class="token keyword">var</span> cnt <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// 子节点数量</span>
+
+<span class="token keyword">func</span> <span class="token function">find</span><span class="token punctuation">(</span>x <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	i<span class="token punctuation">,</span> ok <span class="token operator">:=</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
+	<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+		<span class="token comment">// 如果没有</span>
+		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> x
+		cnt<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+		<span class="token keyword">return</span> x
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 当前节点为父节点</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> x <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> x
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 不是父节点，继续寻找</span>
+		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 联合</span>
+<span class="token keyword">func</span> <span class="token function">Union</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fx <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+	fy <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span>
+	fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span> <span class="token operator">=</span> fy <span class="token comment">// x的父亲的父亲就是y的父亲,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">{</span>
+		t <span class="token operator">:=</span> <span class="token number">0</span>
+		<span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>t<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> t<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+			n <span class="token operator">:=</span> <span class="token number">0</span>
+			fmt<span class="token punctuation">.</span><span class="token function">Scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>n<span class="token punctuation">)</span>
+			fa <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+			cnt <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+			max <span class="token operator">:=</span> <span class="token number">0</span>
+			<span class="token keyword">for</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">{</span>
+				<span class="token keyword">var</span> x<span class="token punctuation">,</span> y <span class="token builtin">int</span>
+				fmt<span class="token punctuation">.</span><span class="token function">Scanf</span><span class="token punctuation">(</span><span class="token string">"%d %d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">,</span> <span class="token operator">&amp;</span>y<span class="token punctuation">)</span>
+				<span class="token function">Union</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">for</span> vk<span class="token punctuation">,</span> <span class="token boolean">_</span><span class="token operator">:=</span> <span class="token keyword">range</span> fa <span class="token punctuation">{</span>
+				fi<span class="token operator">:=</span><span class="token function">find</span><span class="token punctuation">(</span>vk<span class="token punctuation">)</span>
+				cnt<span class="token punctuation">[</span>fi<span class="token punctuation">]</span><span class="token operator">++</span>
+				<span class="token keyword">if</span> cnt<span class="token punctuation">[</span>fi<span class="token punctuation">]</span><span class="token operator">&gt;</span>max<span class="token punctuation">{</span>
+					max<span class="token operator">=</span>cnt<span class="token punctuation">[</span>fi<span class="token punctuation">]</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+			fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>max<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -573,7 +622,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2021/09/27/manacher/">https://github.com/z-anshun/2021/09/27/manacher/</a>
+                    <a href="https://github.com/z-anshun/2021/09/30/bing-cha-ji/">https://github.com/z-anshun/2021/09/30/bing-cha-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -658,9 +707,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/09/30/bing-cha-ji/">
                     <div class="card-image">
@@ -678,9 +728,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -693,6 +743,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -711,13 +762,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/20/golangcall/">
+                <a href="/2021/09/27/manacher/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="关于Golang的指针传递">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Manacher">
                         
-                        <span class="card-title">关于Golang的指针传递</span>
+                        <span class="card-title">Manacher</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -728,14 +779,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -745,8 +796,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Golang/">
-                        <span class="chip bg-color">Golang</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>

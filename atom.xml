@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>小川的博客</title>
+  <title>Noodels2hg的博客</title>
   
   <subtitle>为了freedom</subtitle>
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2021-09-27T15:17:24.451Z</updated>
+  <updated>2021-09-30T15:09:04.936Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
-    <name>小川</name>
+    <name>Noodles2hg</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>并查集</title>
+    <link href="https://github.com/z-anshun/2021/09/30/bing-cha-ji/"/>
+    <id>https://github.com/z-anshun/2021/09/30/bing-cha-ji/</id>
+    <published>2021-09-30T15:08:29.000Z</published>
+    <updated>2021-09-30T15:09:04.936Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://github.com/z-anshun/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Manacher</title>
