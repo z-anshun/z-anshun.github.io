@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并查集, 面条二两">
+    <meta name="keywords" content="劲爆金曲, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>并查集 | Noodles2hg的博客</title>
+    <title>劲爆金曲 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并查集</h1>
+                    <h1 class="description center-align post-title">劲爆金曲</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/%E7%BB%83%E4%B9%A0/">
+                                <span class="chip bg-color">练习</span>
                             </a>
                         
                     </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-30
+                    2021-10-01
                 </div>
                 
 
@@ -484,117 +484,90 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>对于一组数据，当要求我们检查某两个数据是否在同一集合内时，就需要并查集去实现了</p>
-<p>如：&lt;a,b&gt;,&lt;b,c&gt;，那么很明显a、b、c都在同一集合内</p>
+<p>剩下n首歌，t秒时间，问最多能唱几首的前提下，最长时间</p>
+<p>输出最多歌数和最长时间</p>
 </blockquote>
-<p>实现思路：</p>
-<p>如果我们先将输入的a、b指向自己，再将a指向b，即a令父亲为b</p>
-<p>那么：</p>
-<img src="https://i.loli.net/2021/09/30/svnbNtfzORegA6S.png" style="zoom:67%;">
+<p><strong>思路：</strong></p>
+<p>典型的动归问题，假设我们现在要唱<code>j</code>秒，然后当我们新加入一首歌时，我们会判断能否加入。</p>
+<ul>
+<li>如果加入那么最多能唱的歌数为<code>j</code>减去这首歌的时间内能最多唱的数量+1</li>
+<li>如果不加入，那么就是未加入这首歌时，<code>j</code>秒内最多能唱的数量</li>
+</ul>
+<p>因此，我们推出公式<br>$$<br>dp[i][j]=max{dp[i-1][j],dp[i-1][j-songs[i]]+1}<br>$$<br>上面<code>i</code>为第<code>i</code>首歌，<code>j</code>为时间，<code>songs</code>为每首歌对应的时长</p>
+<p>代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// KTV n首歌, 剩余t时间，songs为每首歌的时长</span>
+<span class="token comment">// 金曲的时长为687s</span>
+<span class="token keyword">func</span> <span class="token function">KTV</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> t <span class="token builtin">int</span><span class="token punctuation">,</span> songs <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   number <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>songs<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+   <span class="token keyword">for</span> k<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> <span class="token keyword">range</span> number <span class="token punctuation">{</span>
+      number<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span>
+   <span class="token punctuation">}</span>
+   number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// 0首0s</span>
+   <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token function">len</span><span class="token punctuation">(</span>songs<span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> t<span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">{</span>
+         number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> number<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+         <span class="token keyword">if</span> j <span class="token operator">&gt;=</span> songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 当前的j满足唱这首歌,确保指针不为负</span>
+            number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> number<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+         <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+  
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>当我们再输入b，c后，跟上面一样的操作：</p>
-<img src="https://i.loli.net/2021/09/30/4e3BX18EqZp2HWz.png" style="zoom:67%;">
-
-<p>很明显，我们就可以通过a，b，c是否拥有统一父亲确定是否为同集合了</p>
-<p>理解这个思路很简单，那么代码如何实现？</p>
-<p>首先，设置两个<code>map</code>进行数据的存储</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> fa <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token comment">// 父节点</span>
-<span class="token keyword">var</span> cnt <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// 子节点数量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>我们需要一个函数来进行查找，某个点的父亲</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">find</span><span class="token punctuation">(</span>x <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-	i<span class="token punctuation">,</span> ok <span class="token operator">:=</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
-	<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
-		<span class="token comment">// 如果没有</span>
-		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> x
-		cnt<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-		<span class="token keyword">return</span> x
-	<span class="token punctuation">}</span>
-	<span class="token comment">// 当前节点为父节点</span>
-	<span class="token keyword">if</span> i <span class="token operator">==</span> x <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> x
-	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-		<span class="token comment">// 不是父节点，继续寻找</span>
-		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>有了寻找父节点的函数后，其联合，便简单了，只需要将一个节点的父亲设置为另一个节点父亲的父亲节点</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 联合</span>
-<span class="token keyword">func</span> <span class="token function">Union</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	fx <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-	fy <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span>
-	fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span> <span class="token operator">=</span> fy <span class="token comment">// x的父亲的父亲就是y的父亲,</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>例题：</p>
-<p>现在有107个用户，编号为1- 107，现在已知有m对关系，每一对关系给你两个数x和y，代表编号为x的用户和编号为y的用户是在一个圈子中，例如：A和B在一个圈子中，B和C在一个圈子中，那么A,B,C就在一个圈子中。现在想知道最多的一个圈子内有多少个用户。 </p>
-<p>链接：<a target="_blank" rel="noopener" href="https://www.nowcoder.com/questionTerminal/11ee0516a988421abf40b315a2b28d08">https://www.nowcoder.com/questionTerminal/11ee0516a988421abf40b315a2b28d08</a><br>来源：牛客网</p>
-</blockquote>
-<p>代码实现</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> dom07
-
-<span class="token keyword">import</span> <span class="token string">"fmt"</span>
-
-<span class="token keyword">var</span> fa <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token comment">// 父节点</span>
-<span class="token keyword">var</span> cnt <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// 子节点数量</span>
-
-<span class="token keyword">func</span> <span class="token function">find</span><span class="token punctuation">(</span>x <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-	i<span class="token punctuation">,</span> ok <span class="token operator">:=</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
-	<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
-		<span class="token comment">// 如果没有</span>
-		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> x
-		cnt<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-		<span class="token keyword">return</span> x
-	<span class="token punctuation">}</span>
-	<span class="token comment">// 当前节点为父节点</span>
-	<span class="token keyword">if</span> i <span class="token operator">==</span> x <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> x
-	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-		<span class="token comment">// 不是父节点，继续寻找</span>
-		fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">// 联合</span>
-<span class="token keyword">func</span> <span class="token function">Union</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	fx <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-	fy <span class="token operator">:=</span> <span class="token function">find</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span>
-	fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span> <span class="token operator">=</span> fy <span class="token comment">// x的父亲的父亲就是y的父亲,</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">for</span> <span class="token punctuation">{</span>
-		t <span class="token operator">:=</span> <span class="token number">0</span>
-		<span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>t<span class="token punctuation">)</span>
-		<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
-			<span class="token keyword">return</span>
-		<span class="token punctuation">}</span>
-		<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> t<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-			n <span class="token operator">:=</span> <span class="token number">0</span>
-			fmt<span class="token punctuation">.</span><span class="token function">Scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>n<span class="token punctuation">)</span>
-			fa <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
-			cnt <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
-			max <span class="token operator">:=</span> <span class="token number">0</span>
-			<span class="token keyword">for</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">{</span>
-				<span class="token keyword">var</span> x<span class="token punctuation">,</span> y <span class="token builtin">int</span>
-				fmt<span class="token punctuation">.</span><span class="token function">Scanf</span><span class="token punctuation">(</span><span class="token string">"%d %d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">,</span> <span class="token operator">&amp;</span>y<span class="token punctuation">)</span>
-				<span class="token function">Union</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">for</span> vk<span class="token punctuation">,</span> <span class="token boolean">_</span><span class="token operator">:=</span> <span class="token keyword">range</span> fa <span class="token punctuation">{</span>
-				fi<span class="token operator">:=</span><span class="token function">find</span><span class="token punctuation">(</span>vk<span class="token punctuation">)</span>
-				cnt<span class="token punctuation">[</span>fi<span class="token punctuation">]</span><span class="token operator">++</span>
-				<span class="token keyword">if</span> cnt<span class="token punctuation">[</span>fi<span class="token punctuation">]</span><span class="token operator">&gt;</span>max<span class="token punctuation">{</span>
-					max<span class="token operator">=</span>cnt<span class="token punctuation">[</span>fi<span class="token punctuation">]</span>
-				<span class="token punctuation">}</span>
-			<span class="token punctuation">}</span>
-			fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>max<span class="token punctuation">)</span>
+<p>上面的代码实现了<code>number</code>的初始化，那么最长歌数一定是在<code>number[n]</code>数组里面，那么最长时间呢？</p>
+<p>因为<code>number[i][j]</code>表示的为<code>j</code>秒内最多可唱的歌，也就是当<code>j1&gt;j2</code>时，那么<code>number[i][j1]&gt;=number[i][j2]</code>，因此我们无法知道这个<code>j</code>是否为唱这么多首歌所需的时间</p>
+<p>解决思路：</p>
+<p>我们期望的时间肯定为<code>t-1</code>，那么，我们遍历每一首歌，如果当前这一首能唱，并且满足<code>number</code>中在唱这首歌后刚好为当前歌数-1，那么就代表能选择这首</p>
+<p>代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">total_time</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> songs <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> number <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	<span class="token comment">// 当前剩下的时间t,总的时间</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> t <span class="token operator">&gt;=</span> songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">==</span> number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token operator">-</span>songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token function">total_time</span><span class="token punctuation">(</span>t<span class="token operator">-</span>songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">,</span> songs<span class="token punctuation">,</span> number<span class="token punctuation">)</span>
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">return</span> <span class="token number">0</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>总代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// KTV n首歌, 剩余t时间，songs为每首歌的时长</span>
+<span class="token comment">// 金曲的时长为687s</span>
+<span class="token keyword">func</span> <span class="token function">KTV</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> t <span class="token builtin">int</span><span class="token punctuation">,</span> songs <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   number <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>songs<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+   <span class="token keyword">for</span> k<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> <span class="token keyword">range</span> number <span class="token punctuation">{</span>
+      number<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span>
+   <span class="token punctuation">}</span>
+   number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// 0首0s</span>
+   <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token function">len</span><span class="token punctuation">(</span>songs<span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> t<span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">{</span>
+         number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> number<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+         <span class="token keyword">if</span> j <span class="token operator">&gt;=</span> songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 当前的j满足唱这首歌,确保指针不为负</span>
+            number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> number<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+         <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+   ans <span class="token operator">:=</span> <span class="token function">total_time</span><span class="token punctuation">(</span>t<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> n<span class="token punctuation">,</span> songs<span class="token punctuation">,</span> number<span class="token punctuation">)</span>
+   <span class="token keyword">return</span> number<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>ans<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> ans <span class="token operator">+</span> <span class="token number">678</span> <span class="token comment">// 最长时间，最多歌曲</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">total_time</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> songs <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> number <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+   <span class="token comment">// 当前剩下的时间t,总的时间</span>
+   <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> t <span class="token operator">&gt;=</span> songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">==</span> number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token operator">-</span>songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">{</span>
+         <span class="token keyword">return</span> songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token function">total_time</span><span class="token punctuation">(</span>t<span class="token operator">-</span>songs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">,</span> songs<span class="token punctuation">,</span> number<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+   <span class="token keyword">if</span> x <span class="token operator">&gt;</span> y <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> x
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> y
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -622,7 +595,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2021/09/30/bing-cha-ji/">https://github.com/z-anshun/2021/09/30/bing-cha-ji/</a>
+                    <a href="https://github.com/z-anshun/2021/10/01/jing-bao-jin-qu/">https://github.com/z-anshun/2021/10/01/jing-bao-jin-qu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -660,8 +633,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/%E7%BB%83%E4%B9%A0/">
+                                    <span class="chip bg-color">练习</span>
                                 </a>
                             
                         </div>
@@ -707,9 +680,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/10/01/jing-bao-jin-qu/">
                     <div class="card-image">
@@ -727,9 +701,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -742,6 +716,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -760,13 +735,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/27/manacher/">
+                <a href="/2021/09/30/bing-cha-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Manacher">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="并查集">
                         
-                        <span class="card-title">Manacher</span>
+                        <span class="card-title">并查集</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -777,7 +752,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-30
                             </span>
                         <span class="publish-author">
                             
