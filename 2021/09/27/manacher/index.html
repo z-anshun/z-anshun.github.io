@@ -525,10 +525,8 @@
 
 		<span class="token comment">// 如果当前的右边的临界比原来的大，</span>
 		<span class="token keyword">if</span> i<span class="token operator">+</span>T<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&gt;</span> center<span class="token operator">+</span>maxRadius <span class="token punctuation">{</span>
-			nowLen <span class="token operator">:=</span> maxRadius<span class="token operator">*</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span>
-			<span class="token keyword">if</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'#'</span> <span class="token punctuation">{</span>
-				nowLen<span class="token operator">--</span>
-			<span class="token punctuation">}</span>
+			nowLen <span class="token operator">:=</span> maxRadius
+		
 			<span class="token keyword">if</span> nowLen <span class="token operator">&gt;</span> maxLen <span class="token punctuation">{</span>
 				maxLen <span class="token operator">=</span> nowLen
 			<span class="token punctuation">}</span>
@@ -544,7 +542,7 @@
 		<span class="token keyword">return</span> x
 	<span class="token punctuation">}</span>
 	<span class="token keyword">return</span> y
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>时间复杂度：<br>$$<br>O(n^2)<br>$$</p>
 
