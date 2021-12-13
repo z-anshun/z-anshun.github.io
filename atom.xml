@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2021-12-12T08:10:57.114Z</updated>
+  <updated>2021-12-13T08:10:16.701Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>最大公约数</title>
+    <link href="https://github.com/z-anshun/2021/12/13/gcb/"/>
+    <id>https://github.com/z-anshun/2021/12/13/gcb/</id>
+    <published>2021-12-13T07:48:17.000Z</published>
+    <updated>2021-12-13T08:10:16.701Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://github.com/z-anshun/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>和至少为 K 的最短子数组</title>
@@ -488,27 +513,6 @@
     
     
     <category term="基础" scheme="https://github.com/z-anshun/tags/%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://github.com/z-anshun/2020/10/04/hello-world/"/>
-    <id>https://github.com/z-anshun/2020/10/04/hello-world/</id>
-    <published>2020-10-04T05:43:12.009Z</published>
-    <updated>2020-10-04T05:43:12.009Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
     
   </entry>
   
