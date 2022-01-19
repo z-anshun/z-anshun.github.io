@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2021-12-13T08:10:16.701Z</updated>
+  <updated>2022-01-19T04:53:52.723Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CA证书</title>
+    <link href="https://github.com/z-anshun/2022/01/19/ca-zheng-shu/"/>
+    <id>https://github.com/z-anshun/2022/01/19/ca-zheng-shu/</id>
+    <published>2022-01-19T04:53:30.000Z</published>
+    <updated>2022-01-19T04:53:52.723Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="计网" scheme="https://github.com/z-anshun/categories/%E8%AE%A1%E7%BD%91/"/>
+    
+    
+    <category term="https" scheme="https://github.com/z-anshun/tags/https/"/>
+    
+  </entry>
   
   <entry>
     <title>最大公约数</title>
@@ -488,31 +513,6 @@
     
     
     <category term="架构" scheme="https://github.com/z-anshun/tags/%E6%9E%B6%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浅谈进程与协程、异步与同步、并发与并行</title>
-    <link href="https://github.com/z-anshun/2020/10/14/infomal/"/>
-    <id>https://github.com/z-anshun/2020/10/14/infomal/</id>
-    <published>2020-10-14T13:35:35.000Z</published>
-    <updated>2020-10-14T13:54:38.688Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="随笔" scheme="https://github.com/z-anshun/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="基础" scheme="https://github.com/z-anshun/tags/%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
