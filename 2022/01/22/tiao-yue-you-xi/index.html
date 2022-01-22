@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="最长重复子数组, 面条二两">
+    <meta name="keywords" content="跳跃游戏, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>最长重复子数组 | Noodles2hg的博客</title>
+    <title>跳跃游戏 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">最长重复子数组</h1>
+                    <h1 class="description center-align post-title">跳跃游戏</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%8A%A8%E5%BD%92/">
-                                <span class="chip bg-color">动归</span>
+                            <a href="/tags/BFS/">
+                                <span class="chip bg-color">BFS</span>
                             </a>
                         
                     </div>
@@ -484,110 +484,65 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>题目：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/">718. 最长重复子数组</a></p>
-<p>给两个整数数组 <code>A</code> 和 <code>B</code> ，返回两个数组中公共的、长度最长的子数组的长度。</p>
-<p><strong>示例：</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">输入：
-A: [1,2,3,2,1]
-B: [3,2,1,4,7]
-输出：3
-解释：
-长度最长的公共子数组是 [3, 2, 1] 。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p><strong>提示：</strong></p>
+<p>题目：</p>
+<h4 id="1345-跳跃游戏-IV"><a href="#1345-跳跃游戏-IV" class="headerlink" title="1345. 跳跃游戏 IV"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/jump-game-iv/">1345. 跳跃游戏 IV</a></h4><p>给你一个整数数组 <code>arr</code> ，你一开始在数组的第一个元素处（下标为 0）。</p>
+<p>每一步，你可以从下标 <code>i</code> 跳到下标：</p>
 <ul>
-<li><code>1 &lt;= len(A), len(B) &lt;= 1000</code></li>
-<li><code>0 &lt;= A[i], B[i] &lt; 100</code></li>
+<li><code>i + 1</code> 满足：<code>i + 1 &lt; arr.length</code></li>
+<li><code>i - 1</code> 满足：<code>i - 1 &gt;= 0</code></li>
+<li><code>j</code> 满足：<code>arr[i] == arr[j]</code> 且 <code>i != j</code></li>
 </ul>
+<p>请你返回到达数组最后一个元素的下标处所需的 <strong>最少操作次数</strong> 。</p>
+<p>注意：任何时候你都不能跳到数组外面。</p>
+<p><strong>示例 1：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">输入：arr = [100,-23,-23,404,100,23,23,23,3,404]
+输出：3
+解释：那你需要跳跃 3 次，下标依次为 0 --&gt; 4 --&gt; 3 --&gt; 9 。下标 9 为数组的最后一个元素的下标。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </blockquote>
 <p>分析：</p>
-<p>首先，对于数组A和B，我们创建下面一个表</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody></table>
-<p>其中，横竖轴分表为两个数组的下标，相同为1，不相同为0</p>
-<p>那么，仔细观察，我们就能得出递推公式<br>$$<br>若A[i]==B[j]\<br>dp[i][j]=dp[i-1][j-1]+1\<br>反之\<br>dp[i][j]=0<br>$$<br>代码实现：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">findLength</span><span class="token punctuation">(</span>nums1 <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> nums2 <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-    n<span class="token punctuation">,</span>m<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>nums1<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">len</span><span class="token punctuation">(</span>nums2<span class="token punctuation">)</span>
-    dp<span class="token operator">:=</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span>n<span class="token punctuation">)</span>
-    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token keyword">range</span> dp<span class="token punctuation">{</span>
-        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span>m<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    res<span class="token operator">:=</span><span class="token number">0</span>
-    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
-        <span class="token keyword">for</span> j<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">{</span>
-            <span class="token keyword">if</span> nums1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>nums2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">{</span>
-                <span class="token keyword">if</span> i<span class="token operator">==</span><span class="token number">0</span><span class="token operator">||</span>j<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">{</span>
-                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span>
-                <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span>
-                <span class="token punctuation">}</span>
-                res<span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>res<span class="token punctuation">)</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> res
+<p>因为一个点，可以到<code>i-1</code>、<code>i+1</code>和值相同的点（i为0就没i-1，i为n-1就没i+1,这里的i为<code>arr</code>的下标），那么，很明显，可以构造一个图，使用<strong>邻接表</strong>进行记录。</p>
+<p>然后，我们再从0下标开始进行节点的遍历，因为要求的最少，所以需要一个<code>map</code>对经过的节点记录（约早可抵达的，肯定步数越少）</p>
+<p>代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> pair <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	idx<span class="token punctuation">,</span>step <span class="token builtin">int</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">func</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token builtin">int</span><span class="token punctuation">{</span>
-    <span class="token keyword">if</span> x<span class="token operator">&gt;</span>y<span class="token punctuation">{</span>
-        <span class="token keyword">return</span> x
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> y
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">func</span> <span class="token function">minJumps</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span><span class="token builtin">int</span><span class="token punctuation">{</span>
+	n<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
+	idx<span class="token operator">:=</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+	<span class="token keyword">for</span> i<span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> arr <span class="token punctuation">{</span>
+		idx<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>idx<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+	vis<span class="token operator">:=</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">bool</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token comment">// 下标 -&gt; 是否走过</span>
+	q<span class="token operator">:=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>pair<span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
+	<span class="token keyword">for</span> <span class="token punctuation">{</span>
+		<span class="token comment">// pop</span>
+		p<span class="token operator">:=</span>q<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+		q<span class="token operator">=</span>q<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
 
-<p>当然，这个也可以用在找最长公共子字符串</p>
+		i<span class="token punctuation">,</span>step<span class="token operator">:=</span>p<span class="token punctuation">.</span>idx<span class="token punctuation">,</span>p<span class="token punctuation">.</span>step
+		<span class="token keyword">if</span> i<span class="token operator">==</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">{</span>
+			<span class="token keyword">return</span> step
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span>j<span class="token operator">:=</span><span class="token keyword">range</span> idx<span class="token punctuation">[</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">{</span>
+			<span class="token keyword">if</span> <span class="token operator">!</span>vis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">{</span>
+				vis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span>
+				q <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>q<span class="token punctuation">,</span> pair<span class="token punctuation">{</span>j<span class="token punctuation">,</span>step<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+		<span class="token function">delete</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token comment">// 往后</span>
+		<span class="token keyword">if</span> <span class="token operator">!</span>vis<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">{</span>
+			vis<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span>
+			q <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>q<span class="token punctuation">,</span> pair<span class="token punctuation">{</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>step<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span> i<span class="token operator">&gt;</span><span class="token number">0</span><span class="token operator">&amp;&amp;</span><span class="token operator">!</span>vis<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">{</span>
+			vis<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span>
+			q <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>q<span class="token punctuation">,</span> pair<span class="token punctuation">{</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>step<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -614,7 +569,7 @@ B: [3,2,1,4,7]
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/01/22/zui-chang-chong-fu-zi-shu-zu/">https://github.com/z-anshun/2022/01/22/zui-chang-chong-fu-zi-shu-zu/</a>
+                    <a href="https://github.com/z-anshun/2022/01/22/tiao-yue-you-xi/">https://github.com/z-anshun/2022/01/22/tiao-yue-you-xi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -652,8 +607,8 @@ B: [3,2,1,4,7]
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%8A%A8%E5%BD%92/">
-                                    <span class="chip bg-color">动归</span>
+                                <a href="/tags/BFS/">
+                                    <span class="chip bg-color">BFS</span>
                                 </a>
                             
                         </div>
@@ -699,9 +654,10 @@ B: [3,2,1,4,7]
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/01/22/tiao-yue-you-xi/">
                     <div class="card-image">
@@ -719,9 +675,9 @@ B: [3,2,1,4,7]
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -734,6 +690,7 @@ B: [3,2,1,4,7]
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -752,13 +709,13 @@ B: [3,2,1,4,7]
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/19/ca-zheng-shu/">
+                <a href="/2022/01/22/zui-chang-chong-fu-zi-shu-zu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="CA证书">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="最长重复子数组">
                         
-                        <span class="card-title">CA证书</span>
+                        <span class="card-title">最长重复子数组</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -769,14 +726,14 @@ B: [3,2,1,4,7]
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-22
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%A1%E7%BD%91/" class="post-category">
-                                    计网
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -786,8 +743,8 @@ B: [3,2,1,4,7]
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/https/">
-                        <span class="chip bg-color">https</span>
+                    <a href="/tags/%E5%8A%A8%E5%BD%92/">
+                        <span class="chip bg-color">动归</span>
                     </a>
                     
                 </div>
