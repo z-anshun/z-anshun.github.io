@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CA证书, 面条二两">
+    <meta name="keywords" content="最长重复子数组, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CA证书 | Noodles2hg的博客</title>
+    <title>最长重复子数组 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -318,7 +318,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CA证书</h1>
+                    <h1 class="description center-align post-title">最长重复子数组</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/https/">
-                                <span class="chip bg-color">https</span>
+                            <a href="/tags/%E5%8A%A8%E5%BD%92/">
+                                <span class="chip bg-color">动归</span>
                             </a>
                         
                     </div>
@@ -446,8 +446,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AE%A1%E7%BD%91/" class="post-category">
-                                计网
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
                             </a>
                         
                     </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-19
+                    2022-01-22
                 </div>
                 
 
@@ -483,88 +483,111 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="认证中心CA"><a href="#认证中心CA" class="headerlink" title="认证中心CA"></a>认证中心CA</h2><p>Certificate Authority，证书认证中心</p>
-<p>流程：</p>
-<p><img src="https://i.loli.net/2021/11/22/A4OtwLjKRekWhZ2.png" alt="1169376-20191009111543085-161187219"></p>
-<ol>
-<li><p>服务端S会向第三方CA<strong>提交公钥</strong>（记住不是私钥，私钥自己留着）、组织信息、个人信息（域名）等信息并申请认证</p>
-</li>
-<li><p>CA通过线上、线下等多种手段，<strong>验证</strong>申请者提供信息的真实性，如组织是否存在、企业是否合法，是否拥有域名的所有权等</p>
-</li>
-<li><p>.如信息审核通过，<strong>CA</strong>会向申请者签发<strong>认证文件-证书</strong></p>
-<p>证书包含以下信息：<strong>申请者的公钥</strong>、申请者的组织信息和个人信息、签发机构CA的信息、有效时间、证书序列号等信息的<strong>明文</strong>，同时还有一个<strong>签名</strong></p>
-<p>签名：首先使用散列函数计算公开的明文信息的<strong>信息摘要</strong>，然后，使用<strong>CA的私钥</strong>进行加密，其加密后的密文就是签名</p>
-</li>
-<li><p>客户端C向服务器S发送请求，S返回证书文件</p>
-</li>
-<li><p>客户端C读取证书中的明文信息，<strong>采用相同的散列函数</strong>计算得到<strong>信息摘要</strong>，然后，利用<strong>对应CA的公钥</strong>解密签名数据，<strong>对比证书的信息摘要</strong>，如果一致，则可以确认证书的合法性，即公钥合法</p>
-</li>
-<li><p><strong>客户端</strong>然后验证证书相关的域名信息、有效时间等信息;</p>
-</li>
-<li><p><strong>客户端</strong>会**内置信任CA的证书信息(包含公钥)**，如果CA不被信任，则找不到对应 CA的证书，证书也会被判定非法</p>
-</li>
-</ol>
-<p>过程中需要注意的：</p>
+                <blockquote>
+<p>题目：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/">718. 最长重复子数组</a></p>
+<p>给两个整数数组 <code>A</code> 和 <code>B</code> ，返回两个数组中公共的、长度最长的子数组的长度。</p>
+<p><strong>示例：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">输入：
+A: [1,2,3,2,1]
+B: [3,2,1,4,7]
+输出：3
+解释：
+长度最长的公共子数组是 [3, 2, 1] 。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>提示：</strong></p>
 <ul>
-<li><p>这里出现了两个公钥，一个CA的，一个服务器自己的，发送的信息中携带着公钥</p>
-</li>
-<li><p>证书的合法性仍然依赖于非对称加密算法，证书主要是增加了服务器信息以及签名;</p>
-</li>
-<li><p>内置 CA 对应的证书称为根证书，颁发者和使用者相同，自己为自己签名，即自签名证书（为什么说”部署自签SSL证书非常不安全”）</p>
-</li>
-<li><p><strong>证书=公钥（服务方生成密码对中的公钥）+申请者与颁发者信息+签名（用CA机构生成的密码对的私钥进行签名）</strong></p>
-</li>
+<li><code>1 &lt;= len(A), len(B) &lt;= 1000</code></li>
+<li><code>0 &lt;= A[i], B[i] &lt; 100</code></li>
 </ul>
-<p>也就是<strong>即便有人截取服务器A证书，再发给客户端，想冒充服务器A，也无法实现。因为证书和url的域名是绑定的。</strong></p>
-<h3 id="CA的作用"><a href="#CA的作用" class="headerlink" title="CA的作用"></a>CA的作用</h3><ul>
-<li><strong>颁发证书</strong>，颁发证书其实就是使用CA的私钥对证书请求签名文件进行签名</li>
-<li>颁发的证书浏览器要信任，浏览器只需要用CA的公钥进行验签成功就表示这个证书是合法可信的，这就需要浏览器内置CA的公钥，也就是内置CA的证书。一般来说，操作系统都会内置权威CA的证书，有的浏览器会使用操作系统内置的CA证书列表，有的浏览器则自己维护的CA证书列表，比如Firefox</li>
-</ul>
-<h3 id="HTTP通信存在的问题"><a href="#HTTP通信存在的问题" class="headerlink" title="HTTP通信存在的问题"></a>HTTP通信存在的问题</h3><ul>
-<li>被监听：</li>
-<li>被伪装</li>
-<li>呗篡改</li>
-</ul>
-<h3 id="两种加密方式"><a href="#两种加密方式" class="headerlink" title="两种加密方式"></a>两种加密方式</h3><ul>
-<li>共享密钥加密 <ul>
-<li>共享密钥的加密密钥和解密密钥是相同的，所以又称为对称密钥</li>
-</ul>
-</li>
-<li>公开密钥加密 <ul>
-<li>加密算法是公开的，密钥是保密的。公开密钥分为私有密钥和公有密钥，公有密钥是公开的，任何人(客户端)都可以获取，客户端使用公有密钥加密数据，服务端用私有密钥解密数据。</li>
-</ul>
-</li>
-<li>异同 <ul>
-<li>共享密钥加密与公开密钥加密相比，加解密处理速度快，但公开密钥更适应互联网下使用</li>
-</ul>
-</li>
-</ul>
-<h3 id="https"><a href="#https" class="headerlink" title="https"></a>https</h3><p>https很好的解决了http的三个缺点（被监听、被篡改、被伪装），https不是一种新的协议，它是http+SSL(TLS)的结合体，<strong>SSL是一种独立协议</strong>，所以其它协议比如smtp等也可以跟ssl结合。https改变了通信方式，它由以前的http—–&gt;tcp，改为http——&gt;SSL—–&gt;tcp；https采用了共享密钥加密+公开密钥加密的方式</p>
-<ul>
-<li>防监听 <ul>
-<li>数据是加密的，所以监听得到的数据是密文，hacker看不懂。</li>
-</ul>
-</li>
-<li>防伪装 <ul>
-<li>伪装分为客户端伪装和服务器伪装，通信双方携带证书，证书相当于身份证，有证书就认为合法，没有证书就认为非法，证书由第三方颁布，很难伪造</li>
-</ul>
-</li>
-<li>防篡改 <ul>
-<li>https对数据做了摘要，篡改数据会被感知到。hacker即使从中改了数据也白搭。</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>如何建立https连接？</p>
 </blockquote>
-<ul>
-<li>客户端发送请求到服务器端</li>
-<li>服务器端返回证书和公钥，公钥作为证书的一部分而存在</li>
-<li>客户端验证证书和公钥的有效性，如果有效，则生成共享密钥并使用公钥加密发送到服务器端</li>
-<li>服务器端使用私钥解密数据，并使用收到的共享密钥加密数据，发送到客户端</li>
-<li>客户端使用共享密钥解密数据</li>
-<li>SSL加密建立………</li>
-</ul>
+<p>分析：</p>
+<p>首先，对于数组A和B，我们创建下面一个表</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p>其中，横竖轴分表为两个数组的下标，相同为1，不相同为0</p>
+<p>那么，仔细观察，我们就能得出递推公式<br>$$<br>若A[i]==B[j]\<br>dp[i][j]=dp[i-1][j-1]+1\<br>反之\<br>dp[i][j]=0<br>$$<br>代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">findLength</span><span class="token punctuation">(</span>nums1 <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> nums2 <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+    n<span class="token punctuation">,</span>m<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>nums1<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">len</span><span class="token punctuation">(</span>nums2<span class="token punctuation">)</span>
+    dp<span class="token operator">:=</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token keyword">range</span> dp<span class="token punctuation">{</span>
+        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span>m<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    res<span class="token operator">:=</span><span class="token number">0</span>
+    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span> j<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span> nums1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>nums2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">{</span>
+                <span class="token keyword">if</span> i<span class="token operator">==</span><span class="token number">0</span><span class="token operator">||</span>j<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">{</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span>
+                <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span>
+                <span class="token punctuation">}</span>
+                res<span class="token operator">=</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>res<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token builtin">int</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span> x<span class="token operator">&gt;</span>y<span class="token punctuation">{</span>
+        <span class="token keyword">return</span> x
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> y
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当然，这个也可以用在找最长公共子字符串</p>
 
                 
             </div>
@@ -591,7 +614,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/01/19/ca-zheng-shu/">https://github.com/z-anshun/2022/01/19/ca-zheng-shu/</a>
+                    <a href="https://github.com/z-anshun/2022/01/22/zui-chang-chong-fu-zi-shu-zu/">https://github.com/z-anshun/2022/01/22/zui-chang-chong-fu-zi-shu-zu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -629,8 +652,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/https/">
-                                    <span class="chip bg-color">https</span>
+                                <a href="/tags/%E5%8A%A8%E5%BD%92/">
+                                    <span class="chip bg-color">动归</span>
                                 </a>
                             
                         </div>
@@ -676,9 +699,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/01/22/zui-chang-chong-fu-zi-shu-zu/">
                     <div class="card-image">
@@ -696,9 +720,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -711,6 +735,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -729,13 +754,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/12/13/gcb/">
+                <a href="/2022/01/19/ca-zheng-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="最大公约数">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="CA证书">
                         
-                        <span class="card-title">最大公约数</span>
+                        <span class="card-title">CA证书</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -746,14 +771,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E8%AE%A1%E7%BD%91/" class="post-category">
+                                    计网
                                 </a>
                             
                             
@@ -763,8 +788,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/https/">
+                        <span class="chip bg-color">https</span>
                     </a>
                     
                 </div>
