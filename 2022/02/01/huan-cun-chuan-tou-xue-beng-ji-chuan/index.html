@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="最长的美好子字符串, 面条二两">
+    <meta name="keywords" content="缓存穿透、雪崩、击穿, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>最长的美好子字符串 | Noodles2hg的博客</title>
+    <title>缓存穿透、雪崩、击穿 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">最长的美好子字符串</h1>
+                    <h1 class="description center-align post-title">缓存穿透、雪崩、击穿</h1>
                 </div>
             </div>
         </div>
@@ -432,9 +432,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -442,8 +446,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                面经
                             </a>
                         
                     </div>
@@ -479,242 +483,48 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="最长美好子字符串"><a href="#最长美好子字符串" class="headerlink" title="最长美好子字符串"></a>最长美好子字符串</h1><blockquote>
-<h4 id="1763-最长的美好子字符串"><a href="#1763-最长的美好子字符串" class="headerlink" title="1763. 最长的美好子字符串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-nice-substring/">1763. 最长的美好子字符串</a></h4><p>当一个字符串 <code>s</code> 包含的每一种字母的大写和小写形式 <strong>同时</strong> 出现在 <code>s</code> 中，就称这个字符串 <code>s</code> 是 <strong>美好</strong> 字符串。比方说，<code>"abABB"</code> 是美好字符串，因为 <code>'A'</code> 和 <code>'a'</code> 同时出现了，且 <code>'B'</code> 和 <code>'b'</code> 也同时出现了。然而，<code>"abA"</code> 不是美好字符串因为 <code>'b'</code> 出现了，而 <code>'B'</code> 没有出现。</p>
-<p>给你一个字符串 <code>s</code> ，请你返回 <code>s</code> 最长的 <strong>美好子字符串</strong> 。如果有多个答案，请你返回 <strong>最早</strong> 出现的一个。如果不存在美好子字符串，请你返回一个空字符串。</p>
-<p><strong>示例 1：</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">输入：s = "YazaAay"
-输出："aAa"
-解释："aAa" 是一个美好字符串，因为这个子串中仅含一种字母，其小写形式 'a' 和大写形式 'A' 也同时出现了。
-"aAa" 是最长的美好子字符串。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</blockquote>
-<h2 id="法1：枚举"><a href="#法1：枚举" class="headerlink" title="法1：枚举"></a>法1：枚举</h2><p>首先，对于一个字符串存在的英文字母，我们需要对其做标记，这里我们使用二进制方法最为简便</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">mask<span class="token operator">:=</span><span class="token function">uint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment">// 假设这里的str全为小写字母</span>
-<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span>ch<span class="token operator">:=</span><span class="token keyword">range</span> str<span class="token punctuation">{</span>
-    mask<span class="token operator">|=</span><span class="token number">1</span><span class="token operator">&gt;&gt;</span><span class="token punctuation">(</span>ch<span class="token operator">-</span><span class="token string">'a'</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后，我们对<code>s</code>的子字符串枚举，即<code>s[i:j]</code>，令其大写字母的标记<code>upper</code>，小写字母的标记<code>lower</code>，当两个标记相等时，即为完美子字符串，进而获取最长的即可</p>
-<p>代码实现：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">longestNiceSubstring</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
-    n<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-    res<span class="token operator">:=</span><span class="token string">""</span>
-    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
-        lower<span class="token punctuation">,</span>upper<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>
-        <span class="token keyword">for</span> j<span class="token operator">:=</span>i<span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">{</span>
-            <span class="token keyword">if</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&gt;=</span><span class="token string">'a'</span><span class="token operator">&amp;&amp;</span>s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&lt;=</span><span class="token string">'z'</span><span class="token punctuation">{</span>
-                lower<span class="token operator">|=</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">-</span><span class="token string">'a'</span><span class="token punctuation">)</span>
-            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-                upper<span class="token operator">|=</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">-</span><span class="token string">'A'</span><span class="token punctuation">)</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">if</span> lower<span class="token operator">==</span>upper<span class="token operator">&amp;&amp;</span><span class="token function">len</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token operator">&lt;</span>j<span class="token operator">-</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">{</span>
-                res<span class="token operator">=</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>
-            <span class="token punctuation">}</span>    
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> res
-
-
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>时间复杂度：O*(*n^2)</p>
-<p>空间复杂度：O(1)</p>
-<h2 id="法2：分治"><a href="#法2：分治" class="headerlink" title="法2：分治"></a>法2：分治</h2><p>既然为字符串，那么一定在其某个分段里</p>
+                <h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>指查询一个<strong>不存在的数据</strong>，那么肯定缓存里没有，就会查找DB，如果DB也没有，那么就不会写入缓存，这就是会导致每次对该数据查询的时候都要去DB进行查询，进而缓存便失去了意义，而当流量大的时候，DB可能会直接挂掉</p>
 <blockquote>
-<p>如何分段？</p>
+<p>如何解决？</p>
 </blockquote>
-<p>我们首先对整个字符串获取到<code>upper</code>和<code>lower</code>的标记，然后取并,就知道需要哪些大小字母，也就知道哪些字母一定不会在最终结果，</p>
-<p>进而就可以对其进行分段</p>
-<p>代码实现：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">longestNiceSubstring</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>ans <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">if</span> s <span class="token operator">==</span> <span class="token string">""</span> <span class="token punctuation">{</span>
-		<span class="token keyword">return</span>
-	<span class="token punctuation">}</span>
-	lower<span class="token punctuation">,</span> upper <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span>
-	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> ch <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">{</span>
-		<span class="token keyword">if</span> unicode<span class="token punctuation">.</span><span class="token function">IsLower</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			lower <span class="token operator">|=</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>ch <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">)</span>
-		<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-			upper <span class="token operator">|=</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>ch <span class="token operator">-</span> <span class="token string">'A'</span><span class="token punctuation">)</span>
+<ol>
+<li><p>将空值也进行缓存</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">if</span> v<span class="token operator">:=</span>reids<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>v<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">{</span>
+		v<span class="token punctuation">,</span>err<span class="token operator">=</span>db<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> err<span class="token operator">==</span>db<span class="token punctuation">.</span>DBNoFound<span class="token punctuation">{</span>
+			redis<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span><span class="token boolean">nil</span><span class="token punctuation">)</span>	
 		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token comment">// 如果当前即为完美字符串</span>
-	<span class="token keyword">if</span> lower <span class="token operator">==</span> upper <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> s
-	<span class="token punctuation">}</span>
-	<span class="token comment">// 获取可能需要的字母标记</span>
-	v <span class="token operator">:=</span> lower <span class="token operator">&amp;</span> upper
-	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-		start <span class="token operator">:=</span> i
-		idx <span class="token operator">:=</span> unicode<span class="token punctuation">.</span><span class="token function">ToLower</span><span class="token punctuation">(</span><span class="token function">rune</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">'a'</span> <span class="token comment">// 获取到对应的标记</span>
-		<span class="token comment">// 右边最大的下标</span>
-		<span class="token keyword">for</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> v<span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">&gt;&gt;</span>idx<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">{</span>
-			i<span class="token operator">++</span>
-		<span class="token punctuation">}</span>
-		t <span class="token operator">:=</span> <span class="token function">longestNiceSubstring</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>start<span class="token punctuation">:</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-		<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>ans<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			ans <span class="token operator">=</span> t
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>时间复杂度：<em>O</em>(<em>n</em>⋅∣Σ∣)，其中 n 为字符串的长度，∣Σ∣ 为字符集的大小，这里因为英文字母为52个（包含大小写），即使|Σ|=52，其递归深度，最大为|Σ|/2=26，因为每次递归会去掉一个肯定不会出现在结果里的字母</p>
-<p>空间复杂度：O(|Σ|)，递归深度为|Σ|/2</p>
-<h2 id="法3：滑动窗口"><a href="#法3：滑动窗口" class="headerlink" title="法3：滑动窗口"></a>法3：滑动窗口</h2><p>首先，我们能够获取到该字符串的总的字母类型（不分大小写），令其为<code>maxNum（maxNum&gt;0&amp;&amp;maxNum&lt;=26）</code></p>
-<p>那么，我们就能枚举，当前的字母类型，从1~maxNum，</p>
-<p>最后，我们进行窗口滑动，设置几个变量</p>
-<ul>
-<li><p><code>upper,lower</code>：<code>[26]int</code>数组，分别为大小写字母的个数</p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p><code>total</code>：即当前窗口总的种类，当有一个新字母进来时+1</p>
+<li><p>使用布隆过滤器：当某个不存在时，则一定不存在</p>
 </li>
-<li><p><code>cnt</code> 当前窗口满足的条件的种类，当一个字母满足既有大写和小写时+1</p>
-</li>
-<li><p><code>l</code>：左边界，当<code>total</code>大于当前枚举的类型时，就需要移动左边界进行缩减，当前缩减时，需要将对应的值进行改变</p>
-</li>
-<li><p><code>r</code>：右边界</p>
-</li>
-</ul>
-<p>进而在枚举过程中，就能获取到最长的完美子字符串</p>
-<p>代码实现：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">func longestNiceSubstring(s string) (ans string) {
-	mask := uint(0)
-	for _, ch := range s {
-		mask |= 1 &lt;&lt; (unicode.ToLower(ch) - 'a')
-	}
-
-	maxNum := bits.OnesCount(mask)
-
-	for i := 1; i &lt;= maxNum; i++ {
-		var lowerC, upperC [26]int
-		total, cnt, l := 0, 0, 0
-		for r, ch := range s {
-			idx := unicode.ToLower(ch) - 'a'
-			if ch &gt;= 'a' &amp;&amp; ch &lt;= 'z' {
-				lowerC[idx]++
-				if lowerC[idx] == 1 &amp;&amp; upperC[idx] &gt; 0 {
-					cnt++
-				}
-			} else {
-				upperC[idx]++
-				if upperC[idx] == 1 &amp;&amp; lowerC[idx] &gt; 0 {
-					cnt++
-				}
-			}
-			// 只含有一个
-			if lowerC[idx]+upperC[idx] == 1 {
-				total++
-			}
-			// 当总的个数大于当前类型个数了
-			for total &gt; i {
-				idx := unicode.ToLower(rune(s[l])) - 'a'
-				if lowerC[idx]+upperC[idx] == 1 {
-					total--
-				}
-				if s[l] &gt;= 'a' &amp;&amp; s[l] &lt;= 'z' {
-					lowerC[idx]--
-					if lowerC[idx] == 0 &amp;&amp; upperC[idx] &gt; 0 {
-						cnt--
-					}
-				} else {
-					upperC[idx]--
-					if upperC[idx] == 0 &amp;&amp; lowerC[idx] &gt; 0 {
-						cnt++
-					}
-				}
-				l++
-			}
-			if cnt == i &amp;&amp; r-l+1 &gt; len(ans) {
-				ans = s[l : r+1]
-			}
-		}
-
-	}
-	return
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>时间复杂度：<em>O</em>(<em>n</em>⋅∣Σ∣)，其中 n 为字符串的长度，∣Σ∣ 为字符集的大小</p>
-<p>空间复杂度：O(∣Σ∣)。需要 O(∣Σ∣) 存储所有大小写字母的计数</p>
-<h1 id="衍生题："><a href="#衍生题：" class="headerlink" title="衍生题："></a>衍生题：</h1><blockquote>
-<h4 id="395-至少有-K-个重复字符的最长子串"><a href="#395-至少有-K-个重复字符的最长子串" class="headerlink" title="395. 至少有 K 个重复字符的最长子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/">395. 至少有 K 个重复字符的最长子串</a></h4><p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
-<p><strong>示例 1：</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">输入：s = "aaabb", k = 3
-输出：3
-解释：最长子串为 "aaa" ，其中 'a' 重复了 3 次。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</ol>
+<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>缓存雪崩是指在我们设置缓存时采用了<strong>相同的过期时间</strong>，<strong>导致缓存在某一时刻同时失效</strong>，请求全部转发到DB，DB瞬时压力过重挂掉。</p>
+<blockquote>
+<p>如何解决？</p>
 </blockquote>
-<h2 id="法1：分治"><a href="#法1：分治" class="headerlink" title="法1：分治"></a>法1：分治</h2><p>跟上题一样的做法，在拆分时，我们对个数小于<code>k</code>的字母进行拆分即可</p>
-<p>代码实现</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">longestSubstring</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-
-	<span class="token keyword">var</span> r <span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">{</span>
-		r<span class="token punctuation">[</span>v<span class="token operator">-</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">++</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">var</span> split <span class="token builtin">byte</span>
-	<span class="token keyword">for</span> i<span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> r<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
-		<span class="token keyword">if</span> v <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> v <span class="token operator">&lt;</span> k <span class="token punctuation">{</span>
-			split <span class="token operator">=</span> <span class="token function">byte</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'a'</span>
-			<span class="token keyword">break</span>
+<p>在原有的失效时间基础上<strong>增加一个随机值</strong>，使得过期时间分散一些。</p>
+<h2 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h2><p>大量的请求同时查询一个 key 时，此时这个 key 正好失效了，还未来得急写入，就会导致大量的请求都落到数据库。</p>
+<p>注意：<strong>缓存击穿是查询缓存中失效的 key，而缓存穿透是查询不存在的 key</strong></p>
+<blockquote>
+<p>如何解决？</p>
+</blockquote>
+<p>加分布式锁，第一个请求的线程可以拿到锁，拿到锁的线程查询到了数据之后<strong>设置缓存</strong>，其他的线程获取锁失败会等待几十ms然后重新到缓存取数据，这样便可以避免大量的请求落到数据库</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">GetVal</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span>
+	v<span class="token operator">:=</span>redis<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> v<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">{</span>
+		unique_key<span class="token operator">:=</span>systemId<span class="token operator">+</span><span class="token string">"_"</span><span class="token operator">+</span>key
+		<span class="token keyword">if</span> redis<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>unique_key<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"NX"</span><span class="token punctuation">,</span><span class="token string">"PX"</span><span class="token punctuation">,</span><span class="token number">30000</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">{</span>
+			v<span class="token operator">=</span>db<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+			redis<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>v<span class="token punctuation">)</span>
+			redis<span class="token punctuation">.</span><span class="token function">Del</span><span class="token punctuation">(</span>unique_key<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token comment">// 休眠50ms</span>
+			<span class="token keyword">return</span> <span class="token function">GetVal</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
-
-	<span class="token keyword">if</span> split <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-	<span class="token punctuation">}</span>
-	strs <span class="token operator">:=</span> strings<span class="token punctuation">.</span><span class="token function">Split</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token function">string</span><span class="token punctuation">(</span>split<span class="token punctuation">)</span><span class="token punctuation">)</span>
-	res <span class="token operator">:=</span> <span class="token number">0</span>
-	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> str <span class="token operator">:=</span> <span class="token keyword">range</span> strs <span class="token punctuation">{</span>
-		res <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token function">longestSubstring</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> res
-
-<span class="token punctuation">}</span>
-
-<span class="token keyword">func</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-	<span class="token keyword">if</span> x <span class="token operator">&gt;</span> y <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> x
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> y
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="法2：滑动窗口"><a href="#法2：滑动窗口" class="headerlink" title="法2：滑动窗口"></a>法2：滑动窗口</h2><p>跟上题类似，直接亮代码</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">longestSubstring</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>ans <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
-		cnt <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
-		l <span class="token operator">:=</span> <span class="token number">0</span>     <span class="token comment">// 左</span>
-		total <span class="token operator">:=</span> <span class="token number">0</span> <span class="token comment">// 总的种类</span>
-		lessK <span class="token operator">:=</span> <span class="token number">0</span> <span class="token comment">// 少于K个的种类</span>
-		<span class="token keyword">for</span> r<span class="token punctuation">,</span> ch <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">{</span>
-			idx <span class="token operator">:=</span> ch <span class="token operator">-</span> <span class="token string">'a'</span>
-			<span class="token keyword">if</span> cnt<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
-				lessK<span class="token operator">++</span>
-				total<span class="token operator">++</span>
-			<span class="token punctuation">}</span>
-			cnt<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">++</span>
-			<span class="token keyword">if</span> cnt<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">==</span> k <span class="token punctuation">{</span>
-				lessK<span class="token operator">--</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">for</span> total <span class="token operator">&gt;</span> i <span class="token punctuation">{</span>
-				idx <span class="token operator">:=</span> s<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'a'</span>
-				<span class="token keyword">if</span> cnt<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">==</span> k <span class="token punctuation">{</span>
-					lessK<span class="token operator">++</span>
-				<span class="token punctuation">}</span>
-				cnt<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">--</span>
-				<span class="token keyword">if</span> cnt<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
-					total<span class="token operator">--</span>
-					lessK<span class="token operator">--</span>
-				<span class="token punctuation">}</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">if</span> lessK <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> ans <span class="token operator">&lt;</span> r<span class="token operator">-</span>l<span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">{</span>
-				ans <span class="token operator">=</span> r <span class="token operator">-</span> l <span class="token operator">+</span> <span class="token number">1</span>
-			<span class="token punctuation">}</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">return</span> v
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -742,7 +552,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/01/zui-chang-de-mei-hao-zi-zi-fu-chuan/">https://github.com/z-anshun/2022/02/01/zui-chang-de-mei-hao-zi-zi-fu-chuan/</a>
+                    <a href="https://github.com/z-anshun/2022/02/01/huan-cun-chuan-tou-xue-beng-ji-chuan/">https://github.com/z-anshun/2022/02/01/huan-cun-chuan-tou-xue-beng-ji-chuan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -779,7 +589,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -823,9 +637,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/01/huan-cun-chuan-tou-xue-beng-ji-chuan/">
                     <div class="card-image">
@@ -843,9 +658,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -858,6 +673,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -876,13 +692,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/22/tiao-yue-you-xi/">
+                <a href="/2022/02/01/zui-chang-de-mei-hao-zi-zi-fu-chuan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="跳跃游戏">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="最长的美好子字符串">
                         
-                        <span class="card-title">跳跃游戏</span>
+                        <span class="card-title">最长的美好子字符串</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -893,7 +709,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
                             </span>
                         <span class="publish-author">
                             
@@ -906,14 +722,6 @@
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/BFS/">
-                        <span class="chip bg-color">BFS</span>
-                    </a>
-                    
                 </div>
                 
             </div>
