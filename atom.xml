@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2022-02-02T10:20:39.713Z</updated>
+  <updated>2022-02-02T10:37:19.489Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://github.com/z-anshun/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/"/>
     <id>https://github.com/z-anshun/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/</id>
     <published>2022-02-02T09:56:45.000Z</published>
-    <updated>2022-02-02T10:20:39.713Z</updated>
+    <updated>2022-02-02T10:37:19.489Z</updated>
     
     
       
@@ -37,7 +37,7 @@
     <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="动态窗口" scheme="https://github.com/z-anshun/tags/%E5%8A%A8%E6%80%81%E7%AA%97%E5%8F%A3/"/>
+    <category term="滑动窗口" scheme="https://github.com/z-anshun/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
     
   </entry>
   
