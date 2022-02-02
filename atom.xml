@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2022-02-01T13:04:43.344Z</updated>
+  <updated>2022-02-02T10:20:39.713Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>乘积小于K的子数组</title>
+    <link href="https://github.com/z-anshun/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/"/>
+    <id>https://github.com/z-anshun/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/</id>
+    <published>2022-02-02T09:56:45.000Z</published>
+    <updated>2022-02-02T10:20:39.713Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="动态窗口" scheme="https://github.com/z-anshun/tags/%E5%8A%A8%E6%80%81%E7%AA%97%E5%8F%A3/"/>
+    
+  </entry>
   
   <entry>
     <title>缓存穿透、雪崩、击穿</title>
@@ -169,7 +194,7 @@
     <link href="https://github.com/z-anshun/2021/12/12/he-zhi-shao-wei-k-de-zui-duan-zi-shu-zu/"/>
     <id>https://github.com/z-anshun/2021/12/12/he-zhi-shao-wei-k-de-zui-duan-zi-shu-zu/</id>
     <published>2021-12-12T07:45:32.000Z</published>
-    <updated>2021-12-12T08:10:57.114Z</updated>
+    <updated>2022-02-02T09:53:18.660Z</updated>
     
     
       
@@ -470,31 +495,6 @@
     <id>https://github.com/z-anshun/2021/02/08/day03/</id>
     <published>2021-02-07T16:22:12.000Z</published>
     <updated>2021-02-07T16:22:58.148Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="学习" scheme="https://github.com/z-anshun/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="JAVA" scheme="https://github.com/z-anshun/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA学习第二天</title>
-    <link href="https://github.com/z-anshun/2021/02/05/day02/"/>
-    <id>https://github.com/z-anshun/2021/02/05/day02/</id>
-    <published>2021-02-05T15:31:47.000Z</published>
-    <updated>2021-02-05T15:38:15.211Z</updated>
     
     
       

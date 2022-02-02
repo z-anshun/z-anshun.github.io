@@ -508,23 +508,27 @@
 
 <p>但是，时间复杂度为O(n^2)</p>
 <p><strong>优化</strong></p>
-<p>我们可以发现，<code>A[j]-A[i] = A[j]-A[m]+(A[m]-A[i])</code>，也就是当前若<code>A[j]-A[i]&gt;=k</code>,那么<code>A[j]-A[i--]&gt;=k</code>，即使，当前可以判断<code>i++</code>的循环下，最小的窗口长度</p>
+<p>我们可以发现，<code>A[j]-A[i] = A[j]-A[m]+(A[m]-A[i])</code>，也就是当前若<code>A[j]-A[m]&gt;=k</code>,那么<code>A[j]-A[i]&gt;=k</code>，即，当前可以判断<code>i++</code>的循环下，最小的窗口长度</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
     <span class="token keyword">for</span> <span class="token function">len</span><span class="token punctuation">(</span>queue<span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">{</span>
         l<span class="token operator">:=</span>queue<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token comment">// 若i~l的合大于k，队头就出队列</span>
+        <span class="token comment">// 因为若A[i]-A[l]&gt;=k，那么A[i+1]-A[l]&gt;=k就满足，即不需要再判断以l为左边界</span>
         <span class="token keyword">if</span> A<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span>A<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token operator">&gt;=</span>k<span class="token punctuation">{</span>
             res<span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>i<span class="token operator">-</span>l<span class="token punctuation">)</span>
             queue<span class="token operator">=</span>queue<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
         <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token comment">// 反之就退出</span>
             <span class="token keyword">break</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
     queue<span class="token operator">=</span><span class="token function">append</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span>i<span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>但是，出错，因为若<code>m&lt;i</code>,有可能<code>A[m]&gt;A[i]</code>，也就是<code>A[i]-A[m] &lt; 0</code>,</p>
-<p>那么<code>A[j]-A[i]&gt;=k</code>的前提下，<code>A[j]-A[i-m]=A[j]-A[i]+(A[i]-A[m])&gt;=k，m大于0</code>便不成立</p>
-<p>那么，我们可以通过改变<code>queue</code>中的下标，使其拥有的<code>A[i]-A[queue[n]]&gt;=k</code>，那么<code>A[i]-A[quque[n-1]]&gt;=k</code>一定成立</p>
+<p>那么<code>A[j]-A[i]&gt;=k</code>的前提下，<code>A[j]-A[i-m]=A[j]-A[i]+(A[i]-A[m])&gt;=k，m大于0</code>便不成立，</p>
+<p>即，<code>A[j]-A[m]&lt;k,但是A[j]-A[i]&gt;=k,其中i&gt;m</code>，但在上诉代码中，其<code>m</code>下标可能因为<code>A[j]-A[m]&lt;k</code>而不会被退出，进而无法遍历到<code>A[j]-A[i]</code></p>
+<p>那么，我们可以通过改变<code>queue</code>中的下标，使其拥有的<code>A[i]-A[queue[n]]&gt;=k</code>，那么<code>A[i]-A[quque[n-1]]&gt;=k</code>一定成立，即<code>i</code>与<code>queue</code>中相减的每一段一定为正数</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
     <span class="token comment">// 确保A[i]-A[queue[n]]&gt;=k时，A[i]-A[quque[n-1]]&gt;=k成立，</span>
     <span class="token comment">// 即 A[queue[n]]-A[queue[n-1]]&gt;0</span>
