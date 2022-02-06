@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="乘积小于K的子数组, 面条二两">
+    <meta name="keywords" content="二叉树转双向链表, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>乘积小于K的子数组 | Noodles2hg的博客</title>
+    <title>二叉树转双向链表 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">乘积小于K的子数组</h1>
+                    <h1 class="description center-align post-title">二叉树转双向链表</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                                <span class="chip bg-color">滑动窗口</span>
+                            <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                                <span class="chip bg-color">二叉树</span>
                             </a>
                         
                     </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-02
+                    2022-02-06
                 </div>
                 
 
@@ -484,44 +484,94 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<h4 id="剑指-Offer-II-009-乘积小于-K-的子数组"><a href="#剑指-Offer-II-009-乘积小于-K-的子数组" class="headerlink" title="剑指 Offer II 009. 乘积小于 K 的子数组"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ZVAVXX/">剑指 Offer II 009. 乘积小于 K 的子数组</a></h4><p>给定一个正整数数组 <code>nums</code>和整数 <code>k</code> ，请找出该数组内乘积小于 <code>k</code> 的连续的子数组的个数。</p>
-<p><strong>示例 1:</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">输入: nums = [10,5,2,6], k = 100
-输出: 8
-解释: 8 个乘积小于 100 的子数组分别为: [10], [5], [2], [6], [10,5], [5,2], [2,6], [5,2,6]。
-需要注意的是 [10,5,2] 并不是乘积小于100的子数组。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</blockquote>
-<p>分析：</p>
-<p>首先，题目要求的为<strong>连续</strong>子数组，也就是说如例一的<code>[10,2]</code>这种不满足要求</p>
-<p>既然为连续，那么首先便考虑到了滑动窗口的做法：</p>
-<p>令<code>l</code>为左边界下标，<code>r</code>为右边界下标</p>
-<ul>
-<li><code>l=0,r=0</code>，当前窗口<code>[10]</code>，乘积为10，满足，符合的子数组:<code>[10]</code></li>
-<li><code>l=0,r=1</code>，当前窗口<code>[10,5]</code>，乘积为50，满足，符合的子数组：<code>[10],[10,5],[5]</code></li>
-<li><code>l=0,r=2</code>，当前窗口<code>[10,5,2]</code>，乘积为100，不满足，<code>l++</code></li>
-<li><code>l=1,r=2</code>，当前窗口<code>[5,2]</code>，乘积为10，满足，符合的子数组：<code>[10],[10,5],[5],[5,2],[2]</code></li>
-<li><code>l=1,r=3</code>，当前窗口<code>[5,2,6]</code>，乘积为60，满足，符合的子数组：<code>[10],[10,5],[5],[5,2],[2],[5,2,6],[2,6],[6]</code></li>
-</ul>
-<p>进而，我们发现，每次满足时，新增的子数组个数为<code>r-l+1</code>，即包含新增的<code>nums[r]</code>的子集</p>
-<p>代码实现：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">numSubarrayProductLessThanK</span><span class="token punctuation">(</span>nums <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
-    res<span class="token operator">:=</span><span class="token number">0</span>
-    n<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span>
-    l<span class="token operator">:=</span><span class="token number">0</span>
-    now<span class="token operator">:=</span><span class="token number">1</span>
-    <span class="token keyword">for</span> r<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>r<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>r<span class="token operator">++</span><span class="token punctuation">{</span>
-        now<span class="token operator">*=</span>nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span>
-        <span class="token keyword">for</span> l<span class="token operator">&lt;</span>r<span class="token operator">&amp;&amp;</span>now<span class="token operator">&gt;=</span>k<span class="token punctuation">{</span>
-            now<span class="token operator">/=</span>nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span>
-            l<span class="token operator">++</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">if</span> r<span class="token operator">&gt;=</span>l<span class="token operator">&amp;&amp;</span>now<span class="token operator">&lt;</span>k<span class="token punctuation">{</span>
-            res<span class="token operator">+=</span>r<span class="token operator">-</span>l<span class="token operator">+</span><span class="token number">1</span>
-        <span class="token punctuation">}</span>
+<h4 id="剑指-Offer-36-二叉搜索树与双向链表"><a href="#剑指-Offer-36-二叉搜索树与双向链表" class="headerlink" title="剑指 Offer 36. 二叉搜索树与双向链表"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/">剑指 Offer 36. 二叉搜索树与双向链表</a></h4><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。</p>
+<p>如：</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">		4
+	|		|
+	2		5
+|		|
+1		3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> res
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就需要依照中序遍历的结果的双向链表</p>
+<pre class="line-numbers language-none"><code class="language-none">1 2 3 4 5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<p>分析，对于一棵二叉树的更改，很明显我们需要对其所有节点进行遍历，这里采用深度优先</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">dfs</span><span class="token punctuation">(</span>n <span class="token operator">*</span>Node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span> n<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">{</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>n<span class="token punctuation">.</span>Left<span class="token punctuation">)</span>
+    <span class="token comment">// 当前n</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>n<span class="token punctuation">.</span>Right<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>那么，如果我们能记录当前n的遍历的前一个点，令其为<code>pre</code></p>
+<p>执行如下操作</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 这里不考虑左右节点，直接进行更改</span>
+pre<span class="token punctuation">.</span>Right<span class="token operator">=</span>n
+n<span class="token punctuation">.</span>Left<span class="token operator">=</span>pre
+pre<span class="token operator">=</span>n<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>那么自然就成为了双向链表</p>
+<p>代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	t<span class="token operator">:=</span> <span class="token function">CreateTree</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+	link <span class="token operator">:=</span> <span class="token function">TreeToLink</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+	<span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">5</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span>link<span class="token punctuation">.</span>Val<span class="token punctuation">)</span>
+		link<span class="token operator">=</span>link<span class="token punctuation">.</span>Right
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> Node <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	Val   <span class="token builtin">int</span>
+	Left  <span class="token operator">*</span>Node
+	Right <span class="token operator">*</span>Node
+<span class="token punctuation">}</span>
+<span class="token comment">// 层序遍历构建树</span>
+<span class="token keyword">func</span> <span class="token function">CreateTree</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">*</span>Node <span class="token punctuation">{</span>
+	ns <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Node<span class="token punctuation">{</span><span class="token punctuation">}</span>
+	<span class="token keyword">for</span> i<span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> arr <span class="token punctuation">{</span>
+		n <span class="token operator">:=</span> <span class="token operator">&amp;</span>Node<span class="token punctuation">{</span>Val<span class="token punctuation">:</span> v<span class="token punctuation">}</span>
+		ns <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>ns<span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> i <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+			f <span class="token operator">:=</span> ns<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span>
+			<span class="token keyword">if</span> i<span class="token operator">&amp;</span><span class="token number">1</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">{</span>
+				f<span class="token punctuation">.</span>Left <span class="token operator">=</span> n
+			<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+				f<span class="token punctuation">.</span>Right <span class="token operator">=</span> n
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> ns<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">TreeToLink</span><span class="token punctuation">(</span>root <span class="token operator">*</span>Node<span class="token punctuation">)</span> <span class="token operator">*</span>Node <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> pre<span class="token punctuation">,</span>l <span class="token operator">*</span>Node
+
+	<span class="token keyword">var</span> dfs <span class="token keyword">func</span><span class="token punctuation">(</span>n <span class="token operator">*</span>Node<span class="token punctuation">)</span>
+	dfs<span class="token operator">=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>n <span class="token operator">*</span>Node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> n<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">{</span>
+			<span class="token keyword">return</span>
+		<span class="token punctuation">}</span>
+		<span class="token function">dfs</span><span class="token punctuation">(</span>n<span class="token punctuation">.</span>Left<span class="token punctuation">)</span>
+		n<span class="token punctuation">.</span>Left<span class="token operator">=</span>pre
+		<span class="token keyword">if</span> pre<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">{</span>
+			l<span class="token operator">=</span>n
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			pre<span class="token punctuation">.</span>Right<span class="token operator">=</span>n
+		<span class="token punctuation">}</span>
+		n<span class="token punctuation">.</span>Left<span class="token operator">=</span>pre
+		pre<span class="token operator">=</span>n
+		<span class="token function">dfs</span><span class="token punctuation">(</span>n<span class="token punctuation">.</span>Right<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span>
+    <span class="token comment">// t</span>
+	root<span class="token punctuation">.</span>Left<span class="token operator">=</span>pre
+	pre<span class="token punctuation">.</span>Right<span class="token operator">=</span>root
+	<span class="token keyword">return</span> l
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -549,7 +599,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/">https://github.com/z-anshun/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/</a>
+                    <a href="https://github.com/z-anshun/2022/02/06/er-cha-shu-zhuan-shuang-xiang-lian-biao/">https://github.com/z-anshun/2022/02/06/er-cha-shu-zhuan-shuang-xiang-lian-biao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -587,8 +637,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                                    <span class="chip bg-color">滑动窗口</span>
+                                <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                                    <span class="chip bg-color">二叉树</span>
                                 </a>
                             
                         </div>
@@ -634,9 +684,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/06/er-cha-shu-zhuan-shuang-xiang-lian-biao/">
                     <div class="card-image">
@@ -654,9 +705,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-06
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -669,6 +720,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -687,13 +739,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/01/huan-cun-chuan-tou-xue-beng-ji-chuan/">
+                <a href="/2022/02/02/cheng-ji-xiao-yu-k-de-zi-shu-zu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="缓存穿透、雪崩、击穿">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="乘积小于K的子数组">
                         
-                        <span class="card-title">缓存穿透、雪崩、击穿</span>
+                        <span class="card-title">乘积小于K的子数组</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -704,14 +756,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -721,8 +773,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
+                        <span class="chip bg-color">滑动窗口</span>
                     </a>
                     
                 </div>
