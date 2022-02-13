@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="拥塞控制协议, 面条二两">
+    <meta name="keywords" content="部分排序, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>拥塞控制协议 | Noodles2hg的博客</title>
+    <title>部分排序 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">拥塞控制协议</h1>
+                    <h1 class="description center-align post-title">部分排序</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%A1%E7%BD%91/">
-                                <span class="chip bg-color">计网</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -446,8 +446,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                面经
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
                             </a>
                         
                     </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-07
+                    2022-02-13
                 </div>
                 
 
@@ -483,98 +483,59 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><blockquote>
-<p>什么是流量控制？目的？</p>
-</blockquote>
-<p>发送者发送的数据过快，接受者来不及接受，那么就会有分组丢失的情况。为了避免这种情况，我们就需要控制发送者的速度，使接收方能及时接收。其目的是防止分组丢失，控制TCP的可靠性的一方面</p>
-<blockquote>
-<p>如何实现？</p>
-</blockquote>
-<p>可以使用滑动窗口协议（连续ARQ协议）实现。既保证了分组无差错、有序接收，也实现了流量控制。</p>
-<p>主要方式为接收方返回的ACK中会包含自己的接收窗口的大小，并利用大小来控制发送方的数据发送</p>
-<blockquote>
-<p>为啥会引发死锁？怎么避免？</p>
-</blockquote>
-<p>若发送者收到了一个窗口为0的应答，那么发送者就会停止发送，等待接收者的下一个应答。但是如果这个窗口不为0的应答在<strong>传输过程丢失</strong>，发送者一直等待下去，而接收者以为发送者已经收到该应答，等待接收新数据，这样双方就相互等待，从而产生死锁</p>
-<p>TCP使用了<strong>持续计数器</strong>。每当发送者收到一个零窗口的应答后就启动该计时器。时间一到便主动发送报文询问接收者的窗口大小。若接收者仍然返回零窗口，则重置该计时器继续等待；若窗口不为0，则表示应答报文丢失了，此时重置发送窗口后开始发送，这样就避免了死锁的产生（类似于心跳包）</p>
-<h2 id="拥塞控制和流量控制的区别"><a href="#拥塞控制和流量控制的区别" class="headerlink" title="拥塞控制和流量控制的区别"></a>拥塞控制和流量控制的区别</h2><ul>
-<li><p>拥塞控制：</p>
-<p>作用于网络，防止过多的数据注入到网络中，避免出现网络负载过大的情况。常见做法为：</p>
-<ul>
-<li>慢开始、拥塞避免</li>
-<li>快重传、快恢复</li>
-</ul>
-</li>
-<li><p>流量控制：</p>
-<p>作用于接收者，控制发送者的发送速度，从而使接收者来得及接收，防止分组的丢失</p>
-</li>
-</ul>
-<h2 id="拥塞控制的算法"><a href="#拥塞控制的算法" class="headerlink" title="拥塞控制的算法"></a>拥塞控制的算法</h2><p>假设：</p>
-<p>1、数据是<strong>单方向传递</strong>，另一个窗口只发送确认；</p>
-<p>2、<strong>接收方的缓存足够大</strong>，因此发送方的大小的大小<strong>由网络的拥塞程度来决定</strong></p>
-<h3 id="慢开始算法"><a href="#慢开始算法" class="headerlink" title="慢开始算法"></a>慢开始算法</h3><p>发送方维持一个叫做拥塞窗口cwnd（congestion window）的<strong>状态变量</strong>。其变量大小取决于网络的拥塞程度，并动态的在变化。发送方让自己的发送窗口等于拥塞窗口，另外考虑到接受方的接收能力，发送窗口可能小于拥塞窗口</p>
-<blockquote>
-<p>为啥叫慢开始？</p>
-</blockquote>
-<p>因为一开始不会发送大量的数据，而是先探测网络的拥塞程度，也就是由小到大逐渐增加拥塞窗口的大小</p>
-<p>这里用报文段的个数作为拥塞窗口的大小举例说明慢开始算法，实际的拥塞窗口大小是<strong>以字节为单位</strong>的。如下图：</p>
-<img src="https://s2.loli.net/2022/02/07/4wo1uAjTql9J6r3.png" alt="image-20211121225747348" style="zoom:67%;">
+                <blockquote>
+<p>题目：</p>
+<h4 id="面试题-16-16-部分排序"><a href="#面试题-16-16-部分排序" class="headerlink" title="面试题 16.16. 部分排序"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sub-sort-lcci/">面试题 16.16. 部分排序</a></h4><p>给定一个整数数组，编写一个函数，找出索引<code>m</code>和<code>n</code>，只要将索引区间<code>[m,n]</code>的元素排好序，整个数组就是有序的。注意：<code>n-m</code>尽量最小，也就是说，找出符合条件的最短序列。函数返回值为<code>[m,n]</code>，若不存在这样的<code>m</code>和<code>n</code>（例如整个数组是有序的），请返回<code>[-1,-1]</code>。</p>
+<p><strong>示例：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">输入： [1,2,4,7,10,11,7,12,6,7,16,18,19]
+输出： [3,9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>发送方每收到一个ack就把cwnd+1，</p>
-<p>另外一个传输轮次所经历的时间其实就是往返时间RTT，且每经过一次传输轮次（transmission round），拥塞窗口cwnd就加倍</p>
-<p>当然，cwnd不会无限增长，还需设置一个慢开始门限ssthresh状态变量。</p>
+<p><strong>提示：</strong></p>
 <ul>
-<li>当cwnd&gt;ssthresh时，改为<strong>拥塞避免算法</strong></li>
-<li>当cwnd=ssthresh时，慢开始与拥塞避免算法任意</li>
+<li><code>0 &lt;= len(array) &lt;= 1000000</code></li>
 </ul>
-<p>注意，这里的“慢”并不是指cwnd的增长速率慢，而是指在TCP开始发送报文段时先设置cwnd=1，然后逐渐增大，这当然比按照大的cwnd一下子把许多报文段突然注入到网络中要“慢得多”</p>
-<h3 id="拥塞避免算法"><a href="#拥塞避免算法" class="headerlink" title="拥塞避免算法"></a>拥塞避免算法</h3><p>当拥塞窗口大于等设置的拥塞门限时，就需要使用该算法，</p>
-<p>让拥塞窗口缓慢增长，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1（原来为每个ACK），而不是加倍。这样拥塞窗口按线性规律缓慢增长</p>
-<blockquote>
-<p>什么是拥塞？发送了拥塞咋办？为什么怎么做？</p>
 </blockquote>
-<p>拥塞：<strong>没有按时收到确认</strong>，虽然没有收到确认可能是其他原因的分组丢失，但是因为无法判定，所以都当做拥塞来处理</p>
-<p>解决：无论时慢开始阶段，还是拥塞避免阶段。只要发生了拥塞</p>
-<ol>
-<li>慢开始门限ssthresh设置为出现拥塞时的发送窗口大小的一半（但不能小于2）</li>
-<li>把拥塞窗口cwnd设置为1</li>
-<li>再次执行慢开始算法</li>
-</ol>
-<p>目的：迅速减少主机发送到网络中的分组数，使得发生拥塞的路由器<strong>有足够时间</strong>把队列中积压的分组<strong>处理完毕</strong></p>
-<p><img src="https://i.loli.net/2021/11/21/bThwFu6pjtHfGSz.png" alt="image-20211121231741733"></p>
-<ol>
-<li>拥塞窗口cwnd初始化为1个报文段，慢开始门限初始值为16</li>
-<li>执行慢开始算法，指数规律增长到第4轮，即cwnd=16=ssthresh，改为执行拥塞避免算法，拥塞窗口按线性规律增长</li>
-<li>假定cwnd=24时，网络出现超时（拥塞），则更新后的ssthresh=12，cwnd重新设置为1，并执行慢开始算法。当cwnd=12=ssthresh时，改为执行拥塞避免算法</li>
-</ol>
-<p>乘法减小（Multiplicative Decrease）：无论是在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞，就把慢开始门限ssthresh设置为出现拥塞时的发送窗口大小的一半，并执行慢开始算法，所以当网络频繁出现拥塞时，ssthresh下降的很快，以大大减少注入到网络中的分组数</p>
-<p>加法增大（Additive Increase）：执行拥塞避免算法后，使拥塞窗口缓慢增大，以防止过早出现拥塞</p>
-<p>所以避免拥塞算法也叫AIMD算法</p>
-<blockquote>
-<p>注意：“拥塞避免”并非完全能够避免了阻塞，而是使网络比较不容易出现拥塞</p>
-</blockquote>
-<h3 id="快重传算法"><a href="#快重传算法" class="headerlink" title="快重传算法"></a>快重传算法</h3><p>快重传要求接收方在收到一个失序的报文段后就立即发出重复确认（为的是使发送方及早知道有报文段没有到达对方，可提高网络吞吐量约20%）而不要等到自己发送数据时捎带确认。快重传算法规定，<strong>发送方只要一连收到三个重复确认</strong>就应当<strong>立即重传对方尚未收到的报文段</strong>，而不必继续等待设置的重传计时器时间到期</p>
-<pre class="line-numbers language-tex" data-language="tex"><code class="language-tex">b		s
-m1 -&gt;	
-	&lt;- ack m1
-      m2 -&gt;   
-          &lt;- ack m2
-      m3 -&gt;
-      m4 -&gt;
-      	&lt;- m3丢失
-      m5 -&gt;
-      	&lt;- m3丢失
-      m6 -&gt;
-      	&lt;- m3丢失
-      m3 -&gt;	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<p>很明显，对于<code>array[m+1:]</code>，存在一个比<code>array[m]</code>小的数，对于<code>array[:n]</code>，存在一个比<code>array[n]</code>大的数</p>
+<p>那我们先来看<code>n</code>，假设左边最大的数为<code>max</code>，那么<code>array[n+1]</code>一定大于<code>max</code>，也就是说，我们需要在从左往右遍历，在遍历过程中记录当前最大的值，如果当前比它小，那么这就是<code>n</code>的值，代码如下：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">max<span class="token operator">:=</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token function">len</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;</span>max<span class="token punctuation">{</span>
+        <span class="token comment">// 该值比当前max小，为右边界</span>
+        n<span class="token operator">=</span>i
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        <span class="token comment">// 记录当前最大</span>
+        max<span class="token operator">=</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="快恢复算法"><a href="#快恢复算法" class="headerlink" title="快恢复算法"></a>快恢复算法</h3><p>快重传配合使用的还有快恢复算法</p>
-<ul>
-<li>当发送方连续收到三个重复确认时，就执行“乘法减小”算法，把cwnd减半,并赋值给ssthresh门限（为了预防网络发生拥塞）</li>
-<li>后面并不执行慢开始算法，而是执行执行拥塞避免算法，使cwnd缓慢增大</li>
-</ul>
-<p><img src="https://i.loli.net/2021/11/21/lAOpmr8oaug1nW4.png" alt="image-20211121233111683"></p>
-<p>注意：采用了快恢复算法后，慢开始算法只会在建立TCP连接和网络超时的时候出现          </p>
+<p><code>m</code>的寻找类似，只需从右往左找到一个比当前最小值<code>min</code>大的，那就是<code>m</code></p>
+<p>代码实现：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">subSort</span><span class="token punctuation">(</span>array <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">{</span>
+    n<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> n<span class="token operator">&lt;=</span><span class="token number">1</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    l<span class="token operator">:=</span><span class="token operator">-</span><span class="token number">1</span>
+    r<span class="token operator">:=</span><span class="token operator">-</span><span class="token number">1</span>
+    max<span class="token operator">:=</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    min<span class="token operator">:=</span>array<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;</span>ll<span class="token punctuation">{</span>
+           r<span class="token operator">=</span>i
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            max<span class="token operator">=</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+        end<span class="token operator">:=</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i
+        <span class="token keyword">if</span> array<span class="token punctuation">[</span>end<span class="token punctuation">]</span><span class="token operator">&gt;</span>rr<span class="token punctuation">{</span>
+            l<span class="token operator">=</span>end
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            m<span class="token operator">=</span>array<span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span>l<span class="token punctuation">,</span>r<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -601,7 +562,7 @@ m1 -&gt;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/07/yong-sai-kong-zhi-xie-yi/">https://github.com/z-anshun/2022/02/07/yong-sai-kong-zhi-xie-yi/</a>
+                    <a href="https://github.com/z-anshun/2022/02/13/bu-fen-pai-xu/">https://github.com/z-anshun/2022/02/13/bu-fen-pai-xu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -639,8 +600,8 @@ m1 -&gt;
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%A1%E7%BD%91/">
-                                    <span class="chip bg-color">计网</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -686,9 +647,10 @@ m1 -&gt;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/13/bu-fen-pai-xu/">
                     <div class="card-image">
@@ -706,9 +668,9 @@ m1 -&gt;
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -721,6 +683,7 @@ m1 -&gt;
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -739,13 +702,13 @@ m1 -&gt;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/06/er-cha-shu-zhuan-shuang-xiang-lian-biao/">
+                <a href="/2022/02/07/yong-sai-kong-zhi-xie-yi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="二叉树转双向链表">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="拥塞控制协议">
                         
-                        <span class="card-title">二叉树转双向链表</span>
+                        <span class="card-title">拥塞控制协议</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -756,14 +719,14 @@ m1 -&gt;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                    面经
                                 </a>
                             
                             
@@ -773,8 +736,8 @@ m1 -&gt;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                        <span class="chip bg-color">二叉树</span>
+                    <a href="/tags/%E8%AE%A1%E7%BD%91/">
+                        <span class="chip bg-color">计网</span>
                     </a>
                     
                 </div>
