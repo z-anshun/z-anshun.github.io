@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="部分排序, 面条二两">
+    <meta name="keywords" content="SQL注入, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>部分排序 | Noodles2hg的博客</title>
+    <title>SQL注入 | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">部分排序</h1>
+                    <h1 class="description center-align post-title">SQL注入</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
+                                <span class="chip bg-color">SQL注入</span>
                             </a>
                         
                     </div>
@@ -446,8 +446,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/%E5%AE%89%E5%85%A8/" class="post-category">
+                                安全
                             </a>
                         
                     </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-13
+                    2022-02-20
                 </div>
                 
 
@@ -483,59 +483,81 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>题目：</p>
-<h4 id="面试题-16-16-部分排序"><a href="#面试题-16-16-部分排序" class="headerlink" title="面试题 16.16. 部分排序"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sub-sort-lcci/">面试题 16.16. 部分排序</a></h4><p>给定一个整数数组，编写一个函数，找出索引<code>m</code>和<code>n</code>，只要将索引区间<code>[m,n]</code>的元素排好序，整个数组就是有序的。注意：<code>n-m</code>尽量最小，也就是说，找出符合条件的最短序列。函数返回值为<code>[m,n]</code>，若不存在这样的<code>m</code>和<code>n</code>（例如整个数组是有序的），请返回<code>[-1,-1]</code>。</p>
-<p><strong>示例：</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">输入： [1,2,4,7,10,11,7,12,6,7,16,18,19]
-输出： [3,9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>0 &lt;= len(array) &lt;= 1000000</code></li>
-</ul>
+                <h1 id="什么是SQL注入"><a href="#什么是SQL注入" class="headerlink" title="什么是SQL注入"></a>什么是SQL注入</h1><p>SQL注入攻击（SQL Injection），简称注入攻击，是Web开发中最常见的一种安全漏洞</p>
+<blockquote>
+<p>有什么危害？</p>
 </blockquote>
-<p>分析：</p>
-<p>很明显，对于<code>array[m+1:]</code>，存在一个比<code>array[m]</code>小的数，对于<code>array[:n]</code>，存在一个比<code>array[n]</code>大的数</p>
-<p>那我们先来看<code>n</code>，假设左边最大的数为<code>max</code>，那么<code>array[n+1]</code>一定大于<code>max</code>，也就是说，我们需要在从左往右遍历，在遍历过程中记录当前最大的值，如果当前比它小，那么这就是<code>n</code>的值，代码如下：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">max<span class="token operator">:=</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token function">len</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
-    <span class="token keyword">if</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;</span>max<span class="token punctuation">{</span>
-        <span class="token comment">// 该值比当前max小，为右边界</span>
-        n<span class="token operator">=</span>i
-    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-        <span class="token comment">// 记录当前最大</span>
-        max<span class="token operator">=</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以用它来从数据库获取敏感信息，或者利用数据库的特性执行添加用户，导出文件等一系列恶意操作，甚至有可能获取数据库乃至系统用户最高权限</p>
+<blockquote>
+<p>为什么会造成？</p>
+</blockquote>
+<p>程序没有有效过滤用户的输入，使攻击者成功的向服务器提交<strong>恶意的SQL查询代码</strong>，程序在接收后错误的将攻击者的输入<strong>作为查询语句的一部分执行</strong>，导致原始的查询逻辑被改变，额外的执行了攻击者精心构造的恶意代码</p>
+<p>换句话说，就是将用户输入的语句，直接作为了执行语句的一部分</p>
+<h1 id="注入实例"><a href="#注入实例" class="headerlink" title="注入实例"></a>注入实例</h1><p>假设，我们的SQL处理如下：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">username<span class="token operator">:=</span>r<span class="token punctuation">.</span>Form<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span>
+password<span class="token operator">:=</span>r<span class="token punctuation">.</span>Form<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">)</span>
+sql<span class="token operator">:=</span><span class="token string">"SELECT * FROM user WHERE username='"</span><span class="token operator">+</span>username<span class="token operator">+</span><span class="token string">"' AND password='"</span><span class="token operator">+</span>password<span class="token operator">+</span><span class="token string">"'"</span>
+Db<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><code>m</code>的寻找类似，只需从右往左找到一个比当前最小值<code>min</code>大的，那就是<code>m</code></p>
-<p>代码实现：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">subSort</span><span class="token punctuation">(</span>array <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">{</span>
-    n<span class="token operator">:=</span><span class="token function">len</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> n<span class="token operator">&lt;=</span><span class="token number">1</span><span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    l<span class="token operator">:=</span><span class="token operator">-</span><span class="token number">1</span>
-    r<span class="token operator">:=</span><span class="token operator">-</span><span class="token number">1</span>
-    max<span class="token operator">:=</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-    min<span class="token operator">:=</span>array<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-    <span class="token keyword">for</span> i<span class="token operator">:=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;</span>ll<span class="token punctuation">{</span>
-           r<span class="token operator">=</span>i
-        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-            max<span class="token operator">=</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token punctuation">}</span>
-        end<span class="token operator">:=</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i
-        <span class="token keyword">if</span> array<span class="token punctuation">[</span>end<span class="token punctuation">]</span><span class="token operator">&gt;</span>rr<span class="token punctuation">{</span>
-            l<span class="token operator">=</span>end
-        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-            m<span class="token operator">=</span>array<span class="token punctuation">[</span>end<span class="token punctuation">]</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span>l<span class="token punctuation">,</span>r<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>那么，如果用户输入的用户名为<code>myuser' or 'foo' = 'foo' --</code></p>
+<p>然后，我们的SQL语句就变成了如下：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">user</span> <span class="token keyword">WHERE</span> username<span class="token operator">=</span><span class="token string">'myuser'</span> <span class="token operator">or</span> <span class="token string">'foo'</span> <span class="token operator">=</span> <span class="token string">'foo'</span> <span class="token comment">--'' AND password='xxx'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p>也就是，我们的SQL语句，很有可能变成我们预料的执行，甚至创建用户、直接获取表单等</p>
+<h1 id="如何预防"><a href="#如何预防" class="headerlink" title="如何预防"></a>如何预防</h1><ol>
+<li><p>限制Web应用对数据库操作的权限</p>
+</li>
+<li><p>检查输入的数据是否具有所期望的数据格式，严格限制变量的类型，例如使用regexp包进行一些匹配处理，或者使用strconv包对字符串转化成其他基本类型的数据进行判断（如：int类型的转换）</p>
+<p>如：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 正则过滤sql注入的方法</span>
+<span class="token comment">// 参数 : 要匹配的语句</span>
+<span class="token keyword">func</span> <span class="token function">FilteredSQLInject</span><span class="token punctuation">(</span>to_match_str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+	<span class="token comment">//过滤 ‘</span>
+	<span class="token comment">//ORACLE 注解 --  /**/</span>
+	<span class="token comment">//关键字过滤 update ,delete</span>
+	<span class="token comment">// 正则的字符串, 不能用 " " 因为" "里面的内容会转义</span>
+	str <span class="token operator">:=</span> <span class="token string">`(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|and|or|delete|insert|trancate|char|chr|into|substr|ascii|declare|exec|count|master|into|drop|execute)\b)`</span>
+	re<span class="token punctuation">,</span> err <span class="token operator">:=</span> regexp<span class="token punctuation">.</span><span class="token function">Compile</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span><span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> re<span class="token punctuation">.</span><span class="token function">MatchString</span><span class="token punctuation">(</span>to_match_str<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>对进入数据库的特殊字符（’”\尖括号&amp;*;等）进行转义处理，或编码转换。Go 的<code>text/template</code>包里面的<code>HTMLEscapeString</code>函数可以对字符串进行转义处理</p>
+</li>
+<li><p>所有的查询语句建议使用数据库提供的参数化查询接口，参数化的语句<strong>使用参数</strong>而不是将用户输入变量嵌入到SQL语句中，即不要直接拼接SQL语句。例如使用<code>database/sql</code>里面的查询函数<code>Prepare</code>和<code>Query</code>，或者<code>Exec(query string, args ...interface{})</code></p>
+</li>
+<li><p>在应用发布之前建议使用专业的SQL注入检测工具进行检测，以及时修补被发现的SQL注入漏洞。网上有很多这方面的开源工具，例如sqlmap、SQLninja等</p>
+</li>
+<li><p>避免直接打印SQL的错误信息</p>
+</li>
+</ol>
+<h1 id="GORM-是如何避免的"><a href="#GORM-是如何避免的" class="headerlink" title="GORM 是如何避免的"></a>GORM 是如何避免的</h1><p>首先，GROM是对预处理进行了封装，所有个别查询可以使用到，但个别却没有，如：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">userInput :<span class="token operator">=</span> <span class="token string">"jinzhu;drop table users;"</span>
+
+<span class="token comment">// 安全的，会被转义</span>
+db<span class="token punctuation">.</span><span class="token keyword">Where</span><span class="token punctuation">(</span><span class="token string">"name = ?"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">)</span>
+
+<span class="token comment">// SQL 注入</span>
+db<span class="token punctuation">.</span><span class="token keyword">Where</span><span class="token punctuation">(</span>fmt<span class="token punctuation">.</span>Sprintf<span class="token punctuation">(</span><span class="token string">"name = %v"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 会被转义</span>
+db<span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">,</span> <span class="token string">"name = ?"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span>
+
+<span class="token comment">// SQL 注入</span>
+db<span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">,</span> fmt<span class="token punctuation">.</span>Sprintf<span class="token punctuation">(</span><span class="token string">"name = %v"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>很明显，应该尽量将用户的输入当作参数输入，而不是直接进行语SQL语言的拼接</p>
+<blockquote>
+<p>注意：GORM 打印的 SQL 日志并不像最终执行的 SQL 那样已经转义，复制和运行这些 SQL 时应当注意</p>
+</blockquote>
 
                 
             </div>
@@ -562,7 +584,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/13/bu-fen-pai-xu/">https://github.com/z-anshun/2022/02/13/bu-fen-pai-xu/</a>
+                    <a href="https://github.com/z-anshun/2022/02/20/sql-zhu-ru/">https://github.com/z-anshun/2022/02/20/sql-zhu-ru/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -600,8 +622,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
+                                    <span class="chip bg-color">SQL注入</span>
                                 </a>
                             
                         </div>
@@ -647,9 +669,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/20/sql-zhu-ru/">
                     <div class="card-image">
@@ -667,9 +690,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-20
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -682,6 +705,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -700,13 +724,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/07/yong-sai-kong-zhi-xie-yi/">
+                <a href="/2022/02/13/bu-fen-pai-xu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="拥塞控制协议">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="部分排序">
                         
-                        <span class="card-title">拥塞控制协议</span>
+                        <span class="card-title">部分排序</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -717,14 +741,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -734,8 +758,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E7%BD%91/">
-                        <span class="chip bg-color">计网</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
