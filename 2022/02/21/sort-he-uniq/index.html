@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SQL注入, 面条二两">
+    <meta name="keywords" content="sort, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SQL注入 | Noodles2hg的博客</title>
+    <title>sort | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SQL注入</h1>
+                    <h1 class="description center-align post-title">sort</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +434,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
-                                <span class="chip bg-color">SQL注入</span>
+                            <a href="/tags/%E6%AF%8F%E6%97%A5%E5%91%BD%E4%BB%A4/">
+                                <span class="chip bg-color">每日命令</span>
                             </a>
                         
                     </div>
@@ -446,8 +446,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%AE%89%E5%85%A8/" class="post-category">
-                                安全
+                            <a href="/categories/Linux/" class="post-category">
+                                Linux
                             </a>
                         
                     </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-20
+                    2022-02-21
                 </div>
                 
 
@@ -483,81 +483,154 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="什么是SQL注入"><a href="#什么是SQL注入" class="headerlink" title="什么是SQL注入"></a>什么是SQL注入</h1><p>SQL注入攻击（SQL Injection），简称注入攻击，是Web开发中最常见的一种安全漏洞</p>
-<blockquote>
-<p>有什么危害？</p>
-</blockquote>
-<p>可以用它来从数据库获取敏感信息，或者利用数据库的特性执行添加用户，导出文件等一系列恶意操作，甚至有可能获取数据库乃至系统用户最高权限</p>
-<blockquote>
-<p>为什么会造成？</p>
-</blockquote>
-<p>程序没有有效过滤用户的输入，使攻击者成功的向服务器提交<strong>恶意的SQL查询代码</strong>，程序在接收后错误的将攻击者的输入<strong>作为查询语句的一部分执行</strong>，导致原始的查询逻辑被改变，额外的执行了攻击者精心构造的恶意代码</p>
-<p>换句话说，就是将用户输入的语句，直接作为了执行语句的一部分</p>
-<h1 id="注入实例"><a href="#注入实例" class="headerlink" title="注入实例"></a>注入实例</h1><p>假设，我们的SQL处理如下：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">username<span class="token operator">:=</span>r<span class="token punctuation">.</span>Form<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span>
-password<span class="token operator">:=</span>r<span class="token punctuation">.</span>Form<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">)</span>
-sql<span class="token operator">:=</span><span class="token string">"SELECT * FROM user WHERE username='"</span><span class="token operator">+</span>username<span class="token operator">+</span><span class="token string">"' AND password='"</span><span class="token operator">+</span>password<span class="token operator">+</span><span class="token string">"'"</span>
-Db<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><p>对文本文件中所以进行排序，并将排序结果标准输出。</p>
+<p>既可从指定文件输入，也可从 stdin 中获取输入</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">sort [option]... [FILE]...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>那么，如果用户输入的用户名为<code>myuser' or 'foo' = 'foo' --</code></p>
-<p>然后，我们的SQL语句就变成了如下：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">user</span> <span class="token keyword">WHERE</span> username<span class="token operator">=</span><span class="token string">'myuser'</span> <span class="token operator">or</span> <span class="token string">'foo'</span> <span class="token operator">=</span> <span class="token string">'foo'</span> <span class="token comment">--'' AND password='xxx'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h2><ul>
+<li><code>-b</code>：忽略开头的空白</li>
+<li><code>-d</code>：仅考虑空白、字母、数字</li>
+<li><code>-f</code>：将小写字母作为大写字母考虑</li>
+<li><code>-g</code>：根据数字排序</li>
+<li><code>-i</code>：排除不可打印的字符</li>
+<li><code>-M</code>：按照非月份、一月、十二月的顺序排序</li>
+<li><code>-h</code>：根据存储容量排序（但要使用大写字母，如：2K 1G）</li>
+<li><code>-n</code>：根据数字排序</li>
+<li><code>-R</code>：随机排序</li>
+<li><code>-r</code>：将结果倒叙排序</li>
+<li><code>-m</code>：将几个排序好的文件进行合并；</li>
+<li><code>-o</code>：指定输入文件，而不是标准输出</li>
+<li><code>-k, --key=KEYDEF</code>： 通过一个key排序；KEYDEF给出位置和类型</li>
+<li><code>-t, --field-separator=SEP </code>：使用SEP作为列的分隔符</li>
+</ul>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>文件</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p><code>sort</code>将一个文件/文本的每一行作为一个单位，相互比较，比较的原则是从首字符向后，依次按照ASCII码值进行比较，最好再将其按升序排序</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">anshun@LAPTOP-F0CAKEEH:~$ cat sort.txt
+aaa:10:1.1 　　
+ccc:30:3.3 　　
+ddd:40:4.4 　　
+bbb:20:2.2 　　
+eee:50:5.5 　　
+eee:50:5.5
+anshun@LAPTOP-F0CAKEEH:~$ sort sort.txt
+aaa:10:1.1 　　
+bbb:20:2.2 　　
+ccc:30:3.3 　　
+ddd:40:4.4 　　
+eee:50:5.5
+eee:50:5.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>也就是，我们的SQL语句，很有可能变成我们预料的执行，甚至创建用户、直接获取表单等</p>
-<h1 id="如何预防"><a href="#如何预防" class="headerlink" title="如何预防"></a>如何预防</h1><ol>
-<li><p>限制Web应用对数据库操作的权限</p>
-</li>
-<li><p>检查输入的数据是否具有所期望的数据格式，严格限制变量的类型，例如使用regexp包进行一些匹配处理，或者使用strconv包对字符串转化成其他基本类型的数据进行判断（如：int类型的转换）</p>
+<p>需要忽略相同的行，使用<code>-u</code>或者使用<code>uniq</code>：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">anshun@LAPTOP-F0CAKEEH:~$ sort -u sort.txt
+aaa:10:1.1
+bbb:20:2.2
+ccc:30:3.3
+ddd:40:4.4
+eee:50:5.5
+anshun@LAPTOP-F0CAKEEH:~$ uniq sort.txt
+aaa:10:1.1
+ccc:30:3.3
+ddd:40:4.4
+bbb:20:2.2
+eee:50:5.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>sort</code>的<code>-n、-r、-k、-t</code>选项的使用：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">anshun@LAPTOP-F0CAKEEH:~$ cat sort.txt
+AAA:BB:CC
+aaa:10:1.1
+ccc:30:3.3
+ddd:40:4.4
+bbb:20:2.2
+eee:50:5.5
+eee:50:5.5
+# 将BB列按照数字从小到大顺序排列：
+# -n 按数字大小排序， -k 指定列 -t 指定分隔符
+anshun@LAPTOP-F0CAKEEH:~$ sort -nk 2 -t: sort.txt
+AAA:BB:CC
+aaa:10:1.1
+bbb:20:2.2
+ccc:30:3.3
+ddd:40:4.4
+eee:50:5.5
+eee:50:5.5
+# 将CC列数字从大到小顺序排列：
+# -n是按照数字大小排序，-r是以相反顺序，-k是指定需要排序的栏位，-t指定栏位分隔符为冒号
+anshun@LAPTOP-F0CAKEEH:~$ sort -nrk 3 -t: sort.txt
+eee:50:5.5
+eee:50:5.5
+ddd:40:4.4
+ccc:30:3.3
+bbb:20:2.2
+aaa:10:1.1
+AAA:BB:CC<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="k选项的解读"><a href="#k选项的解读" class="headerlink" title="-k选项的解读"></a>-k选项的解读</h2><pre class="line-numbers language-none"><code class="language-none">-k FStart.CStart,FEnd.CEnd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>Start</code>部分的<code>FStart</code>和<code>C.Start</code>；<code>C.Start</code>是可以省略的，<code>FEnd.CEnd</code>也一样。</p>
+<p><code>FStart.CStart</code>，其中<code>FStart</code>就是表示使用的域，而<code>CStart</code>则表示在<code>FStart</code>域中从第几个字符开始算排序首字符，<code>FEnd.CEnd</code>没有，就默认至最后一个字符</p>
 <p>如：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 正则过滤sql注入的方法</span>
-<span class="token comment">// 参数 : 要匹配的语句</span>
-<span class="token keyword">func</span> <span class="token function">FilteredSQLInject</span><span class="token punctuation">(</span>to_match_str <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
-	<span class="token comment">//过滤 ‘</span>
-	<span class="token comment">//ORACLE 注解 --  /**/</span>
-	<span class="token comment">//关键字过滤 update ,delete</span>
-	<span class="token comment">// 正则的字符串, 不能用 " " 因为" "里面的内容会转义</span>
-	str <span class="token operator">:=</span> <span class="token string">`(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|and|or|delete|insert|trancate|char|chr|into|substr|ascii|declare|exec|count|master|into|drop|execute)\b)`</span>
-	re<span class="token punctuation">,</span> err <span class="token operator">:=</span> regexp<span class="token punctuation">.</span><span class="token function">Compile</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>
-	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
-		<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span><span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> <span class="token boolean">false</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> re<span class="token punctuation">.</span><span class="token function">MatchString</span><span class="token punctuation">(</span>to_match_str<span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">#从公司英文名称的第二个字母开始排序：
+$ sort -t ' ' -k 1.2 facebook.txt
+baidu 100 5000
+sohu 100 4500
+google 110 5000
+guge 50 3000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用<code>-k 1.2</code>，表示对第一个域的第二个字符开始到本域的最后一个字符为止的字符串进行排序</p>
+<p>例子2：只针对公司英文名称的第二个字母进行排序，如果相同的按照员工工资进行降序排序：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">$ sort -t ' ' -k 1.2,1.2 -nrk 3,3 facebook.txt
+baidu 100 5000
+google 110 5000
+sohu 100 4500
+guge 50 3000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a>uniq</h1><p>显示或忽略重复的行。</p>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">uniq [OPTION]... [INPUT [OUTPUT]]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="主要用途"><a href="#主要用途" class="headerlink" title="主要用途"></a>主要用途</h2><ul>
+<li>将输入文件（或标准输入）中邻近的重复行写入到输出文件（或标准输出）中</li>
+<li>当没有选项时，邻近的重复行合并为一个</li>
+</ul>
+<h2 id="选项-1"><a href="#选项-1" class="headerlink" title="选项"></a>选项</h2><ul>
+<li><code>-c</code>：count，在每行开头增加重复次数</li>
+<li><code>-d</code>：repeated，所有邻近的重复行只被打印一次</li>
+<li><code>-D</code>：所有邻近的重复行将全部打印</li>
+<li><code>-f, --skip-fileds=N</code>：跳过对前N个列的比较</li>
+<li><code>-i</code>：忽略大小写的差异</li>
+<li><code>-s，--skip-chars=N</code>：跳过对前N个字符的比较</li>
+<li><code>-u</code>：unique，只打印非邻近的重复行</li>
+<li><code>-z</code>：设置行终止符为NUL（空），而不是换行符</li>
+<li><code>-w</code>：只对每行前N个字符进行比较</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 很明显，第一行命令，只做了相邻行的去重
+uniq file.txt
+sort file.txt | uniq
+sort -u file.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-</li>
-</ol>
-<ol start="3">
-<li><p>对进入数据库的特殊字符（’”\尖括号&amp;*;等）进行转义处理，或编码转换。Go 的<code>text/template</code>包里面的<code>HTMLEscapeString</code>函数可以对字符串进行转义处理</p>
-</li>
-<li><p>所有的查询语句建议使用数据库提供的参数化查询接口，参数化的语句<strong>使用参数</strong>而不是将用户输入变量嵌入到SQL语句中，即不要直接拼接SQL语句。例如使用<code>database/sql</code>里面的查询函数<code>Prepare</code>和<code>Query</code>，或者<code>Exec(query string, args ...interface{})</code></p>
-</li>
-<li><p>在应用发布之前建议使用专业的SQL注入检测工具进行检测，以及时修补被发现的SQL注入漏洞。网上有很多这方面的开源工具，例如sqlmap、SQLninja等</p>
-</li>
-<li><p>避免直接打印SQL的错误信息</p>
-</li>
-</ol>
-<h1 id="GORM-是如何避免的"><a href="#GORM-是如何避免的" class="headerlink" title="GORM 是如何避免的"></a>GORM 是如何避免的</h1><p>首先，GROM是对预处理进行了封装，所有个别查询可以使用到，但个别却没有，如：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">userInput :<span class="token operator">=</span> <span class="token string">"jinzhu;drop table users;"</span>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 只显示单一行
+uniq file.txt
+sort file.txt | uniq -u<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<span class="token comment">// 安全的，会被转义</span>
-db<span class="token punctuation">.</span><span class="token keyword">Where</span><span class="token punctuation">(</span><span class="token string">"name = ?"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">)</span>
 
-<span class="token comment">// SQL 注入</span>
-db<span class="token punctuation">.</span><span class="token keyword">Where</span><span class="token punctuation">(</span>fmt<span class="token punctuation">.</span>Sprintf<span class="token punctuation">(</span><span class="token string">"name = %v"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">)</span>
 
-<span class="token comment">// 会被转义</span>
-db<span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">,</span> <span class="token string">"name = ?"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 统计各行在文件中出现的次数：
+sort file.txt | uniq -c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<span class="token comment">// SQL 注入</span>
-db<span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">user</span><span class="token punctuation">,</span> fmt<span class="token punctuation">.</span>Sprintf<span class="token punctuation">(</span><span class="token string">"name = %v"</span><span class="token punctuation">,</span> userInput<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>很明显，应该尽量将用户的输入当作参数输入，而不是直接进行语SQL语言的拼接</p>
-<blockquote>
-<p>注意：GORM 打印的 SQL 日志并不像最终执行的 SQL 那样已经转义，复制和运行这些 SQL 时应当注意</p>
-</blockquote>
+
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 在文件中找出重复的行
+sort file.txt | uniq -d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<hr>
+<p><strong>利用<code>sort</code>和<code>uniq</code>求两个文件的并集，交集和差集</strong></p>
+<p>并集：<code>cat f1.txt f2.txt | sort|uniq &gt; file.txt</code></p>
+<p>交集：<code>cat f1.txt f2.txt | sort|uniq -d &gt; file.txt</code></p>
+<p>差集：这里仅举例f1.txt相对于f2.txt的差集</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat f1.txt f2.txt | sort|uniq -d &gt; tmp.txt
+cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -584,7 +657,7 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/20/sql-zhu-ru/">https://github.com/z-anshun/2022/02/20/sql-zhu-ru/</a>
+                    <a href="https://github.com/z-anshun/2022/02/21/sort-he-uniq/">https://github.com/z-anshun/2022/02/21/sort-he-uniq/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -622,8 +695,8 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
-                                    <span class="chip bg-color">SQL注入</span>
+                                <a href="/tags/%E6%AF%8F%E6%97%A5%E5%91%BD%E4%BB%A4/">
+                                    <span class="chip bg-color">每日命令</span>
                                 </a>
                             
                         </div>
@@ -669,9 +742,10 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/21/sort-he-uniq/">
                     <div class="card-image">
@@ -689,9 +763,9 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-21
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -704,6 +778,7 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -722,13 +797,13 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/13/bu-fen-pai-xu/">
+                <a href="/2022/02/20/sql-zhu-ru/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="部分排序">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="SQL注入">
                         
-                        <span class="card-title">部分排序</span>
+                        <span class="card-title">SQL注入</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -739,14 +814,14 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E5%AE%89%E5%85%A8/" class="post-category">
+                                    安全
                                 </a>
                             
                             
@@ -756,8 +831,8 @@ db<span class="token punctuation">.</span><span class="token function">First</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
+                        <span class="chip bg-color">SQL注入</span>
                     </a>
                     
                 </div>
