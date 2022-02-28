@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="sort, 面条二两">
+    <meta name="keywords" content="lsof, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>sort | Noodles2hg的博客</title>
+    <title>lsof | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">sort</h1>
+                    <h1 class="description center-align post-title">lsof</h1>
                 </div>
             </div>
         </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-21
+                    2022-02-22
                 </div>
                 
 
@@ -483,154 +483,134 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><p>对文本文件中所以进行排序，并将排序结果标准输出。</p>
-<p>既可从指定文件输入，也可从 stdin 中获取输入</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">sort [option]... [FILE]...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h1 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h1><p>list open file</p>
+<p>一个查看进程打开的文件的工具</p>
+<p>在Linux中，一切皆文件。因此，通过文件不仅可以访问常规数据，还能访问网络连接和硬件。所有<code>lsof</code>不仅可以查看进程打开的文件、目录，还能查看进程监听的端口等 socket 相关的信息</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">lsof (选项)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h2 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h2><ul>
-<li><code>-b</code>：忽略开头的空白</li>
-<li><code>-d</code>：仅考虑空白、字母、数字</li>
-<li><code>-f</code>：将小写字母作为大写字母考虑</li>
-<li><code>-g</code>：根据数字排序</li>
-<li><code>-i</code>：排除不可打印的字符</li>
-<li><code>-M</code>：按照非月份、一月、十二月的顺序排序</li>
-<li><code>-h</code>：根据存储容量排序（但要使用大写字母，如：2K 1G）</li>
-<li><code>-n</code>：根据数字排序</li>
-<li><code>-R</code>：随机排序</li>
-<li><code>-r</code>：将结果倒叙排序</li>
-<li><code>-m</code>：将几个排序好的文件进行合并；</li>
-<li><code>-o</code>：指定输入文件，而不是标准输出</li>
-<li><code>-k, --key=KEYDEF</code>： 通过一个key排序；KEYDEF给出位置和类型</li>
-<li><code>-t, --field-separator=SEP </code>：使用SEP作为列的分隔符</li>
+<li><code>-a</code>：列出打开文件所在的进程</li>
+<li><code>-c&lt;进程名&gt;</code>：列出指定进程打开的文件</li>
+<li><code>-g</code>：列出GID号进程详情</li>
+<li><code>-d&lt;文件号&gt;</code>：列出占用该文件号的进程</li>
+<li><code>+d&lt;目录&gt;</code>：列出目录下被打开的文件</li>
+<li><code>+D&lt;目录&gt;</code>：递归列出目录下被打开的文件</li>
+<li><code>-n&lt;目录&gt;</code>：列出使用NFS的文件</li>
+<li><code>-i&lt;条件&gt;</code>：列出符合条件的进程（协议、:端口、@ip）</li>
+<li><code>-p&lt;进程号&gt;</code>：列出指定进程号所打开的文件</li>
+<li><code>-u</code>：列出 UID 号进程详情</li>
 </ul>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>文件</p>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p><code>sort</code>将一个文件/文本的每一行作为一个单位，相互比较，比较的原则是从首字符向后，依次按照ASCII码值进行比较，最好再将其按升序排序</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">anshun@LAPTOP-F0CAKEEH:~$ cat sort.txt
-aaa:10:1.1 　　
-ccc:30:3.3 　　
-ddd:40:4.4 　　
-bbb:20:2.2 　　
-eee:50:5.5 　　
-eee:50:5.5
-anshun@LAPTOP-F0CAKEEH:~$ sort sort.txt
-aaa:10:1.1 　　
-bbb:20:2.2 　　
-ccc:30:3.3 　　
-ddd:40:4.4 　　
-eee:50:5.5
-eee:50:5.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lsof
+command     PID USER   FD      type             DEVICE     SIZE       NODE NAME
+init          1 root  cwd       DIR                8,2     4096          2 /
+init          1 root  rtd       DIR                8,2     4096          2 /
+init          1 root  txt       REG                8,2    43496    6121706 /sbin/init
+init          1 root  mem       REG                8,2   143600    7823908 /lib64/ld-2.5.so
+init          1 root  mem       REG                8,2  1722304    7823915 /lib64/libc-2.5.so
+init          1 root  mem       REG                8,2    23360    7823919 /lib64/libdl-2.5.so
+init          1 root  mem       REG                8,2    95464    7824116 /lib64/libselinux.so.1
+init          1 root  mem       REG                8,2   247496    7823947 /lib64/libsepol.so.1
+init          1 root   10u     FIFO               0,17                1233 /dev/initctl
+migration     2 root  cwd       DIR                8,2     4096          2 /
+migration     2 root  rtd       DIR                8,2     4096          2 /
+migration     2 root  txt   unknown                                        /proc/2/exe
+ksoftirqd     3 root  cwd       DIR                8,2     4096          2 /
+ksoftirqd     3 root  rtd       DIR                8,2     4096          2 /
+ksoftirqd     3 root  txt   unknown                                        /proc/3/exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>需要忽略相同的行，使用<code>-u</code>或者使用<code>uniq</code>：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">anshun@LAPTOP-F0CAKEEH:~$ sort -u sort.txt
-aaa:10:1.1
-bbb:20:2.2
-ccc:30:3.3
-ddd:40:4.4
-eee:50:5.5
-anshun@LAPTOP-F0CAKEEH:~$ uniq sort.txt
-aaa:10:1.1
-ccc:30:3.3
-ddd:40:4.4
-bbb:20:2.2
-eee:50:5.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>sort</code>的<code>-n、-r、-k、-t</code>选项的使用：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">anshun@LAPTOP-F0CAKEEH:~$ cat sort.txt
-AAA:BB:CC
-aaa:10:1.1
-ccc:30:3.3
-ddd:40:4.4
-bbb:20:2.2
-eee:50:5.5
-eee:50:5.5
-# 将BB列按照数字从小到大顺序排列：
-# -n 按数字大小排序， -k 指定列 -t 指定分隔符
-anshun@LAPTOP-F0CAKEEH:~$ sort -nk 2 -t: sort.txt
-AAA:BB:CC
-aaa:10:1.1
-bbb:20:2.2
-ccc:30:3.3
-ddd:40:4.4
-eee:50:5.5
-eee:50:5.5
-# 将CC列数字从大到小顺序排列：
-# -n是按照数字大小排序，-r是以相反顺序，-k是指定需要排序的栏位，-t指定栏位分隔符为冒号
-anshun@LAPTOP-F0CAKEEH:~$ sort -nrk 3 -t: sort.txt
-eee:50:5.5
-eee:50:5.5
-ddd:40:4.4
-ccc:30:3.3
-bbb:20:2.2
-aaa:10:1.1
-AAA:BB:CC<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="k选项的解读"><a href="#k选项的解读" class="headerlink" title="-k选项的解读"></a>-k选项的解读</h2><pre class="line-numbers language-none"><code class="language-none">-k FStart.CStart,FEnd.CEnd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><code>Start</code>部分的<code>FStart</code>和<code>C.Start</code>；<code>C.Start</code>是可以省略的，<code>FEnd.CEnd</code>也一样。</p>
-<p><code>FStart.CStart</code>，其中<code>FStart</code>就是表示使用的域，而<code>CStart</code>则表示在<code>FStart</code>域中从第几个字符开始算排序首字符，<code>FEnd.CEnd</code>没有，就默认至最后一个字符</p>
-<p>如：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">#从公司英文名称的第二个字母开始排序：
-$ sort -t ' ' -k 1.2 facebook.txt
-baidu 100 5000
-sohu 100 4500
-google 110 5000
-guge 50 3000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>使用<code>-k 1.2</code>，表示对第一个域的第二个字符开始到本域的最后一个字符为止的字符串进行排序</p>
-<p>例子2：只针对公司英文名称的第二个字母进行排序，如果相同的按照员工工资进行降序排序：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">$ sort -t ' ' -k 1.2,1.2 -nrk 3,3 facebook.txt
-baidu 100 5000
-google 110 5000
-sohu 100 4500
-guge 50 3000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a>uniq</h1><p>显示或忽略重复的行。</p>
-<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">uniq [OPTION]... [INPUT [OUTPUT]]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="主要用途"><a href="#主要用途" class="headerlink" title="主要用途"></a>主要用途</h2><ul>
-<li>将输入文件（或标准输入）中邻近的重复行写入到输出文件（或标准输出）中</li>
-<li>当没有选项时，邻近的重复行合并为一个</li>
+<p>各列信息名：</p>
+<ul>
+<li>Command：进程名</li>
+<li>PID：进程标识符</li>
+<li>PPID：夫进程表示符号（需指定<code>-R</code>参数）</li>
+<li>User：进程所有者</li>
+<li>PGID：进程所属组</li>
+<li>FD：文件描述符</li>
+<li>Type：文件类型，如 DIR、REG 等</li>
+<li>Device：以逗号分隔设备编号</li>
+<li>Node：索引节点(文件在磁盘上的标识)</li>
 </ul>
-<h2 id="选项-1"><a href="#选项-1" class="headerlink" title="选项"></a>选项</h2><ul>
-<li><code>-c</code>：count，在每行开头增加重复次数</li>
-<li><code>-d</code>：repeated，所有邻近的重复行只被打印一次</li>
-<li><code>-D</code>：所有邻近的重复行将全部打印</li>
-<li><code>-f, --skip-fileds=N</code>：跳过对前N个列的比较</li>
-<li><code>-i</code>：忽略大小写的差异</li>
-<li><code>-s，--skip-chars=N</code>：跳过对前N个字符的比较</li>
-<li><code>-u</code>：unique，只打印非邻近的重复行</li>
-<li><code>-z</code>：设置行终止符为NUL（空），而不是换行符</li>
-<li><code>-w</code>：只对每行前N个字符进行比较</li>
+<p><strong>FD 列中的常见内容有 cwd、rtd、txt、mem 和一些数字等等。</strong>其中：</p>
+<ul>
+<li>cwd 表示当前的工作目录；</li>
+<li>rtd 表示根目录；</li>
+<li>txt 表示程序的可执行文件；</li>
+<li>mem 表示内存映射文件；</li>
+<li>数字表示输入输出（0输入，1输出，2标准错误）；</li>
 </ul>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 很明显，第一行命令，只做了相邻行的去重
-uniq file.txt
-sort file.txt | uniq
-sort -u file.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 只显示单一行
-uniq file.txt
-sort file.txt | uniq -u<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 统计各行在文件中出现的次数：
-sort file.txt | uniq -c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 在文件中找出重复的行
-sort file.txt | uniq -d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<hr>
-<p><strong>利用<code>sort</code>和<code>uniq</code>求两个文件的并集，交集和差集</strong></p>
-<p>并集：<code>cat f1.txt f2.txt | sort|uniq &gt; file.txt</code></p>
-<p>交集：<code>cat f1.txt f2.txt | sort|uniq -d &gt; file.txt</code></p>
-<p>差集：这里仅举例f1.txt相对于f2.txt的差集</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat f1.txt f2.txt | sort|uniq -d &gt; tmp.txt
-cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
+<p>标准输入输出后跟着文件状态模式：</p>
+<ul>
+<li>u：该文件被打开并处于读取/写入模式</li>
+<li>r：表示该文件被打开并处于只读模式</li>
+<li>w：该文件被打开且处于写入模式</li>
+<li>空格 | <code>-</code>：unknow，且没有被锁定</li>
+</ul>
+<p>在文件状态模式后面，还跟着相关的锁：</p>
+<ul>
+<li>w：文件部分锁</li>
+<li>W：整个文件锁</li>
+</ul>
+<p>文件类型：</p>
+<ul>
+<li>DIR：目录</li>
+<li>CHR：字符类型</li>
+<li>BLK：块设备类型</li>
+<li>UNIX：域套接字</li>
+<li>FIFO</li>
+<li>IPv4：网际协议（IP）套接字</li>
+<li>DEVICE：指定磁盘名称</li>
+<li>SIZE：文件大小</li>
+<li>NODE：索引节点（文件在磁盘上的标识）</li>
+<li>NAME</li>
+<li>REG：常规文件</li>
+</ul>
+<h2 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h2><ol>
+<li><p>列出指定进程号打开的所有文件：</p>
+<p><code>lsof -p $pid</code></p>
+</li>
+<li><p>打开指定文件的进程：</p>
+<p><code>lsof $filename</code></p>
+</li>
+<li><p>查看哪些进程打开了某个目录，及其目录下的文件：</p>
+<p><code>lsof +d $filename</code></p>
+<p><code>lsof +D $filename</code> 对指定目录进行递归</p>
+</li>
+<li><p>组合选项：<code>lsof</code>的选择间，默认为或的关系，添加<code>-a</code>选项，让其选项间的关系变为与</p>
+<p><code>lsof -a -p $$ -d0,1,2</code></p>
+<p>这里的<code>$$</code>为当前进程的PID，<code>-d</code>选项选择了文件的描述符</p>
+</li>
+<li><p>查看指定程序名称打开的文件：</p>
+<p><code>lsof -c cr</code> 查找以字母cr开头的程序打开的文件列表</p>
+<p><code>-c</code>也支持正则表达式：<code>lsof -c /cr[ao]/</code> 过滤出以 cra 和 cro 开头的程序打开的文件列表</p>
+</li>
+<li><p>查看被打开的和网络相关的文件，格式如下：</p>
+<p><code>[46][protocol][@hostname|hostaddr][:service|port]</code></p>
+<ul>
+<li>46：表示 IP 协议的版本</li>
+<li>protocol：表示网络协议名称，如 TCP 或 UDP</li>
+<li>hostname：或 hostaddr 表示主机地址</li>
+<li>service：指 /etc/services 中的名称，比如 smtp 或多个服务的列表</li>
+<li>port：表示端口号，可指定一个或多个</li>
+</ul>
+<p>默认<code>-i</code>选项同时输出 IPv4 和 IPv6 打开的文件</p>
+<p><code>lsof -i 4</code>列出 IPv4 打开的文件；<code>lsof -i 6</code>列出 IPv6 打开的文件</p>
+<p><code>lsof -i:22</code> 列出与22号端口相关的文件</p>
+<p><code>lsof -i TCP:1-1024</code>列出指定范围内被打开的TCP端口</p>
+</li>
+<li><p>查看你被打开的 UNIX domain socket 文件</p>
+<p><code>lsof -a -c sshd -U</code> <code>-U</code>选择查看打开的 UNIX domain socket 文件，<code>-c</code>指定服务名，这里为 ssh 服务</p>
+</li>
+<li><p>查看某个用户打开的所有文件</p>
+<p><code>lsof -u syslog</code> <code>-u</code> 既可以指定用户名，也能指定用户ID</p>
+<p><code>kill -9 $(lsof -t -u nick)</code> 杀掉某个用户打开了文件的所有进程，<code>-t</code>选项让其只输出进程的PID</p>
+</li>
+<li><p>统计系统打开的文件总数</p>
+<p><code>lsof -P -n | wc -l</code> <code>-P</code> 表示不解析端口号，<code>-n</code>表示不解析主机名，这两个选项主要的目的是为了提升 lsof 命令的执行速度</p>
+</li>
+<li><p>获取端口对应的进程ID=&gt;pid</p>
+<p><code>lsof -i:9881 -P -t -sTCP:LISTEN</code> <code>-s</code>选择协议</p>
+</li>
+</ol>
 
                 
             </div>
@@ -657,7 +637,7 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/21/sort-he-uniq/">https://github.com/z-anshun/2022/02/21/sort-he-uniq/</a>
+                    <a href="https://github.com/z-anshun/2022/02/22/lsof/">https://github.com/z-anshun/2022/02/22/lsof/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -742,9 +722,10 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/22/lsof/">
                     <div class="card-image">
@@ -762,9 +743,9 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -777,6 +758,7 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -795,13 +777,13 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/20/sql-zhu-ru/">
+                <a href="/2022/02/21/sort-he-uniq/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="SQL注入">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="sort">
                         
-                        <span class="card-title">SQL注入</span>
+                        <span class="card-title">sort</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -812,14 +794,14 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-21
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AE%89%E5%85%A8/" class="post-category">
-                                    安全
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                             
                             
@@ -829,8 +811,8 @@ cat f1.txt f2.txt | sort|uniq -u &gt; file.txt<span aria-hidden="true" class="li
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
-                        <span class="chip bg-color">SQL注入</span>
+                    <a href="/tags/%E6%AF%8F%E6%97%A5%E5%91%BD%E4%BB%A4/">
+                        <span class="chip bg-color">每日命令</span>
                     </a>
                     
                 </div>

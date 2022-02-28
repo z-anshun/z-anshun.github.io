@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2022-02-21T14:15:55.581Z</updated>
+  <updated>2022-02-28T14:24:38.215Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>lsof</title>
+    <link href="https://github.com/z-anshun/2022/02/22/lsof/"/>
+    <id>https://github.com/z-anshun/2022/02/22/lsof/</id>
+    <published>2022-02-22T11:42:58.000Z</published>
+    <updated>2022-02-28T14:24:38.215Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Linux" scheme="https://github.com/z-anshun/categories/Linux/"/>
+    
+    
+    <category term="每日命令" scheme="https://github.com/z-anshun/tags/%E6%AF%8F%E6%97%A5%E5%91%BD%E4%BB%A4/"/>
+    
+  </entry>
   
   <entry>
     <title>sort</title>
@@ -470,31 +495,6 @@
     <id>https://github.com/z-anshun/2021/09/30/bing-cha-ji/</id>
     <published>2021-09-30T15:08:29.000Z</published>
     <updated>2021-09-30T15:09:04.936Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="算法" scheme="https://github.com/z-anshun/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Manacher</title>
-    <link href="https://github.com/z-anshun/2021/09/27/manacher/"/>
-    <id>https://github.com/z-anshun/2021/09/27/manacher/</id>
-    <published>2021-09-27T14:56:33.000Z</published>
-    <updated>2021-10-03T16:34:36.889Z</updated>
     
     
       
