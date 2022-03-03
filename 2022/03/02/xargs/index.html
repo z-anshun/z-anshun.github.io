@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="wc, 面条二两">
+    <meta name="keywords" content="xargs, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>wc | Noodles2hg的博客</title>
+    <title>xargs | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">wc</h1>
+                    <h1 class="description center-align post-title">xargs</h1>
                 </div>
             </div>
         </div>
@@ -459,7 +459,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-28
+                    2022-03-02
                 </div>
                 
 
@@ -483,51 +483,101 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h1><p>统计文件的字节数、字数、行数</p>
-<p>若不指定其文件名，或给予的文件名为“-”，则<code>wc</code>会从标准输入设备读取数据</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">wc(选项)(参数)
-wc [选项]... [文件]...
-wc [选项]... --files0-from=F<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+                <h1 id="Xargs"><a href="#Xargs" class="headerlink" title="Xargs"></a>Xargs</h1><p>给其他命令传递参数的一个<strong>过滤器</strong></p>
+<p>擅长将标准输入数据转换成命令行格式</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>读取输入数据重新格式化输出</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat test.txt
 
-<h2 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h2><ul>
-<li><code>-c</code>：统计字节数，或 <code>--bytes</code>，显示 <code>Bytes</code>数</li>
-<li><code>-l</code>：统计行数，或 <code>--lines</code>，显示行数</li>
-<li><code>-m</code>：统计字符数，或 <code>--chars</code>，显示字符数</li>
-<li><code>-w</code>：统计字数，或 <code>--words</code>，显示字数。</li>
-<li><code>-L</code>：打印最长行的长度，或 <code>--max-line-length</code></li>
-</ul>
-<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">wc -l * # 统计当前目录下的所有文件行数及总计行数
-wc -l *.js
-find . * | xargs wc -l * # 当前目录以及子目录的所有文件行数及总计行数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+a b c d e f g
+h i j k l m n
+o p q
+r s t
+u v w x y z<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>查看文件的字节数、字数、行数</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">wc test.txt
-# 输出结果
-7     8     70     test.txt
-# 行数 单词数 字节数 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat test.txt | xargs
 
-<p>用<code>wc</code>命名做到只打印统计数字而不打印文件名</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">wc -l &lt; test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+a b c d e f g h i j k l m n o p q r s t u v w x y z<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>统计当前目录下的文件数（不含隐藏文件）</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 要去除TOTAL行
-expr $(ls -l | wc -l) - 1
-# 输出结果
-8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="使用-n进行多行输出"><a href="#使用-n进行多行输出" class="headerlink" title="使用-n进行多行输出"></a>使用<code>-n</code>进行多行输出</h3><p>每行的word个数</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat test.txt | xargs -n3
 
-<p>统计当前目录下的所有文件行数及总计行数</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">[root@centos7 ~]# wc -l *
-      21 LICENSE
-     270 README.md
-wc: example: read: Is a directory
-     785 lerna-debug.log
-      25 lerna.json
-wc: node_modules: read: Is a directory
-   23603 package-lock.json
-      79 package.json
-       3 renovate.json
-   24786 total<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+a b c
+d e f
+g h i
+j k l
+m n o
+p q r
+s t u
+v w x
+y z<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="使用-d进行分割"><a href="#使用-d进行分割" class="headerlink" title="使用-d进行分割"></a>使用<code>-d</code>进行分割</h3><p><code>-d</code>确定分隔符</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">echo "nameXnameXnameXname" | xargs -dX
+
+name name name name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>结合<code>-n</code>选项使用</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">echo "nameXnameXnameXname" | xargs -dX -n2
+
+name name
+name name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="读取-stdin"><a href="#读取-stdin" class="headerlink" title="读取 stdin"></a>读取 stdin</h3><p>假设一个命令为 sk.sh 和一个保存参数的文件 arg.txt</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">#!/bin/bash
+#sk.sh 命令内容，打印出所有参数。
+
+echo $* # $* 所有参数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat arg.txt
+
+aaa
+bbb
+ccc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="集合-I选项"><a href="#集合-I选项" class="headerlink" title="集合 -I选项"></a>集合 <code>-I</code>选项</h4><p>使用<code>-I</code>选项，<strong>指定</strong>一个替换字符串<code>{}</code>，类似占位符，这样，在<code>xargs</code>扩展时，该占位符就会被替换掉，并且每个命令执行一次</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat arg.txt | xargs -I {} ./sk.sh -p {} -l
+
+-p aaa -l
+-p bbb -l
+-p ccc -l<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>复制所有图片文件到 /data/images 目录下：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">ls *.jpg | xargs -n1 -I {} cp {} /data/images<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="结合find"><a href="#结合find" class="headerlink" title="结合find"></a>结合<code>find</code></h3><p>用 rm 删除太多的文件时候，可能得到一个错误信息：<code>/bin/rm Argument list too long</code>. 用 <code>xargs</code> 去避免这个问题</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">find . -type f -name "*.log" -print0 | xargs -0 rm -f<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>xargs -0</code> 将 <code>\0</code> 作为定界符</p>
+<p>统计一个源代码目录中所有 php 文件的行数：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">find . -type f -name "*.php" -print0 | xargs -0 wc -l<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查找所有的 jpg 文件，并且压缩它们：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">find . -type f -name "*.jpg" -print | xargs tar -czvf images.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>xargs 其他应用</p>
+<p>假如你有一个文件包含了很多你希望下载的 URL，你能够使用 xargs下载所有链接：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># cat url-list.txt | xargs wget -c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="打印出执行的命令"><a href="#打印出执行的命令" class="headerlink" title="打印出执行的命令"></a>打印出执行的命令</h3><p>结合 <code>-t</code> 选项可以打印出 <code>xargs</code> 执行的命令</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">ls | xargs -t -I{} echo {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>会输出当前目录下的文件列表和执行的 echo 命令</p>
+<h3 id="使用-p-选项确认执行的命令"><a href="#使用-p-选项确认执行的命令" class="headerlink" title="使用 -p 选项确认执行的命令"></a>使用 -p 选项确认执行的命令</h3><p><code>-p</code> 选项会在执行每一个命令时弹出确认，当你需要非常准确的确认每一次操作时可以使用 <code>-p</code> 参数，比如，查找当前目录下 <code>.log</code> 文件，每一次删除都需要确认：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">find . -maxdepth 1 -name "*.log" | xargs -p -I{} rm {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="执行多个命令"><a href="#执行多个命令" class="headerlink" title="执行多个命令"></a>执行多个命令</h3><p>使用 <code>-I</code> 选项可以让 <code>xargs</code> 执行多个命令</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">cat foo.txt
+one
+two
+three
+
+cat foo.txt | xargs -I % sh -c 'echo %; mkdir %'
+one
+two
+three
+
+ls
+one two three<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -554,7 +604,7 @@ wc: node_modules: read: Is a directory
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/z-anshun/2022/02/28/wc/">https://github.com/z-anshun/2022/02/28/wc/</a>
+                    <a href="https://github.com/z-anshun/2022/03/02/xargs/">https://github.com/z-anshun/2022/03/02/xargs/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -639,9 +689,10 @@ wc: node_modules: read: Is a directory
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/03/02/xargs/">
                     <div class="card-image">
@@ -659,9 +710,9 @@ wc: node_modules: read: Is a directory
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -674,6 +725,7 @@ wc: node_modules: read: Is a directory
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -692,13 +744,13 @@ wc: node_modules: read: Is a directory
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/22/lsof/">
+                <a href="/2022/02/28/wc/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="lsof">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="wc">
                         
-                        <span class="card-title">lsof</span>
+                        <span class="card-title">wc</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -709,7 +761,7 @@ wc: node_modules: read: Is a directory
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-28
                             </span>
                         <span class="publish-author">
                             
