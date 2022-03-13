@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2022-03-05T15:41:17.870Z</updated>
+  <updated>2022-03-13T11:13:17.483Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基础技术</title>
+    <link href="https://github.com/z-anshun/2022/03/10/ji-chu-ji-zhu/"/>
+    <id>https://github.com/z-anshun/2022/03/10/ji-chu-ji-zhu/</id>
+    <published>2022-03-10T10:12:37.000Z</published>
+    <updated>2022-03-13T11:13:17.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="手搓docker" scheme="https://github.com/z-anshun/categories/%E6%89%8B%E6%90%93docker/"/>
+    
+    
+    <category term="docker 看书计划" scheme="https://github.com/z-anshun/tags/docker-%E7%9C%8B%E4%B9%A6%E8%AE%A1%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>grep</title>
+    <link href="https://github.com/z-anshun/2022/03/05/grep/"/>
+    <id>https://github.com/z-anshun/2022/03/05/grep/</id>
+    <published>2022-03-05T15:42:08.000Z</published>
+    <updated>2022-03-05T15:42:08.874Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>find</title>
@@ -461,56 +507,6 @@
     
     
     <category term="Golang" scheme="https://github.com/z-anshun/tags/Golang/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树状数组</title>
-    <link href="https://github.com/z-anshun/2021/10/21/shu-zhuang-shu-zu/"/>
-    <id>https://github.com/z-anshun/2021/10/21/shu-zhuang-shu-zu/</id>
-    <published>2021-10-21T14:24:17.000Z</published>
-    <updated>2021-10-21T14:24:56.019Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="树状数组" scheme="https://github.com/z-anshun/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>最多牌组数</title>
-    <link href="https://github.com/z-anshun/2021/10/09/zui-duo-pai-zu-shu/"/>
-    <id>https://github.com/z-anshun/2021/10/09/zui-duo-pai-zu-shu/</id>
-    <published>2021-10-09T10:13:45.000Z</published>
-    <updated>2021-10-09T10:14:03.638Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="动归" scheme="https://github.com/z-anshun/tags/%E5%8A%A8%E5%BD%92/"/>
     
   </entry>
   
