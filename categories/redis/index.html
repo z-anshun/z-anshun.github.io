@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: 学习, 面条二两">
+    <meta name="keywords" content="分类: redis, 面条二两">
     <meta name="description" content="nothing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>分类: 学习 | Noodles2hg的博客</title>
+    <title>分类: redis | Noodles2hg的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -373,7 +373,7 @@
                 
                 <a href="/categories/%E5%AD%A6%E4%B9%A0/" title="学习: 8">
                     <span class="chip center-align waves-effect waves-light
-                             chip-active "
+                             chip-default "
                             style="background-color: #F9EBEA;">学习
                         <span class="tag-length">8</span>
                     </span>
@@ -454,7 +454,7 @@
                 
                 <a href="/categories/redis/" title="redis: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
+                             chip-active "
                             style="background-color: #85C1E9;">redis
                         <span class="tag-length">1</span>
                     </span>
@@ -474,36 +474,37 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2021/12/06/sync.map-yuan-li/">
+                    <a href="/2022/03/28/di-ceng-jie-gou/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="sync.Map原理">
+                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="底层结构">
                             
-                            <span class="card-title">sync.Map原理</span>
+                            <span class="card-title">底层结构</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                数据结构Map
-type Map struct{
-	// 加锁保护，用于dirty字段
-    mu Mutex
-    // 只读数据，实际类型为readOnly，为原子操作
-    read atomic.Value // 原子操作实现
+                                动态字符串SDS（simple dynamic string），简单动态字符串
+struct sdshdr{
+	int len; // 当前的长度
+    
+    int free;// 可使用的空间
+    
+    char buf[
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-28
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
+                                <a href="/categories/redis/" class="post-category">
+                                    redis
                                 </a>
                                 
                                 
@@ -514,360 +515,12 @@ type Map struct{
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Golang/">
-                            <span class="chip bg-color">Golang</span>
+                        <a href="/tags/books/">
+                            <span class="chip bg-color">books</span>
                         </a>
                         
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/09/20/golangcall/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="关于Golang的指针传递">
-                            
-                            <span class="card-title">关于Golang的指针传递</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                首先，我们先来看一段代码
-package main
-
-import "fmt"
-
-func main(){
-	var i []int
-	try(i)
-	fmt.Println(i) //[]
-}
-
-func try(i []int){
-	i
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-20
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Golang/">
-                            <span class="chip bg-color">Golang</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/02/day06/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="JAVA学习第六天">
-                            
-                            <span class="card-title">JAVA学习第六天</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                包及访问控制权限打包语法
-1package 包名
-
-编译语法
-javac -d . PackageDemo01.java
--d:表示生成目录，目录以package的定义为准
-.：表示在当前所在的文件夹下生成
-导入 import语法
-12im
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-02
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JAVA/">
-                            <span class="chip bg-color">JAVA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/02/day05/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="JAVA学习第五天">
-                            
-                            <span class="card-title">JAVA学习第五天</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                异常try-catch类似于if-else
-语法：
-12345678910111213try{    // 可能有错误的语句}catch(异常类 异常对象){    // 对应的处理语句}catch(异常类 异常对象){    }catch
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-02
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JAVA/">
-                            <span class="chip bg-color">JAVA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/02/09/day04/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="JAVA学习第四天">
-                            
-                            <span class="card-title">JAVA学习第四天</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                适配器的设计为什么需要这个?
-我们先假设一下，如果一个接口定义了许多抽象方法，那么即便我们需要实现这个接口，也不一定需要其中的全部方法，就会造成麻烦。
-怎么解决？我们可以用一个抽象类来实现这个接口，里面的方法都为空，再用对应的对象来继承，覆
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JAVA/">
-                            <span class="chip bg-color">JAVA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/02/08/day03/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="JAVA学习第三天">
-                            
-                            <span class="card-title">JAVA学习第三天</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                面向对象（高级）继承语法：
-123class 子类 extends 父类{    }
-
-例：
-12345class Student extends Person{    public Student(){        super(); /
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JAVA/">
-                            <span class="chip bg-color">JAVA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/02/05/day02/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="JAVA学习第二天">
-                            
-                            <span class="card-title">JAVA学习第二天</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                面向对象面向对象具有的特征
-封装性：即将其对象封装起来，并且实现“信息隐蔽”。也就是说只需要外界知道怎么使用，也不需要了解其细节，个别属性外界无法知道
-继承性：顾名思义，儿子继承父级的一些方法。目的是为了增加代码的复用性，提高软件开发的效率
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-05
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JAVA/">
-                            <span class="chip bg-color">JAVA</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/02/04/day01/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="JAVA学习第一天">
-                            
-                            <span class="card-title">JAVA学习第一天</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                梦开始的地方12345public class main {    public static void main(String[] args){        System.out.println("hello world");    }
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-04
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    学习
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/JAVA/">
-                            <span class="chip bg-color">JAVA</span>
+                        <a href="/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
+                            <span class="chip bg-color">redis设计与实现</span>
                         </a>
                         
                     </div>

@@ -1,0 +1,1661 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="底层结构, 面条二两">
+    <meta name="description" content="nothing">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>底层结构 | Noodles2hg的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Noodles2hg的博客" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Noodles2hg的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Noodles2hg的博客</div>
+        <div class="logo-desc">
+            
+            nothing
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">底层结构</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/books/">
+                                <span class="chip bg-color">books</span>
+                            </a>
+                        
+                            <a href="/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
+                                <span class="chip bg-color">redis设计与实现</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/redis/" class="post-category">
+                                redis
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-03-28
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="动态字符串"><a href="#动态字符串" class="headerlink" title="动态字符串"></a>动态字符串</h1><p>SDS（simple dynamic string），简单动态字符串</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">sdshdr</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> len<span class="token punctuation">;</span> <span class="token comment">// 当前的长度</span>
+    
+    <span class="token keyword">int</span> free<span class="token punctuation">;</span><span class="token comment">// 可使用的空间</span>
+    
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">// </span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：SDS遵循C字符串以空字符结尾的惯例，即<code>\0</code>,所以在len里面没算上这个char，对用户来说是透明的。好处是重用C的函数</p>
+<blockquote>
+<p>为什么不跟C一样，直接存储字符串？</p>
+</blockquote>
+<ol>
+<li>获取字符串长度的时间复杂度为O(1)，便于<code>STRLEN</code>等命令</li>
+<li>杜绝缓冲区溢出，比如：在调用<code>strcat(char *dest,const char *src)</code>时，导致拼接的遍历过长，覆盖到其它变量</li>
+<li>减少内存重新分配的次数</li>
+<li>惰性空间释放</li>
+<li>二进制安全（binary-safe），使用二进制存储，len判断何时终止，以致于存什么，拿出来就是什么</li>
+<li>C函数的重用<code>strcasecmp</code></li>
+</ol>
+<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">listNode</span><span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">listNode</span> <span class="token operator">*</span>pre<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">listNode</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>value<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">list</span><span class="token punctuation">{</span>
+    listNode <span class="token operator">*</span>head<span class="token punctuation">;</span>
+    listNode <span class="token operator">*</span>tail<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> len<span class="token punctuation">;</span><span class="token comment">// 长度</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>dup<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//节点复制函数</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>free<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>match<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>list<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">dictht</span><span class="token punctuation">{</span>
+    dictEntry <span class="token operator">*</span><span class="token operator">*</span>table<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> size<span class="token punctuation">;</span> <span class="token comment">// 大小</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> sizemask<span class="token punctuation">;</span> <span class="token comment">// 索引值，等于size-1</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> used<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>dictht<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">dictEntry</span><span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>key<span class="token punctuation">;</span>
+    
+    <span class="token keyword">union</span><span class="token punctuation">{</span>
+       <span class="token keyword">void</span> <span class="token operator">*</span>val<span class="token punctuation">;</span>
+       uint64 _tu64<span class="token punctuation">;</span>
+       int64 _ts64<span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span>v<span class="token punctuation">;</span>
+    
+    <span class="token keyword">struct</span> <span class="token class-name">dictEntry</span> <span class="token operator">*</span>next<span class="token punctuation">;</span> <span class="token comment">// 指向下一个节点，用来解决哈希冲突</span>
+<span class="token punctuation">}</span>dictEntry<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2022/03/20/OY2ZvMn3UI8g59w.png" alt="image-20220320224141826"></p>
+<h2 id="字典-1"><a href="#字典-1" class="headerlink" title="字典"></a>字典</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">dict</span><span class="token punctuation">{</span>
+    <span class="token comment">// 特定的类型,指向 dictType 结构的指针</span>
+    dictType <span class="token operator">*</span>type<span class="token punctuation">;</span>
+    <span class="token comment">// 私有数据，保存需要传给哪些类型特定函数的可选参数</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>privdata<span class="token punctuation">;</span>
+    <span class="token comment">// hash 表</span>
+    dictht ht<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">// rehash 索引</span>
+    <span class="token keyword">int</span> rehashidx<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>dict<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">dictType</span><span class="token punctuation">{</span>
+    <span class="token comment">// 计算对应的哈希值</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>hashFunction<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 复制键</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>keyDup<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>privdata<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 复制值</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>valDup<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>privdata<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 对比键</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>keyCompare<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>privdata<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>key1<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>key2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 销毁键</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>keyDestructor<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>privdata<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 销毁值</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>valDestructor<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>privdata<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>dictType<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2022/03/20/rBzAag4dLCHYksX.png" alt="image-20220320231509728"></p>
+<p>将k0和v0添加到字典里面：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 计算出k0的哈希值</span>
+hash <span class="token operator">=</span> dict<span class="token operator">-&gt;</span>type<span class="token operator">-&gt;</span><span class="token function">hashFunction</span><span class="token punctuation">(</span>k0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 假设当前的hash值为0</span>
+index <span class="token operator">=</span> hash<span class="token operator">&amp;</span>dict<span class="token operator">-&gt;</span>ht<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sizemask <span class="token comment">// 8&amp;3 = 0;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2022/03/20/pBdDeVuMPC7YnZk.png" alt="image-20220320234733914"></p>
+<p>注意：redis的hash冲突是使用链地址法来解决的，并且使用头插入法（因为没有记录链表尾节点，使其时间复杂度为O(1)）</p>
+<blockquote>
+<p>何时扩容？</p>
+</blockquote>
+<ul>
+<li>服务器目前没有执行 BGSAVE 或者 BGREWRITEAOF 命令，并且哈希表的负载因子大于等于1</li>
+<li>服务器正在执行 BGSAVE 或者 BGREWRITEAOF 命令，并且哈希表的负载因子&gt;=5</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 负载因子=哈希表已保存节点数量/哈希表大小</span>
+load_factor<span class="token operator">=</span>ht<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>used <span class="token operator">/</span> ht<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>size<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>何时执行移动？</p>
+</blockquote>
+<p>每一次操作，和定时。并且，新写入的kv，只会在ht[1]中</p>
+<blockquote>
+<p>为什么在执行时的要大于等于5?</p>
+</blockquote>
+<p>因为在执行 BGSAVE 或者 BGREWRITEAOF 命令时，Redis需要创建子进程，而大多数操作系统都是使用的COW（copy-on-write）技术来优化子程序的使用效率，所以在子程序执行期间，应尽量避免扩展，避免不必要的内存写入操作，最大限度地节约内存</p>
+<blockquote>
+<p>rehash 渐进式hash的过程如何？</p>
+</blockquote>
+<ol>
+<li>ht[1]分配空间，使其 2^n&gt;ht[0].size （这里的2^n 为ht[1]的空间大小）</li>
+<li>在dict中维护一个rehashidx变量，设置为0，表示开始</li>
+<li>在rehash期间，除了对字典执行指定操作外，还有将rehashidx索引上在ht[0]对应的键值对移向ht[1]然后rehashidx++</li>
+<li>所有移动完后，rehashidx=-1，并将dict-&gt;ht[0]=dict-&gt;ht[1]</li>
+</ol>
+<blockquote>
+<p>为什么扩容时为2的次方？</p>
+</blockquote>
+<p>使sizemark为2^n-1，与它求并集代替求余，使其效率更高</p>
+<h1 id="跳表"><a href="#跳表" class="headerlink" title="跳表"></a>跳表</h1><p>skiplist</p>
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220321232440597.png" alt="image-20220321232440597" style="zoom:67%;">
+
+<p>zskiplist:</p>
+<ul>
+<li>header：跳跃表的表头节点</li>
+<li>tail：尾节点</li>
+<li>level：当前层数最大的那个节点的层数</li>
+<li>length：跳跃表包含节点的数量</li>
+</ul>
+<p>zskiplistNode:</p>
+<ul>
+<li>层（level）：节点中L1、L2、L3等字样标记节点的各个层，每层带有两个属性：<ul>
+<li>前进指针：访问下一个节点</li>
+<li>跨度：上图中带有箭头指针上的数字</li>
+</ul>
+</li>
+<li>后退（backwark）指针：图中的BW</li>
+<li>分值（score）：对应的值</li>
+<li>成员对象（obj）：图中的o1、o2、o3，表示对象</li>
+</ul>
+<h2 id="跳表节点"><a href="#跳表节点" class="headerlink" title="跳表节点"></a>跳表节点</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">zskiplistNode</span><span class="token punctuation">{</span>
+    <span class="token comment">// 层</span>
+    <span class="token keyword">struct</span> <span class="token class-name">zskiplistLevel</span><span class="token punctuation">{</span>
+        <span class="token comment">// 前进指针</span>
+        <span class="token keyword">struct</span> <span class="token class-name">zskiplistNode</span> <span class="token operator">*</span> forward<span class="token punctuation">;</span>
+        <span class="token comment">// 当前跨度</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span> span<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> level<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">// 后退指针</span>
+    <span class="token keyword">struct</span> <span class="token class-name">zskiplistNode</span> <span class="token operator">*</span>backward<span class="token punctuation">;</span>
+    <span class="token comment">// 分值</span>
+    <span class="token keyword">double</span> score<span class="token punctuation">;</span>
+    <span class="token comment">// 成员对象</span>
+    robj <span class="token operator">*</span>obj<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>zskiplistNode<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>层：每次创建节点时，根据幂次定律（power law，某件事的发生频率和它的某个属性成幂关系，即越大的出现概率越小）随机生成一个level大小（1~32）</li>
+<li>前近指针</li>
+<li>跨度：记录两个节点之间的距离，如果下一个为NULL，其值就为0。其还有一个作用，用来<strong>计算rank</strong>（排名），在查找某个节点的过程中，将跨度累计起来，就是目标节点在跳跃表中的排位</li>
+<li>后退指针：可实现从表尾至表头的遍历</li>
+<li>分值和成员：分值为 double，成员为一个SDS的字符串</li>
+</ul>
+<h2 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h2><p>管理多个跳跃节点</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">zskiplist</span><span class="token punctuation">{</span>
+    <span class="token comment">// 表头和表尾节点</span>
+    <span class="token keyword">struct</span> <span class="token class-name">zskiplistNode</span> <span class="token operator">*</span>header<span class="token punctuation">,</span><span class="token operator">*</span>tail<span class="token punctuation">;</span>
+    <span class="token comment">// 表中节点的数量</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> length<span class="token punctuation">;</span>
+    <span class="token comment">// 表中层数最大的节点的层数</span>
+    <span class="token keyword">int</span> level<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>zskiplist<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="整数集合"><a href="#整数集合" class="headerlink" title="整数集合"></a>整数集合</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">intset</span><span class="token punctuation">{</span>
+    <span class="token comment">// 编码方式</span>
+    uint32_t encoding<span class="token punctuation">;</span>
+    <span class="token comment">// 该集合包含的元素数量</span>
+    uint32_t length<span class="token punctuation">;</span>
+    <span class="token comment">// 保存元素的数量</span>
+    int8_t contents<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>intset<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：contents中的元素并不一定是int8_t，需要根据encoding来判断</p>
+<p><strong>升级</strong></p>
+<p>升级整数集合并添加新元素：</p>
+<ol>
+<li>根据新元素类型，扩展整数集合底层数组的空间大小，并为其分配新空间</li>
+<li>将底层数组现有的元素都转换成与新元素相同的类型，并按原位放置</li>
+<li>将新元素添加</li>
+</ol>
+<p>注意：因为要触发升级，就证明当前的类型不足以满足新值，那么一定是更小、或者更大的，这就导致新元素要么在<code>content</code>的第一个或者最后一个</p>
+<p><strong>升级的好处在于 提升整数集合的灵活性格 和 尽可能地节约内存</strong></p>
+<ul>
+<li>提升灵活性：因为能自动升级，那么也就能避免错误，使其用法更加灵活</li>
+<li>一开始使用 int16_t 类型，等遇到了 int32_t 和 int64_t 时，再进行升级，就能尽可能的节约内存</li>
+</ul>
+<p>注意：整数集合并不支持降级的操作，一旦对数组进行了升级，那么编码就会一直保持升级的状态</p>
+<h1 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h1><p>ziplist，是<strong>列表键和哈希键</strong>的底层实现之一。</p>
+<p>当一个列表 键只包含少量列表项，并且每个<strong>列表项</strong>要么是小整数，要么就是长度比较短的字符串，那么 Redis 就会使用压缩列表来做列表键的底层实现</p>
+<p>如：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; RPUSH lst 1 3 5 10086 "hello" "world"
+(integer)6
+redis&gt; OBJECT ENCODING lst
+"ziplist"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>另外，当一个哈希键只包含少量键值对，并且每个键值对的<strong>键和值</strong>要么为小整数值，或者比较短的字符串，那么 Redis 也会使用压缩列表来做哈希键的实现</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; HMSET profile "name" "Jack" "age" 28 "job" "Programmer"
+OK
+redis&gt; OBJECT ENCODING profile
+"ziplist"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="压缩列表的构成"><a href="#压缩列表的构成" class="headerlink" title="压缩列表的构成"></a>压缩列表的构成</h2><p>压缩列表是为了节约redis内存而开发的，由一系列特殊编码的连续内存块组成的顺序型（sequential）数据结构。</p>
+<p>一个压缩列表可以包含任意多个节点（entry），每个节点可以保存一个字节数组或者一个整数值</p>
+<p><img src="https://s2.loli.net/2022/03/25/o438KkBYQuOwbJx.png" alt="image-20220325235637048"></p>
+<ul>
+<li>zlbytes：uint32_t 类型，4 字节，记录整个压缩列表占用的内存字节数；在对压缩列表进行重新内存分配，或者计算 zlend 的位置时使用</li>
+<li>zltial：uint32_t 类型，4字节，记录压缩列表表尾节点距离压缩列表的起始地址有多少个字节；通过这个变量，程序无需遍历，直接找到表尾节点的地址（这里的起始指的整个列表的开始位置，即zlbytes的地址）</li>
+<li>zllen：uint16_t 类型，2字节，记录压缩列表包含的节点数量（注意：当这个属于小于 UINT16_MAX，也就是65535 的 时候，这个属性就是这个列表包含节点的数量，反之，大于时，就需要遍历才能知道真实的节点数量）</li>
+<li>extryX：列表节点，长度由列表节点自己定</li>
+<li>zlend：uint8_t类型，特殊值 0xFF（255）,用于标记压缩列表的末端</li>
+</ul>
+<h3 id="压缩节点"><a href="#压缩节点" class="headerlink" title="压缩节点"></a>压缩节点</h3><p><img src="https://s2.loli.net/2022/03/26/8J1Mpl4yBt5Qojr.png" alt="image-20220326000857699"></p>
+<ul>
+<li><p>previous_entry_length：表示前一个节点的长度，当前一个节点小于254长度时，该属性占用1字节，当大于254，该属性会占用5个字节，第一个字节设置为254，后面4个字节再表示长度</p>
+</li>
+<li><p>encoding：记录节点的content属性所保存数据的类型以及长度。类型使用一个字节长度表示，以11开头，长度由1、2、或5字节长度表示，即当前字节<strong>数组的长度</strong></p>
+<p><img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220326232010369.png" alt="image-20220326232010369"></p>
+</li>
+</ul>
+<p>​    如：00001011，则表示这是一个字节数组，长度为1011，即11长度，content就可为“hello world”</p>
+<p>​    如：11000000，则表示一个int16_t的整数类型，content就可以为 10086。</p>
+<ul>
+<li>content：保存节点的值，节点值可以是一个字节数组或者整数，值的类型和长度，由节点的encode属性决定</li>
+</ul>
+<h3 id="连锁更新"><a href="#连锁更新" class="headerlink" title="连锁更新"></a>连锁更新</h3><p>当某个节点的entry为250~253字节时，后面一个节点的previous_entry_length就只占一个字节，但，当前面插入一个大于254字节的时候，这时候，这个节点的previous_entry_length就需要改成5个字节，即使大于了254，那么后面一个节点也需要改变</p>
+<p>最坏情况下，需要N次分配，每次空间重新分配都需要 O(n)，那么时间复杂度就为O(n^2)</p>
+<p>但是这种多个连续节点在250~253字节的情况并不多见，而且，只要被更新的节点数不多，也不会对性能造成什么影响</p>
+<p>因此，ziplistPush 等命令的平均复杂度还是O(n)</p>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><p>在 Redis 中用对象来表示数据库中的键和值，每当创建一个键值对时，都会至少创建2个对象</p>
+<p>如</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET msg "hello world"
+OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>就会存储2个对象，一个包含了字符串值“msg”的对象，另一个包含了字符串值“hello world”的对象</p>
+<p>而Redis中每一个对象都由 redisObject 结构表示</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">redisObject</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 类型</span>
+    <span class="token keyword">unsigned</span> type<span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">;</span> <span class="token comment">// 强制占4位</span>
+    <span class="token comment">// 编码</span>
+    <span class="token keyword">unsigned</span> encoding<span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token comment">// 指向底层实现数据结构的指针</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>robj<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>类型</strong></p>
+<p>虽然对于 Redis 的键值对来说，键总是一个字符串对象，但值可以是一个字符串对象、列表对象、哈希对象、集合对象或者有序集合对象</p>
+<p>因此，当我们使用 type 命令时，命令返回的结果为值对应的对象</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; TYEP msg
+string<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>编码和底层实现</strong></p>
+<p>对象的ptr指针指向对象的底层实现数据结构，而这些属性都是由对象的encoding属性决定的</p>
+<p>encoding所包含的属性有 long类型的整数、embstr 编码的简单动态字符串、简单动态字符串、字典、双端链表、压缩列表、整数集合、跳跃表和字典</p>
+<p>并且每种类型的对象至少使用了两种不同的编码</p>
+<p>使用 <code>OBJECT ENCODING</code>可以查看值对象的编码</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; OBJECT ENCODING msg
+"emstr"
+redis&gt; SET story "long long long long long long ago..."
+OK
+reids&gt; OBJECT ENCODING story
+"raw"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用 encoding 属性，能够极大的提高 Redis 的灵活性和效率，根据不同场景来为同一个对象设置不同的编码，从而优化对象在某一场景下的效率</p>
+<p>比如：在列表元素较少时，使用压缩列表作为列表对象的底层实现</p>
+<h2 id="字符串对象"><a href="#字符串对象" class="headerlink" title="字符串对象"></a>字符串对象</h2><p>字符串对象可以是 int、raw或者emstr</p>
+<ol>
+<li>如果一个字符串对象保存的为整数值，并且这个值可以使用long类型来表示，那么字符串对象的编码设置为int</li>
+</ol>
+<p>如：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET number 10086
+OK
+redis&gt; OBJECT ENCODING number
+"int"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327180552328.png" alt="image-20220327180552328" style="zoom:33%;">
+
+<ol start="2">
+<li>如果保存的是一个字符值，并且这个字符值的长度大于32字节，那么就会使用一个SDS来保存，并将对象的编码设置为raw</li>
+</ol>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET story "Long, long ago there lived a king..."
+OK
+redis&gt; STRLEN story
+(integer) 37
+redis&gt; OBJECT ENCODING story
+"raw"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327181051298.png" alt="image-20220327181051298" style="zoom:50%;">
+
+<ol start="3">
+<li>如果保存对象是一个字符串值，并且长度小于等于32字节，那么将会使用embstr 编码的方式来保存</li>
+</ol>
+<p>embstr编码是一个用于保存短字符串的方法，其底层也是使用redisObject和sds实现的，但是只分配一次内存空间，且redisObject和sds为连续的空间，而不用为两个分别分配</p>
+<blockquote>
+<p>使用 embstr 保存短字符串，有什么好处？</p>
+</blockquote>
+<ul>
+<li>只用分配一次内存</li>
+<li>释放也只用一次就行</li>
+<li>因为在一块连续的内存中，能更好的利用缓存</li>
+</ul>
+<ol start="4">
+<li>如果保存为 long doubule 类型的浮点数，在 Redis 中也是使用字符串来保存的。也就是，如果我们需要保存一个浮点数，那么会将其转为字符串值，再保存</li>
+</ol>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET pi 3.14
+OK
+redis&gt; OBJECT ENCODING pi
+"embstr"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一定条件下，int编码的字符串对象和embstr 编码的字符串对象在条件满足的情况下，会被转换为raw编码的字符串对象</p>
+<p>如：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET number 10086
+OK
+redis&gt; OBJECT ENCODING number
+"int"
+redis&gt; APPEND number " is a number"
+(integer) 23
+redis&gt; GET number
+"10086 is a number"
+redis&gt; OBJECT ENCODING number
+"raw"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>另外，Redis没有为embstr 编码的字符串对象编写任何相应的修改程序（只有int和raw有），所以 embstr 编码的字符串实际上是只读。</p>
+<p>所以对embstr编码的字符串对象的修改命令，都是先转换成raw，再执行，所以在对 embstr 编码的字符串对象执行修改命令后，都会变成一个 raw 编码的字符串对象</p>
+<p>如：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET msg "hello world"
+OK
+redis&gt; OBJECT ENCODING msg
+"embstr"
+redis&gt; APPEND msg " agein"
+(integer) 18
+redis&gt; OBJECT ENCODING msg
+"raw"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="列表对象"><a href="#列表对象" class="headerlink" title="列表对象"></a>列表对象</h2><p>列表对象的编码可以是ziplist或者linkedlist</p>
+<p>注意，linkedlist 编码的列表在底层的双端链表结构中包含了多个字符串对象，字符串对象是 Redis 五种类型的对象中唯一一种会被其它四种类型对象嵌套的对象</p>
+<blockquote>
+<p>列表对象何时使用 ziplist 编码？</p>
+</blockquote>
+<ul>
+<li>列表对象保存的所有字符串元素的长度都小于64字节</li>
+<li>保存的元素数量小于512个</li>
+</ul>
+<p>注意：上面两个上限是可以修改的变量，list-max-ziplist-value和list-max-ziplist-entries</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; RPUSH blah "hello" "world" "again"
+(integer) 3
+redis&gt; OBJECT ENCODING blah
+"ziplist"
+
+# 将65字节长的放入
+redis&gt; RPUSH blsh "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+(integer) 4
+redis&gt; OBJECT ENCODING blah
+"linkedlist"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="哈希对象"><a href="#哈希对象" class="headerlink" title="哈希对象"></a>哈希对象</h2><p>哈希对象的编码可以是 ziplist 或 hashtable</p>
+<p>当使用 ziplist 实现时，有新键值对要加入哈希对象时，会先将键压缩至列表尾部，然后再将值放入</p>
+<p>因此：</p>
+<ul>
+<li>压缩列表的实现的哈希的键值对是紧挨在一起</li>
+<li>先添加的就会在前面，后来的就在后面</li>
+</ul>
+<p>当使用hashtable编码是现实时，其键值对都是一个字符串对象</p>
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327230702869.png" alt="image-20220327230702869" style="zoom: 33%;">
+
+<blockquote>
+<p>何时为 ziplist 编码实现哈希对象？</p>
+</blockquote>
+<ul>
+<li>键值对的字符串长度都小于64字节</li>
+<li>保存的键值对数量小于512个</li>
+</ul>
+<p>当然，可以改变配置 hash-max-ziplist-value 和 hash-max-ziplist-entries</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; HSET book name "Mastering"
+(integer) 1
+redis&gt; OBJECT ENCODING book
+"ziplist"
+redis&gt; HSET book long_long_long_long_long_long_long_long_long_long_long_long_long_long_description "content"
+(integer) 1
+redis&gt; OBJECT ENCODING book
+"hashtable"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="集合对象"><a href="#集合对象" class="headerlink" title="集合对象"></a>集合对象</h2><p>集合对象的编码可以是intset或者 hashtable</p>
+<p>intset 编码的集合对象使用整数集合作为底层实现，集合对象包含的所有元素都被保存在整数集合里面</p>
+<p>如：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SADD number 1 3 5
+(integer) 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327234018347.png" alt="image-20220327234018347" style="zoom:50%;">
+
+<p>hashtable 编码实现时，字典的每个<strong>键都是一个字符串对象</strong>，每个字符串对象包含了一个集合元素，而字典的值则全部设为 NULL。因为 dict的table为多个entry，含有k v</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SADD Dfruits "apple" "banana" "cherry"
+(integer) 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327234344125.png" alt="image-20220327234344125" style="zoom:50%;">
+
+<blockquote>
+<p>何时使用 intset 编码？</p>
+</blockquote>
+<ul>
+<li>集合对象保存的所有元素为整数值</li>
+<li>保存元素数量不超过 512 个</li>
+</ul>
+<p>注意：元素上限数量是可以改变的，set-max-intset-entries</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SADD numbers 1 3 5
+(integer) 3
+redis&gt; OBJECT ENCODING numbers
+"intset"
+redis&gt; SADD numbers "seven"
+(integer) 1
+redis&gt; OBJECT ENCODING numbers
+"hashtables"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="有序集合对象"><a href="#有序集合对象" class="headerlink" title="有序集合对象"></a>有序集合对象</h2><p>有序集合的编码可以是 ziplist 或者 skiplist</p>
+<p>ziplist 编码实现的有序集合，类似哈希。只是有序集合将成员（member）放在前面，分数（score）放在后面，而且有序集合的分值从小到大排，将分值小的放在表头，分值大的，放在表尾</p>
+<p><img src="https://s2.loli.net/2022/03/28/P8IQb6xBZjRpszh.png" alt="image-20220328001406857"></p>
+<p>skiplist编码的有序集合，使用zet结构作为底层实现，一个zet包含一个字典和一个跳跃表</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">typedef struct zset{
+	zskiplist *zsl;
+	dict *dict;
+}zset;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>为了什么有序集合需要同时使用跳表和字典？</p>
+</blockquote>
+<p>保证查找和排序时，都能有更好的性能。以空间换时间。并且字典和跳跃表会共享元素的成员和分值，所有不会造成数据重复，也不会浪费内存</p>
+<blockquote>
+<p>何时使用 ziplist？</p>
+</blockquote>
+<ul>
+<li>有序集合保存的元素数量小于 128 个</li>
+<li>长度都小于 64 字节</li>
+</ul>
+<p>当然，以上条件可以使用 zset-max-ziplist-entries 和 zset-max-ziplist-value 进行修改</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; EVAL "for i=1, 128 do redis.call('ZADD',KEYS[1],i,i) end" 1 numbers
+(nil)
+redis&gt; ZCARD numbers
+(integer) 128
+redis&gt; OBJECT ENCODING numbers
+"ziplist"
+redis&gt; ZADD numbers 3.14 pi
+(integer) 1
+redis&gt; ZCARD numbers
+(integer) 129
+redis&gt; OBJECT ENCODING numbers
+"skiplist"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h2><p>Redis 的命令可以分为两种类型，一种是可以对任何类型的键执行，如：DEL、EXPRIRE、RENAME等；一种只能对特定类型的键执行，如：SET、HEDL、ZADD等</p>
+<blockquote>
+<p>如何实现的类型检查？</p>
+</blockquote>
+<p>因为对特定类型的键执行时，肯定时需要做类型检查的，也就是对 redisObject 结构的 type 属性进行检查</p>
+<blockquote>
+<p>如何实现多态命令？即根据值的对象，选择正确的编码方式</p>
+</blockquote>
+<p>比如，我们执行 LLEN 命令时，无论对象为 ziplist，还是 linkedlist，都会使用对应 API 返回相应的结果。；类似 DEL、EXPIRE等和LLEN等命令，但前者是基于类型的多态，后者是基于编码的多态</p>
+<h2 id="内存回收"><a href="#内存回收" class="headerlink" title="内存回收"></a>内存回收</h2><p>Redis 的内存回收是引用技术实现的</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">redisObject</span><span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+    
+    <span class="token comment">// 引用计数</span>
+    <span class="token keyword">int</span> refcount<span class="token punctuation">;</span>
+    
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>robj<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>计数信息如何变化？</p>
+</blockquote>
+<ul>
+<li>在创建一个新对象时，会被初始化为1</li>
+<li>在被一个新程序使用时，会+1，不再被引用时，会-1</li>
+<li>变为0时，会被释放掉</li>
+</ul>
+<h2 id="对象共享"><a href="#对象共享" class="headerlink" title="对象共享"></a>对象共享</h2><p>对于redisObject，如果多个键指向的值都是一样的，那么都会指向同一个值对象。而没多一个引用，refcount就会+1</p>
+<p>一般来说，redis初始化时，会创建一万个字符串对象，包含 0~9999的所有整数。因此，当服务器需要使用时，便会直接引用，而不需要再创建</p>
+<p>注意：这个数量可以通过 redis.h/REDIS_SHARED_INTEGERS 常量来进行修改</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET A 100
+OK
+redis&gt; OBJECT REFCOUNT A
+(integer) 2
+redis&gt; SET B 100
+OK
+redis&gt; OBJECT REFCOUNT A
+(integer) 3
+redis&gt; OBJECT REFCOUNT B
+(integer) 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220328181906340.png" alt="image-20220328181906340" style="zoom:50%;">
+
+<p>注意：这些共享并不是只有字符串键可以使用，而只要在数据结构中嵌套了字符串对象（如：linkedlist的列表对象、hashtable编码的集合对象都行）</p>
+<blockquote>
+<p>为什么 Redis 不共享包含字符串的对象？即 raw或embstr</p>
+</blockquote>
+<p>因为在共享时，需要验证该内容是否完全一样，那么如果该结构越复杂，验证共享对象和目前对象的复杂度就会越高，进行消耗的CPU时间也会越多。如果是整数值的，那么验证操作的复杂度为O(1)；如果是字符串值得，那么复杂度就会为O(n)</p>
+<h2 id="对象空转时长"><a href="#对象空转时长" class="headerlink" title="对象空转时长"></a>对象空转时长</h2><p>前面介绍了 redisObject 的四个属性为 type、encoding、ptr 和 refcount 。那么还存在最后一个属性，即 lru，记录 对象最后一次被命令程序访问的时间</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">redisObject</span><span class="token punctuation">{</span>
+    <span class="token comment">// 类型</span>
+    <span class="token keyword">unsigned</span> type<span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">;</span> <span class="token comment">// 强制占4位</span>
+    <span class="token comment">// 编码</span>
+    <span class="token keyword">unsigned</span> encoding<span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token comment">// 指向底层实现数据结构的指针</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> refcount<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> lru<span class="token operator">:</span><span class="token number">22</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>OBJECT IDLETIME 命令打印出其空转时长，而这一空转时长是通过将当前时间减去键的值对象的lru时间得出的</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">redis&gt; SET msg "hello world"
+OK
+# 等待一段时间
+redis&gt; OBJECT IDLETIME msg
+(integer) 20
+redis&gt; GET msg
+"hello world"
+redis&gt; OBJECT IDLETIME msg
+()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Noodles2hg</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://github.com/z-anshun/2022/03/28/di-ceng-jie-gou/">https://github.com/z-anshun/2022/03/28/di-ceng-jie-gou/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Noodles2hg</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/books/">
+                                    <span class="chip bg-color">books</span>
+                                </a>
+                            
+                                <a href="/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
+                                    <span class="chip bg-color">redis设计与实现</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/03/28/di-ceng-jie-gou/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="底层结构">
+                        
+                        <span class="card-title">底层结构</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/redis/" class="post-category">
+                                    redis
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/books/">
+                        <span class="chip bg-color">books</span>
+                    </a>
+                    
+                    <a href="/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
+                        <span class="chip bg-color">redis设计与实现</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/03/26/gou-zao-rong-qi-he-jing-xiang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="构造容器和镜像实现原理">
+                        
+                        <span class="card-title">构造容器和镜像实现原理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%89%8B%E6%90%93docker/" class="post-category">
+                                    手搓docker
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
+                    </a>
+                    
+                    <a href="/tags/books/">
+                        <span class="chip bg-color">books</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020-2022</span>
+            
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">Noodles2hg</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/z-anshun" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1179798460@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1179798460" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1179798460" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
