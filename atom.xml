@@ -6,7 +6,7 @@
   <link href="https://github.com/z-anshun/atom.xml" rel="self"/>
   
   <link href="https://github.com/z-anshun/"/>
-  <updated>2022-04-05T12:52:21.684Z</updated>
+  <updated>2022-04-09T12:24:43.889Z</updated>
   <id>https://github.com/z-anshun/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>独立功能的实现</title>
+    <link href="https://github.com/z-anshun/2022/04/09/du-li-gong-neng-de-shi-xian/"/>
+    <id>https://github.com/z-anshun/2022/04/09/du-li-gong-neng-de-shi-xian/</id>
+    <published>2022-04-09T12:24:12.000Z</published>
+    <updated>2022-04-09T12:24:43.889Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="redis" scheme="https://github.com/z-anshun/categories/redis/"/>
+    
+    
+    <category term="books" scheme="https://github.com/z-anshun/tags/books/"/>
+    
+    <category term="redis设计与实现" scheme="https://github.com/z-anshun/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多机数据库</title>
+    <link href="https://github.com/z-anshun/2022/04/09/duo-ji-shu-ju-ku/"/>
+    <id>https://github.com/z-anshun/2022/04/09/duo-ji-shu-ju-ku/</id>
+    <published>2022-04-08T17:22:12.000Z</published>
+    <updated>2022-04-09T12:25:26.534Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="redis" scheme="https://github.com/z-anshun/categories/redis/"/>
+    
+    
+    <category term="books" scheme="https://github.com/z-anshun/tags/books/"/>
+    
+    <category term="redis设计与实现" scheme="https://github.com/z-anshun/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>单机数据库的实现</title>
@@ -465,56 +519,6 @@
     
     
     <category term="BFS" scheme="https://github.com/z-anshun/tags/BFS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>最长重复子数组</title>
-    <link href="https://github.com/z-anshun/2022/01/22/zui-chang-chong-fu-zi-shu-zu/"/>
-    <id>https://github.com/z-anshun/2022/01/22/zui-chang-chong-fu-zi-shu-zu/</id>
-    <published>2022-01-22T14:29:51.000Z</published>
-    <updated>2022-01-22T14:52:06.050Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="https://github.com/z-anshun/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="动归" scheme="https://github.com/z-anshun/tags/%E5%8A%A8%E5%BD%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CA证书</title>
-    <link href="https://github.com/z-anshun/2022/01/19/ca-zheng-shu/"/>
-    <id>https://github.com/z-anshun/2022/01/19/ca-zheng-shu/</id>
-    <published>2022-01-19T04:53:30.000Z</published>
-    <updated>2022-02-07T12:44:50.145Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="面经" scheme="https://github.com/z-anshun/categories/%E9%9D%A2%E7%BB%8F/"/>
-    
-    
-    <category term="https" scheme="https://github.com/z-anshun/tags/https/"/>
     
   </entry>
   
