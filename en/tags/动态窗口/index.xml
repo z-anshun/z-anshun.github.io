@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>动态窗口 on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/%E5%8A%A8%E6%80%81%E7%AA%97%E5%8F%A3/</link>
+    <description>Recent content in 动态窗口 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 12 Dec 2021 15:45:32 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/%E5%8A%A8%E6%80%81%E7%AA%97%E5%8F%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>和至少为 K 的最短子数组</title>
+      <link>https://z-anshun.github.io/en/posts/blog/%E5%92%8C%E8%87%B3%E5%B0%91%E4%B8%BA-k-%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Sun, 12 Dec 2021 15:45:32 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/blog/%E5%92%8C%E8%87%B3%E5%B0%91%E4%B8%BA-k-%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84/</guid>
+      <description>题目：给你一个整数数组 nums 和一个整数 k ，找出 nums 中和至少为 k 的 最短非空子数组 ，并返回该子数组的长度。如果不存在这样的 子数组 ，返回 -1 。 子数组 是数组</description>
+    </item>
+  </channel>
+</rss>

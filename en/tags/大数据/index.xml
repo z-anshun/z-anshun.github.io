@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>大数据 on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+    <description>Recent content in 大数据 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 29 Jun 2022 21:13:36 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>大数据开发试题</title>
+      <link>https://z-anshun.github.io/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Wed, 29 Jun 2022 21:13:36 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/</guid>
+      <description>基础概念 大数据带来思维方式的三个转变是 相关而非因果 全样而非抽样 效率而非精准 精准而非全面 大数据发展的三个阶段是 低谷期 萌芽期 成熟期 大规模应用期 每</description>
+    </item>
+  </channel>
+</rss>

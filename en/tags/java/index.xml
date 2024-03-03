@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>JAVA on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/java/</link>
+    <description>Recent content in JAVA on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 02 Mar 2021 21:16:00 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JAVA学习第六天</title>
+      <link>https://z-anshun.github.io/en/posts/tech/java/day06/</link>
+      <pubDate>Tue, 02 Mar 2021 21:16:00 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/java/day06/</guid>
+      <description>包及访问控制权限 打包 语法 1 package 包名 编译语法 javac -d . PackageDemo01.java -d:表示生成目录，目录以package的定义为准 .：表示在当前所在的文件夹下生成 导入 import 语法</description>
+    </item>
+    <item>
+      <title>JAVA学习第五天</title>
+      <link>https://z-anshun.github.io/en/posts/tech/java/day05/</link>
+      <pubDate>Tue, 02 Mar 2021 21:15:56 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/java/day05/</guid>
+      <description>异常 try-catch 类似于if-else 语法： 1 2 3 4 5 6 7 8 9 10 11 12 13 try{ // 可能有错误的语句 }catch(异常类 异常对象){ // 对应的处理语句 }catch(</description>
+    </item>
+    <item>
+      <title>JAVA学习第四天</title>
+      <link>https://z-anshun.github.io/en/posts/tech/java/day04/</link>
+      <pubDate>Tue, 09 Feb 2021 20:52:11 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/java/day04/</guid>
+      <description>适配器的设计 为什么需要这个? 我们先假设一下，如果一个接口定义了许多抽象方法，那么即便我们需要实现这个接口，也不一定需要其中的全部方法，就会造</description>
+    </item>
+    <item>
+      <title>JAVA学习第三天</title>
+      <link>https://z-anshun.github.io/en/posts/tech/java/day03/</link>
+      <pubDate>Mon, 08 Feb 2021 00:22:12 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/java/day03/</guid>
+      <description>面向对象（高级） 继承 语法： 1 2 3 class 子类 extends 父类{ } 例： 1 2 3 4 5 class Student extends Person{ public Student(){ super(); // 调用父级的构造函数，当构造函数的参数为空时可省略 } } 换句话说，</description>
+    </item>
+    <item>
+      <title>JAVA学习第二天</title>
+      <link>https://z-anshun.github.io/en/posts/tech/java/day02/</link>
+      <pubDate>Fri, 05 Feb 2021 23:31:47 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/java/day02/</guid>
+      <description>面向对象 面向对象具有的特征 封装性：即将其对象封装起来，并且实现“信息隐蔽”。也就是说只需要外界知道怎么使用，也不需要了解其细节，个别属性外界</description>
+    </item>
+    <item>
+      <title>JAVA学习第一天</title>
+      <link>https://z-anshun.github.io/en/posts/tech/java/day01/</link>
+      <pubDate>Thu, 04 Feb 2021 22:28:28 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/java/day01/</guid>
+      <description>梦开始的地方 1 2 3 4 5 public class main { public static void main(String[] args){ System.out.println(&amp;#34;hello world&amp;#34;); } } 前言 Java的简介 java具有三个发展方向，分别是 JAVA SE: JAVA的核心语言类，也是我要学的，主</description>
+    </item>
+  </channel>
+</rss>

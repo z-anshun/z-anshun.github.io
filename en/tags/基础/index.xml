@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>基础 on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/%E5%9F%BA%E7%A1%80/</link>
+    <description>Recent content in 基础 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 14 Oct 2020 21:35:35 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浅谈进程与协程、异步与同步、并发与并行</title>
+      <link>https://z-anshun.github.io/en/posts/blog/infomal/</link>
+      <pubDate>Wed, 14 Oct 2020 21:35:35 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/blog/infomal/</guid>
+      <description>今天偶然看到异步和同步的文章，联想到了进程，线程这些。下面，我来浅谈一下进程、线程、异步和同步 进程和线程 进程 一个程序的执行过程，是一个Win</description>
+    </item>
+  </channel>
+</rss>

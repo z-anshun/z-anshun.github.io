@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>底层结构 | Noodles2hg的博客</title>
+<meta name="keywords" content="redis设计与实现, Books">
+<meta name="description" content="动态字符串 SDS（simple dynamic string），简单动态字符串 1 2 3 4 5 6 7 struct sdshdr{ int len; // 当前的长度 int free;// 可使用的空间 char buf[];// } 注意：SDS遵循C字符">
+<meta name="author" content="Noodles2hg">
+<link rel="canonical" href="https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://z-anshun.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://z-anshun.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://z-anshun.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://z-anshun.github.io/Q.gif">
+<link rel="mask-icon" href="https://z-anshun.github.io/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="底层结构" />
+<meta property="og:description" content="动态字符串 SDS（simple dynamic string），简单动态字符串 1 2 3 4 5 6 7 struct sdshdr{ int len; // 当前的长度 int free;// 可使用的空间 char buf[];// } 注意：SDS遵循C字符" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-28T19:12:12+00:00" />
+<meta property="article:modified_time" content="2022-03-28T19:12:12+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="底层结构"/>
+<meta name="twitter:description" content="动态字符串 SDS（simple dynamic string），简单动态字符串 1 2 3 4 5 6 7 struct sdshdr{ int len; // 当前的长度 int free;// 可使用的空间 char buf[];// } 注意：SDS遵循C字符"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://z-anshun.github.io/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "📕阅读",
+      "item": "https://z-anshun.github.io/en/posts/read/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "底层结构",
+      "item": "https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "底层结构",
+  "name": "底层结构",
+  "description": "动态字符串 SDS（simple dynamic string），简单动态字符串 1 2 3 4 5 6 7 struct sdshdr{ int len; // 当前的长度 int free;// 可使用的空间 char buf[];// } 注意：SDS遵循C字符",
+  "keywords": [
+    "redis设计与实现", "Books"
+  ],
+  "articleBody": "动态字符串 SDS（simple dynamic string），简单动态字符串\n1 2 3 4 5 6 7 struct sdshdr{ int len; // 当前的长度 int free;// 可使用的空间 char buf[];// } 注意：SDS遵循C字符串以空字符结尾的惯例，即\\0,所以在len里面没算上这个char，对用户来说是透明的。好处是重用C的函数\n为什么不跟C一样，直接存储字符串？\n获取字符串长度的时间复杂度为O(1)，便于STRLEN等命令 杜绝缓冲区溢出，比如：在调用strcat(char *dest,const char *src)时，导致拼接的遍历过长，覆盖到其它变量 减少内存重新分配的次数 惰性空间释放 二进制安全（binary-safe），使用二进制存储，len判断何时终止，以致于存什么，拿出来就是什么 C函数的重用strcasecmp 链表 1 2 3 4 5 typedef struct listNode{ struct listNode *pre; struct listNode *next; void *value; } 1 2 3 4 5 6 7 8 typedef struct list{ listNode *head; listNode *tail; unsigned long len;// 长度 void *(*dup)(void *ptr); //节点复制函数 void (*free)(void *ptr); int (*match)(void *ptr,void *key); }list; 字典 哈希表 1 2 3 4 5 6 typedef struct dictht{ dictEntry **table; unsigned long size; // 大小 unsigned long sizemask; // 索引值，等于size-1 unsigned long used; }dictht; 1 2 3 4 5 6 7 8 9 10 11 typedef struct dictEntry{ void *key; union{ void *val; uint64 _tu64; int64 _ts64; }v; struct dictEntry *next; // 指向下一个节点，用来解决哈希冲突 }dictEntry; 字典 1 2 3 4 5 6 7 8 9 10 typedef struct dict{ // 特定的类型,指向 dictType 结构的指针 dictType *type; // 私有数据，保存需要传给哪些类型特定函数的可选参数 void *privdata; // hash 表 dictht ht[2]; // rehash 索引 int rehashidx; }dict; 1 2 3 4 5 6 7 8 9 10 11 12 13 14 typedef struct dictType{ // 计算对应的哈希值 unsigned int (*hashFunction)(const void *key); // 复制键 void *(*keyDup)(void *privdata,const void *key); // 复制值 void *(*valDup)(void *privdata,const void *obj); // 对比键 void (*keyCompare)(void *privdata,const void *key1,const void *key2); // 销毁键 void (*keyDestructor)(void *privdata,void *key); // 销毁值 void (*valDestructor)(void *privdata,void *obj); }dictType; 将k0和v0添加到字典里面：\n1 2 3 4 // 计算出k0的哈希值 hash = dict-\u003etype-\u003ehashFunction(k0); // 假设当前的hash值为0 index = hash\u0026dict-\u003eht[0].sizemask // 8\u00263 = 0; 注意：redis的hash冲突是使用链地址法来解决的，并且使用头插入法（因为没有记录链表尾节点，使其时间复杂度为O(1)）\n何时扩容？\n服务器目前没有执行 BGSAVE 或者 BGREWRITEAOF 命令，并且哈希表的负载因子大于等于1 服务器正在执行 BGSAVE 或者 BGREWRITEAOF 命令，并且哈希表的负载因子\u003e=5 1 2 // 负载因子=哈希表已保存节点数量/哈希表大小 load_factor=ht[0].used / ht[0].size; 何时执行移动？\n每一次操作，和定时。并且，新写入的kv，只会在ht[1]中\n为什么在执行时的要大于等于5?\n因为在执行 BGSAVE 或者 BGREWRITEAOF 命令时，Redis需要创建子进程，而大多数操作系统都是使用的COW（copy-on-write）技术来优化子程序的使用效率，所以在子程序执行期间，应尽量避免扩展，避免不必要的内存写入操作，最大限度地节约内存\nrehash 渐进式hash的过程如何？\nht[1]分配空间，使其 2^n\u003eht[0].size （这里的2^n 为ht[1]的空间大小） 在dict中维护一个rehashidx变量，设置为0，表示开始 在rehash期间，除了对字典执行指定操作外，还有将rehashidx索引上在ht[0]对应的键值对移向ht[1]然后rehashidx++ 所有移动完后，rehashidx=-1，并将dict-\u003eht[0]=dict-\u003eht[1] 为什么扩容时为2的次方？\n使sizemark为2^n-1，与它求并集代替求余，使其效率更高\n跳表 skiplist\nzskiplist:\nheader：跳跃表的表头节点 tail：尾节点 level：当前层数最大的那个节点的层数 length：跳跃表包含节点的数量 zskiplistNode:\n层（level）：节点中L1、L2、L3等字样标记节点的各个层，每层带有两个属性： 前进指针：访问下一个节点 跨度：上图中带有箭头指针上的数字 后退（backwark）指针：图中的BW 分值（score）：对应的值 成员对象（obj）：图中的o1、o2、o3，表示对象 跳表节点 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 typedef struct zskiplistNode{ // 层 struct zskiplistLevel{ // 前进指针 struct zskiplistNode * forward; // 当前跨度 unsigned int span; } level[]; // 后退指针 struct zskiplistNode *backward; // 分值 double score; // 成员对象 robj *obj; }zskiplistNode; 层：每次创建节点时，根据幂次定律（power law，某件事的发生频率和它的某个属性成幂关系，即越大的出现概率越小）随机生成一个level大小（1~32） 前近指针 跨度：记录两个节点之间的距离，如果下一个为NULL，其值就为0。其还有一个作用，用来计算rank（排名），在查找某个节点的过程中，将跨度累计起来，就是目标节点在跳跃表中的排位 后退指针：可实现从表尾至表头的遍历 分值和成员：分值为 double，成员为一个SDS的字符串 跳跃表 管理多个跳跃节点\n1 2 3 4 5 6 7 8 typedef struct zskiplist{ // 表头和表尾节点 struct zskiplistNode *header,*tail; // 表中节点的数量 unsigned long length; // 表中层数最大的节点的层数 int level; }zskiplist 整数集合 1 2 3 4 5 6 7 8 typedef struct intset{ // 编码方式 uint32_t encoding; // 该集合包含的元素数量 uint32_t length; // 保存元素的数量 int8_t contents[]; }intset; 注意：contents中的元素并不一定是int8_t，需要根据encoding来判断\n升级\n升级整数集合并添加新元素：\n根据新元素类型，扩展整数集合底层数组的空间大小，并为其分配新空间 将底层数组现有的元素都转换成与新元素相同的类型，并按原位放置 将新元素添加 注意：因为要触发升级，就证明当前的类型不足以满足新值，那么一定是更小、或者更大的，这就导致新元素要么在content的第一个或者最后一个\n升级的好处在于 提升整数集合的灵活性格 和 尽可能地节约内存\n提升灵活性：因为能自动升级，那么也就能避免错误，使其用法更加灵活 一开始使用 int16_t 类型，等遇到了 int32_t 和 int64_t 时，再进行升级，就能尽可能的节约内存 注意：整数集合并不支持降级的操作，一旦对数组进行了升级，那么编码就会一直保持升级的状态\n压缩列表 ziplist，是列表键和哈希键的底层实现之一。\n当一个列表 键只包含少量列表项，并且每个列表项要么是小整数，要么就是长度比较短的字符串，那么 Redis 就会使用压缩列表来做列表键的底层实现\n如：\n1 2 3 4 redis\u003e RPUSH lst 1 3 5 10086 \"hello\" \"world\" (integer)6 redis\u003e OBJECT ENCODING lst \"ziplist\" 另外，当一个哈希键只包含少量键值对，并且每个键值对的键和值要么为小整数值，或者比较短的字符串，那么 Redis 也会使用压缩列表来做哈希键的实现\n1 2 3 4 redis\u003e HMSET profile \"name\" \"Jack\" \"age\" 28 \"job\" \"Programmer\" OK redis\u003e OBJECT ENCODING profile \"ziplist\" 压缩列表的构成 压缩列表是为了节约redis内存而开发的，由一系列特殊编码的连续内存块组成的顺序型（sequential）数据结构。\n一个压缩列表可以包含任意多个节点（entry），每个节点可以保存一个字节数组或者一个整数值\nzlbytes：uint32_t 类型，4 字节，记录整个压缩列表占用的内存字节数；在对压缩列表进行重新内存分配，或者计算 zlend 的位置时使用 zltial：uint32_t 类型，4字节，记录压缩列表表尾节点距离压缩列表的起始地址有多少个字节；通过这个变量，程序无需遍历，直接找到表尾节点的地址（这里的起始指的整个列表的开始位置，即zlbytes的地址） zllen：uint16_t 类型，2字节，记录压缩列表包含的节点数量（注意：当这个属于小于 UINT16_MAX，也就是65535 的 时候，这个属性就是这个列表包含节点的数量，反之，大于时，就需要遍历才能知道真实的节点数量） extryX：列表节点，长度由列表节点自己定 zlend：uint8_t类型，特殊值 0xFF（255）,用于标记压缩列表的末端 压缩节点 previous_entry_length：表示前一个节点的长度，当前一个节点小于254长度时，该属性占用1字节，当大于254，该属性会占用5个字节，第一个字节设置为254，后面4个字节再表示长度\nencoding：记录节点的content属性所保存数据的类型以及长度。类型使用一个字节长度表示，以11开头，长度由1、2、或5字节长度表示，即当前字节数组的长度\n​\t如：00001011，则表示这是一个字节数组，长度为1011，即11长度，content就可为“hello world”\n​\t如：11000000，则表示一个int16_t的整数类型，content就可以为 10086。\ncontent：保存节点的值，节点值可以是一个字节数组或者整数，值的类型和长度，由节点的encode属性决定 连锁更新 当某个节点的entry为250~253字节时，后面一个节点的previous_entry_length就只占一个字节，但，当前面插入一个大于254字节的时候，这时候，这个节点的previous_entry_length就需要改成5个字节，即使大于了254，那么后面一个节点也需要改变\n最坏情况下，需要N次分配，每次空间重新分配都需要 O(n)，那么时间复杂度就为O(n^2)\n但是这种多个连续节点在250~253字节的情况并不多见，而且，只要被更新的节点数不多，也不会对性能造成什么影响\n因此，ziplistPush 等命令的平均复杂度还是O(n)\n对象 在 Redis 中用对象来表示数据库中的键和值，每当创建一个键值对时，都会至少创建2个对象\n如\n1 2 redis\u003e SET msg \"hello world\" OK 就会存储2个对象，一个包含了字符串值“msg”的对象，另一个包含了字符串值“hello world”的对象\n而Redis中每一个对象都由 redisObject 结构表示\n1 2 3 4 5 6 7 8 9 typedef struct redisObject { // 类型 unsigned type:4; // 强制占4位 // 编码 unsigned encoding:4; // 指向底层实现数据结构的指针 void *ptr; //... }robj; 类型\n虽然对于 Redis 的键值对来说，键总是一个字符串对象，但值可以是一个字符串对象、列表对象、哈希对象、集合对象或者有序集合对象\n因此，当我们使用 type 命令时，命令返回的结果为值对应的对象\n1 2 redis\u003e TYEP msg string 编码和底层实现\n对象的ptr指针指向对象的底层实现数据结构，而这些属性都是由对象的encoding属性决定的\nencoding所包含的属性有 long类型的整数、embstr 编码的简单动态字符串、简单动态字符串、字典、双端链表、压缩列表、整数集合、跳跃表和字典\n并且每种类型的对象至少使用了两种不同的编码\n使用 OBJECT ENCODING可以查看值对象的编码\n1 2 3 4 5 6 redis\u003e OBJECT ENCODING msg \"emstr\" redis\u003e SET story \"long long long long long long ago...\" OK reids\u003e OBJECT ENCODING story \"raw\" 使用 encoding 属性，能够极大的提高 Redis 的灵活性和效率，根据不同场景来为同一个对象设置不同的编码，从而优化对象在某一场景下的效率\n比如：在列表元素较少时，使用压缩列表作为列表对象的底层实现\n字符串对象 字符串对象可以是 int、raw或者emstr\n如果一个字符串对象保存的为整数值，并且这个值可以使用long类型来表示，那么字符串对象的编码设置为int 如：\n1 2 3 4 redis\u003e SET number 10086 OK redis\u003e OBJECT ENCODING number \"int\" 如果保存的是一个字符值，并且这个字符值的长度大于32字节，那么就会使用一个SDS来保存，并将对象的编码设置为raw 1 2 3 4 5 6 redis\u003e SET story \"Long, long ago there lived a king...\" OK redis\u003e STRLEN story (integer) 37 redis\u003e OBJECT ENCODING story \"raw\" 如果保存对象是一个字符串值，并且长度小于等于32字节，那么将会使用embstr 编码的方式来保存 embstr编码是一个用于保存短字符串的方法，其底层也是使用redisObject和sds实现的，但是只分配一次内存空间，且redisObject和sds为连续的空间，而不用为两个分别分配\n使用 embstr 保存短字符串，有什么好处？\n只用分配一次内存 释放也只用一次就行 因为在一块连续的内存中，能更好的利用缓存 如果保存为 long doubule 类型的浮点数，在 Redis 中也是使用字符串来保存的。也就是，如果我们需要保存一个浮点数，那么会将其转为字符串值，再保存 1 2 3 4 redis\u003e SET pi 3.14 OK redis\u003e OBJECT ENCODING pi \"embstr\" 一定条件下，int编码的字符串对象和embstr 编码的字符串对象在条件满足的情况下，会被转换为raw编码的字符串对象\n如：\n1 2 3 4 5 6 7 8 9 10 redis\u003e SET number 10086 OK redis\u003e OBJECT ENCODING number \"int\" redis\u003e APPEND number \" is a number\" (integer) 23 redis\u003e GET number \"10086 is a number\" redis\u003e OBJECT ENCODING number \"raw\" 另外，Redis没有为embstr 编码的字符串对象编写任何相应的修改程序（只有int和raw有），所以 embstr 编码的字符串实际上是只读。\n所以对embstr编码的字符串对象的修改命令，都是先转换成raw，再执行，所以在对 embstr 编码的字符串对象执行修改命令后，都会变成一个 raw 编码的字符串对象\n如：\n1 2 3 4 5 6 7 8 redis\u003e SET msg \"hello world\" OK redis\u003e OBJECT ENCODING msg \"embstr\" redis\u003e APPEND msg \" agein\" (integer) 18 redis\u003e OBJECT ENCODING msg \"raw\" 列表对象 列表对象的编码可以是ziplist或者linkedlist\n注意，linkedlist 编码的列表在底层的双端链表结构中包含了多个字符串对象，字符串对象是 Redis 五种类型的对象中唯一一种会被其它四种类型对象嵌套的对象\n列表对象何时使用 ziplist 编码？\n列表对象保存的所有字符串元素的长度都小于64字节 保存的元素数量小于512个 注意：上面两个上限是可以修改的变量，list-max-ziplist-value和list-max-ziplist-entries\n1 2 3 4 5 6 7 8 9 10 redis\u003e RPUSH blah \"hello\" \"world\" \"again\" (integer) 3 redis\u003e OBJECT ENCODING blah \"ziplist\" # 将65字节长的放入 redis\u003e RPUSH blsh \"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\" (integer) 4 redis\u003e OBJECT ENCODING blah \"linkedlist\" 哈希对象 哈希对象的编码可以是 ziplist 或 hashtable\n当使用 ziplist 实现时，有新键值对要加入哈希对象时，会先将键压缩至列表尾部，然后再将值放入\n因此：\n压缩列表的实现的哈希的键值对是紧挨在一起 先添加的就会在前面，后来的就在后面 当使用hashtable编码是现实时，其键值对都是一个字符串对象\n何时为 ziplist 编码实现哈希对象？\n键值对的字符串长度都小于64字节 保存的键值对数量小于512个 当然，可以改变配置 hash-max-ziplist-value 和 hash-max-ziplist-entries\n1 2 3 4 5 6 7 8 redis\u003e HSET book name \"Mastering\" (integer) 1 redis\u003e OBJECT ENCODING book \"ziplist\" redis\u003e HSET book long_long_long_long_long_long_long_long_long_long_long_long_long_long_description \"content\" (integer) 1 redis\u003e OBJECT ENCODING book \"hashtable\" 集合对象 集合对象的编码可以是intset或者 hashtable\nintset 编码的集合对象使用整数集合作为底层实现，集合对象包含的所有元素都被保存在整数集合里面\n如：\n1 2 redis\u003e SADD number 1 3 5 (integer) 3 hashtable 编码实现时，字典的每个键都是一个字符串对象，每个字符串对象包含了一个集合元素，而字典的值则全部设为 NULL。因为 dict的table为多个entry，含有k v\n1 2 redis\u003e SADD Dfruits \"apple\" \"banana\" \"cherry\" (integer) 3 何时使用 intset 编码？\n集合对象保存的所有元素为整数值 保存元素数量不超过 512 个 注意：元素上限数量是可以改变的，set-max-intset-entries\n1 2 3 4 5 6 7 8 redis\u003e SADD numbers 1 3 5 (integer) 3 redis\u003e OBJECT ENCODING numbers \"intset\" redis\u003e SADD numbers \"seven\" (integer) 1 redis\u003e OBJECT ENCODING numbers \"hashtables\" 有序集合对象 有序集合的编码可以是 ziplist 或者 skiplist\nziplist 编码实现的有序集合，类似哈希。只是有序集合将成员（member）放在前面，分数（score）放在后面，而且有序集合的分值从小到大排，将分值小的放在表头，分值大的，放在表尾\nskiplist编码的有序集合，使用zet结构作为底层实现，一个zet包含一个字典和一个跳跃表\n1 2 3 4 typedef struct zset{ zskiplist *zsl; dict *dict; }zset; 为了什么有序集合需要同时使用跳表和字典？\n保证查找和排序时，都能有更好的性能。以空间换时间。并且字典和跳跃表会共享元素的成员和分值，所有不会造成数据重复，也不会浪费内存\n何时使用 ziplist？\n有序集合保存的元素数量小于 128 个 长度都小于 64 字节 当然，以上条件可以使用 zset-max-ziplist-entries 和 zset-max-ziplist-value 进行修改\n1 2 3 4 5 6 7 8 9 10 11 12 redis\u003e EVAL \"for i=1, 128 do redis.call('ZADD',KEYS[1],i,i) end\" 1 numbers (nil) redis\u003e ZCARD numbers (integer) 128 redis\u003e OBJECT ENCODING numbers \"ziplist\" redis\u003e ZADD numbers 3.14 pi (integer) 1 redis\u003e ZCARD numbers (integer) 129 redis\u003e OBJECT ENCODING numbers \"skiplist\" 类型检查 Redis 的命令可以分为两种类型，一种是可以对任何类型的键执行，如：DEL、EXPRIRE、RENAME等；一种只能对特定类型的键执行，如：SET、HEDL、ZADD等\n如何实现的类型检查？\n因为对特定类型的键执行时，肯定时需要做类型检查的，也就是对 redisObject 结构的 type 属性进行检查\n如何实现多态命令？即根据值的对象，选择正确的编码方式\n比如，我们执行 LLEN 命令时，无论对象为 ziplist，还是 linkedlist，都会使用对应 API 返回相应的结果。；类似 DEL、EXPIRE等和LLEN等命令，但前者是基于类型的多态，后者是基于编码的多态\n内存回收 Redis 的内存回收是引用技术实现的\n1 2 3 4 5 6 7 8 typedef struct redisObject{ //... // 引用计数 int refcount; //... }robj; 计数信息如何变化？\n在创建一个新对象时，会被初始化为1 在被一个新程序使用时，会+1，不再被引用时，会-1 变为0时，会被释放掉 对象共享 对于redisObject，如果多个键指向的值都是一样的，那么都会指向同一个值对象。而没多一个引用，refcount就会+1\n一般来说，redis初始化时，会创建一万个字符串对象，包含 0~9999的所有整数。因此，当服务器需要使用时，便会直接引用，而不需要再创建\n注意：这个数量可以通过 redis.h/REDIS_SHARED_INTEGERS 常量来进行修改\n1 2 3 4 5 6 7 8 9 10 redis\u003e SET A 100 OK redis\u003e OBJECT REFCOUNT A (integer) 2 redis\u003e SET B 100 OK redis\u003e OBJECT REFCOUNT A (integer) 3 redis\u003e OBJECT REFCOUNT B (integer) 3 注意：这些共享并不是只有字符串键可以使用，而只要在数据结构中嵌套了字符串对象（如：linkedlist的列表对象、hashtable编码的集合对象都行）\n为什么 Redis 不共享包含字符串的对象？即 raw或embstr\n因为在共享时，需要验证该内容是否完全一样，那么如果该结构越复杂，验证共享对象和目前对象的复杂度就会越高，进行消耗的CPU时间也会越多。如果是整数值的，那么验证操作的复杂度为O(1)；如果是字符串值得，那么复杂度就会为O(n)\n对象空转时长 前面介绍了 redisObject 的四个属性为 type、encoding、ptr 和 refcount 。那么还存在最后一个属性，即 lru，记录 对象最后一次被命令程序访问的时间\n1 2 3 4 5 6 7 8 9 10 typedef struct redisObject{ // 类型 unsigned type:4; // 强制占4位 // 编码 unsigned encoding:4; // 指向底层实现数据结构的指针 void *ptr; int refcount; unsigned lru:22; } OBJECT IDLETIME 命令打印出其空转时长，而这一空转时长是通过将当前时间减去键的值对象的lru时间得出的\n1 2 3 4 5 6 7 8 9 redis\u003e SET msg \"hello world\" OK # 等待一段时间 redis\u003e OBJECT IDLETIME msg (integer) 20 redis\u003e GET msg \"hello world\" redis\u003e OBJECT IDLETIME msg () ",
+  "wordCount" : "6721",
+  "inLanguage": "en",
+  "datePublished": "2022-03-28T19:12:12Z",
+  "dateModified": "2022-03-28T19:12:12Z",
+  "author":{
+    "@type": "Person",
+    "name": "Noodles2hg"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Noodles2hg的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://z-anshun.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://z-anshun.github.io/en/" accesskey="h" title="Noodles2hg&#39;s Blog (Alt + H)">
+                <img src="https://z-anshun.github.io/images/jmy.jpg" alt="" aria-label="logo"
+                    height="35">Noodles2hg&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://z-anshun.github.io/en/search/" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://z-anshun.github.io/en/">Home</a>&nbsp;»&nbsp;<a href="https://z-anshun.github.io/en/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://z-anshun.github.io/en/posts/read/">📕阅读</a></div>
+    <h1 class="post-title entry-hint-parent">
+      底层结构
+    </h1>
+    <div class="post-meta"><span title='2022-03-28 19:12:12 +0000 UTC'>2022-03-28</span>&nbsp;·&nbsp;14 min&nbsp;·&nbsp;Noodles2hg
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%8a%a8%e6%80%81%e5%ad%97%e7%ac%a6%e4%b8%b2" aria-label="动态字符串">动态字符串</a></li>
+                <li>
+                    <a href="#%e9%93%be%e8%a1%a8" aria-label="链表">链表</a></li>
+                <li>
+                    <a href="#%e5%ad%97%e5%85%b8" aria-label="字典">字典</a><ul>
+                        
+                <li>
+                    <a href="#%e5%93%88%e5%b8%8c%e8%a1%a8" aria-label="哈希表">哈希表</a></li>
+                <li>
+                    <a href="#%e5%ad%97%e5%85%b8-1" aria-label="字典">字典</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e8%b7%b3%e8%a1%a8" aria-label="跳表">跳表</a><ul>
+                        
+                <li>
+                    <a href="#%e8%b7%b3%e8%a1%a8%e8%8a%82%e7%82%b9" aria-label="跳表节点">跳表节点</a></li>
+                <li>
+                    <a href="#%e8%b7%b3%e8%b7%83%e8%a1%a8" aria-label="跳跃表">跳跃表</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%95%b4%e6%95%b0%e9%9b%86%e5%90%88" aria-label="整数集合">整数集合</a></li>
+                <li>
+                    <a href="#%e5%8e%8b%e7%bc%a9%e5%88%97%e8%a1%a8" aria-label="压缩列表">压缩列表</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8e%8b%e7%bc%a9%e5%88%97%e8%a1%a8%e7%9a%84%e6%9e%84%e6%88%90" aria-label="压缩列表的构成">压缩列表的构成</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8e%8b%e7%bc%a9%e8%8a%82%e7%82%b9" aria-label="压缩节点">压缩节点</a></li>
+                <li>
+                    <a href="#%e8%bf%9e%e9%94%81%e6%9b%b4%e6%96%b0" aria-label="连锁更新">连锁更新</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%af%b9%e8%b1%a1" aria-label="对象">对象</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%af%b9%e8%b1%a1" aria-label="字符串对象">字符串对象</a></li>
+                <li>
+                    <a href="#%e5%88%97%e8%a1%a8%e5%af%b9%e8%b1%a1" aria-label="列表对象">列表对象</a></li>
+                <li>
+                    <a href="#%e5%93%88%e5%b8%8c%e5%af%b9%e8%b1%a1" aria-label="哈希对象">哈希对象</a></li>
+                <li>
+                    <a href="#%e9%9b%86%e5%90%88%e5%af%b9%e8%b1%a1" aria-label="集合对象">集合对象</a></li>
+                <li>
+                    <a href="#%e6%9c%89%e5%ba%8f%e9%9b%86%e5%90%88%e5%af%b9%e8%b1%a1" aria-label="有序集合对象">有序集合对象</a></li>
+                <li>
+                    <a href="#%e7%b1%bb%e5%9e%8b%e6%a3%80%e6%9f%a5" aria-label="类型检查">类型检查</a></li>
+                <li>
+                    <a href="#%e5%86%85%e5%ad%98%e5%9b%9e%e6%94%b6" aria-label="内存回收">内存回收</a></li>
+                <li>
+                    <a href="#%e5%af%b9%e8%b1%a1%e5%85%b1%e4%ba%ab" aria-label="对象共享">对象共享</a></li>
+                <li>
+                    <a href="#%e5%af%b9%e8%b1%a1%e7%a9%ba%e8%bd%ac%e6%97%b6%e9%95%bf" aria-label="对象空转时长">对象空转时长</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="动态字符串">动态字符串<a hidden class="anchor" aria-hidden="true" href="#动态字符串">#</a></h1>
+<p>SDS（simple dynamic string），简单动态字符串</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">struct</span> sdshdr{
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">int</span> len; <span style="color:#007f7f">// 当前的长度
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> free;<span style="color:#007f7f">// 可使用的空间
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">char</span> buf[];<span style="color:#007f7f">// 
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：SDS遵循C字符串以空字符结尾的惯例，即<code>\0</code>,所以在len里面没算上这个char，对用户来说是透明的。好处是重用C的函数</p>
+<blockquote>
+<p>为什么不跟C一样，直接存储字符串？</p>
+</blockquote>
+<ol>
+<li>获取字符串长度的时间复杂度为O(1)，便于<code>STRLEN</code>等命令</li>
+<li>杜绝缓冲区溢出，比如：在调用<code>strcat(char *dest,const char *src)</code>时，导致拼接的遍历过长，覆盖到其它变量</li>
+<li>减少内存重新分配的次数</li>
+<li>惰性空间释放</li>
+<li>二进制安全（binary-safe），使用二进制存储，len判断何时终止，以致于存什么，拿出来就是什么</li>
+<li>C函数的重用<code>strcasecmp</code></li>
+</ol>
+<h1 id="链表">链表<a hidden class="anchor" aria-hidden="true" href="#链表">#</a></h1>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> listNode{
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">struct</span> listNode *pre;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">struct</span> listNode *next;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">void</span> *value;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> list{
+</span></span><span style="display:flex;"><span>    listNode *head;
+</span></span><span style="display:flex;"><span>    listNode *tail;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">long</span> len;<span style="color:#007f7f">// 长度
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> *(*dup)(<span style="color:#fff;font-weight:bold">void</span> *ptr); <span style="color:#007f7f">//节点复制函数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> (*free)(<span style="color:#fff;font-weight:bold">void</span> *ptr);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> (*match)(<span style="color:#fff;font-weight:bold">void</span> *ptr,<span style="color:#fff;font-weight:bold">void</span> *key);
+</span></span><span style="display:flex;"><span>}list;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="字典">字典<a hidden class="anchor" aria-hidden="true" href="#字典">#</a></h1>
+<h2 id="哈希表">哈希表<a hidden class="anchor" aria-hidden="true" href="#哈希表">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> dictht{
+</span></span><span style="display:flex;"><span>    dictEntry **table;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">long</span> size; <span style="color:#007f7f">// 大小
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">long</span> sizemask; <span style="color:#007f7f">// 索引值，等于size-1
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">long</span> used;
+</span></span><span style="display:flex;"><span>}dictht;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> dictEntry{
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">void</span> *key;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">union</span>{
+</span></span><span style="display:flex;"><span>       <span style="color:#fff;font-weight:bold">void</span> *val;
+</span></span><span style="display:flex;"><span>       uint64 _tu64;
+</span></span><span style="display:flex;"><span>       int64 _ts64; 
+</span></span><span style="display:flex;"><span>    }v;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">struct</span> dictEntry *next; <span style="color:#007f7f">// 指向下一个节点，用来解决哈希冲突
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}dictEntry;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="https://s2.loli.net/2022/03/20/OY2ZvMn3UI8g59w.png" alt="image-20220320224141826"  />
+</p>
+<h2 id="字典-1">字典<a hidden class="anchor" aria-hidden="true" href="#字典-1">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> dict{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 特定的类型,指向 dictType 结构的指针
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    dictType *type;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 私有数据，保存需要传给哪些类型特定函数的可选参数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> *privdata;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// hash 表
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    dictht ht[<span style="color:#ff0;font-weight:bold">2</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// rehash 索引
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> rehashidx;
+</span></span><span style="display:flex;"><span>}dict;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> dictType{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 计算对应的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">int</span> (*hashFunction)(<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">void</span> *key);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 复制键
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> *(*keyDup)(<span style="color:#fff;font-weight:bold">void</span> *privdata,<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">void</span> *key);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 复制值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> *(*valDup)(<span style="color:#fff;font-weight:bold">void</span> *privdata,<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">void</span> *obj);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 对比键
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> (*keyCompare)(<span style="color:#fff;font-weight:bold">void</span> *privdata,<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">void</span> *key1,<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">void</span> *key2);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 销毁键
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> (*keyDestructor)(<span style="color:#fff;font-weight:bold">void</span> *privdata,<span style="color:#fff;font-weight:bold">void</span> *key);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 销毁值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> (*valDestructor)(<span style="color:#fff;font-weight:bold">void</span> *privdata,<span style="color:#fff;font-weight:bold">void</span> *obj);
+</span></span><span style="display:flex;"><span>}dictType;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="https://s2.loli.net/2022/03/20/rBzAag4dLCHYksX.png" alt="image-20220320231509728"  />
+</p>
+<p>将k0和v0添加到字典里面：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#007f7f">// 计算出k0的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>hash = dict-&gt;type-&gt;hashFunction(k0);
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 假设当前的hash值为0
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>index = hash&amp;dict-&gt;ht[<span style="color:#ff0;font-weight:bold">0</span>].sizemask <span style="color:#007f7f">// 8&amp;3 = 0;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="https://s2.loli.net/2022/03/20/pBdDeVuMPC7YnZk.png" alt="image-20220320234733914"  />
+</p>
+<p>注意：redis的hash冲突是使用链地址法来解决的，并且使用头插入法（因为没有记录链表尾节点，使其时间复杂度为O(1)）</p>
+<blockquote>
+<p>何时扩容？</p>
+</blockquote>
+<ul>
+<li>服务器目前没有执行 BGSAVE 或者 BGREWRITEAOF 命令，并且哈希表的负载因子大于等于1</li>
+<li>服务器正在执行 BGSAVE 或者 BGREWRITEAOF 命令，并且哈希表的负载因子&gt;=5</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#007f7f">// 负载因子=哈希表已保存节点数量/哈希表大小
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>load_factor=ht[<span style="color:#ff0;font-weight:bold">0</span>].used / ht[<span style="color:#ff0;font-weight:bold">0</span>].size;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>何时执行移动？</p>
+</blockquote>
+<p>每一次操作，和定时。并且，新写入的kv，只会在ht[1]中</p>
+<blockquote>
+<p>为什么在执行时的要大于等于5?</p>
+</blockquote>
+<p>因为在执行 BGSAVE 或者 BGREWRITEAOF 命令时，Redis需要创建子进程，而大多数操作系统都是使用的COW（copy-on-write）技术来优化子程序的使用效率，所以在子程序执行期间，应尽量避免扩展，避免不必要的内存写入操作，最大限度地节约内存</p>
+<blockquote>
+<p>rehash 渐进式hash的过程如何？</p>
+</blockquote>
+<ol>
+<li>ht[1]分配空间，使其 2^n&gt;ht[0].size （这里的2^n 为ht[1]的空间大小）</li>
+<li>在dict中维护一个rehashidx变量，设置为0，表示开始</li>
+<li>在rehash期间，除了对字典执行指定操作外，还有将rehashidx索引上在ht[0]对应的键值对移向ht[1]然后rehashidx++</li>
+<li>所有移动完后，rehashidx=-1，并将dict-&gt;ht[0]=dict-&gt;ht[1]</li>
+</ol>
+<blockquote>
+<p>为什么扩容时为2的次方？</p>
+</blockquote>
+<p>使sizemark为2^n-1，与它求并集代替求余，使其效率更高</p>
+<h1 id="跳表">跳表<a hidden class="anchor" aria-hidden="true" href="#跳表">#</a></h1>
+<p>skiplist</p>
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220321232440597.png" alt="image-20220321232440597" style="zoom:67%;" />
+<p>zskiplist:</p>
+<ul>
+<li>header：跳跃表的表头节点</li>
+<li>tail：尾节点</li>
+<li>level：当前层数最大的那个节点的层数</li>
+<li>length：跳跃表包含节点的数量</li>
+</ul>
+<p>zskiplistNode:</p>
+<ul>
+<li>层（level）：节点中L1、L2、L3等字样标记节点的各个层，每层带有两个属性：
+<ul>
+<li>前进指针：访问下一个节点</li>
+<li>跨度：上图中带有箭头指针上的数字</li>
+</ul>
+</li>
+<li>后退（backwark）指针：图中的BW</li>
+<li>分值（score）：对应的值</li>
+<li>成员对象（obj）：图中的o1、o2、o3，表示对象</li>
+</ul>
+<h2 id="跳表节点">跳表节点<a hidden class="anchor" aria-hidden="true" href="#跳表节点">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> zskiplistNode{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 层
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">struct</span> zskiplistLevel{
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 前进指针
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">struct</span> zskiplistNode * forward;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 当前跨度
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">int</span> span;
+</span></span><span style="display:flex;"><span>    } level[];
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 后退指针
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">struct</span> zskiplistNode *backward;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 分值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">double</span> score;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 成员对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    robj *obj;
+</span></span><span style="display:flex;"><span>}zskiplistNode;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>层：每次创建节点时，根据幂次定律（power law，某件事的发生频率和它的某个属性成幂关系，即越大的出现概率越小）随机生成一个level大小（1~32）</li>
+<li>前近指针</li>
+<li>跨度：记录两个节点之间的距离，如果下一个为NULL，其值就为0。其还有一个作用，用来<strong>计算rank</strong>（排名），在查找某个节点的过程中，将跨度累计起来，就是目标节点在跳跃表中的排位</li>
+<li>后退指针：可实现从表尾至表头的遍历</li>
+<li>分值和成员：分值为 double，成员为一个SDS的字符串</li>
+</ul>
+<h2 id="跳跃表">跳跃表<a hidden class="anchor" aria-hidden="true" href="#跳跃表">#</a></h2>
+<p>管理多个跳跃节点</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> zskiplist{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 表头和表尾节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">struct</span> zskiplistNode *header,*tail;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 表中节点的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> <span style="color:#fff;font-weight:bold">long</span> length;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 表中层数最大的节点的层数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> level;
+</span></span><span style="display:flex;"><span>}zskiplist
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="整数集合">整数集合<a hidden class="anchor" aria-hidden="true" href="#整数集合">#</a></h1>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> intset{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 编码方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">uint32_t</span> encoding;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 该集合包含的元素数量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">uint32_t</span> length;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 保存元素的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int8_t</span> contents[];
+</span></span><span style="display:flex;"><span>}intset;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：contents中的元素并不一定是int8_t，需要根据encoding来判断</p>
+<p><strong>升级</strong></p>
+<p>升级整数集合并添加新元素：</p>
+<ol>
+<li>根据新元素类型，扩展整数集合底层数组的空间大小，并为其分配新空间</li>
+<li>将底层数组现有的元素都转换成与新元素相同的类型，并按原位放置</li>
+<li>将新元素添加</li>
+</ol>
+<p>注意：因为要触发升级，就证明当前的类型不足以满足新值，那么一定是更小、或者更大的，这就导致新元素要么在<code>content</code>的第一个或者最后一个</p>
+<p><strong>升级的好处在于 提升整数集合的灵活性格 和 尽可能地节约内存</strong></p>
+<ul>
+<li>提升灵活性：因为能自动升级，那么也就能避免错误，使其用法更加灵活</li>
+<li>一开始使用 int16_t 类型，等遇到了 int32_t 和 int64_t 时，再进行升级，就能尽可能的节约内存</li>
+</ul>
+<p>注意：整数集合并不支持降级的操作，一旦对数组进行了升级，那么编码就会一直保持升级的状态</p>
+<h1 id="压缩列表">压缩列表<a hidden class="anchor" aria-hidden="true" href="#压缩列表">#</a></h1>
+<p>ziplist，是<strong>列表键和哈希键</strong>的底层实现之一。</p>
+<p>当一个列表 键只包含少量列表项，并且每个<strong>列表项</strong>要么是小整数，要么就是长度比较短的字符串，那么 Redis 就会使用压缩列表来做列表键的底层实现</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; RPUSH lst <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#ff0;font-weight:bold">3</span> <span style="color:#ff0;font-weight:bold">5</span> <span style="color:#ff0;font-weight:bold">10086</span> <span style="color:#0ff;font-weight:bold">&#34;hello&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;world&#34;</span>
+</span></span><span style="display:flex;"><span>(integer)<span style="color:#ff0;font-weight:bold">6</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING lst
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;ziplist&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外，当一个哈希键只包含少量键值对，并且每个键值对的<strong>键和值</strong>要么为小整数值，或者比较短的字符串，那么 Redis 也会使用压缩列表来做哈希键的实现</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; HMSET profile <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;Jack&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;age&#34;</span> <span style="color:#ff0;font-weight:bold">28</span> <span style="color:#0ff;font-weight:bold">&#34;job&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;Programmer&#34;</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING profile
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;ziplist&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="压缩列表的构成">压缩列表的构成<a hidden class="anchor" aria-hidden="true" href="#压缩列表的构成">#</a></h2>
+<p>压缩列表是为了节约redis内存而开发的，由一系列特殊编码的连续内存块组成的顺序型（sequential）数据结构。</p>
+<p>一个压缩列表可以包含任意多个节点（entry），每个节点可以保存一个字节数组或者一个整数值</p>
+<p><img loading="lazy" src="https://s2.loli.net/2022/03/25/o438KkBYQuOwbJx.png" alt="image-20220325235637048"  />
+</p>
+<ul>
+<li>zlbytes：uint32_t 类型，4 字节，记录整个压缩列表占用的内存字节数；在对压缩列表进行重新内存分配，或者计算 zlend 的位置时使用</li>
+<li>zltial：uint32_t 类型，4字节，记录压缩列表表尾节点距离压缩列表的起始地址有多少个字节；通过这个变量，程序无需遍历，直接找到表尾节点的地址（这里的起始指的整个列表的开始位置，即zlbytes的地址）</li>
+<li>zllen：uint16_t 类型，2字节，记录压缩列表包含的节点数量（注意：当这个属于小于 UINT16_MAX，也就是65535 的 时候，这个属性就是这个列表包含节点的数量，反之，大于时，就需要遍历才能知道真实的节点数量）</li>
+<li>extryX：列表节点，长度由列表节点自己定</li>
+<li>zlend：uint8_t类型，特殊值 0xFF（255）,用于标记压缩列表的末端</li>
+</ul>
+<h3 id="压缩节点">压缩节点<a hidden class="anchor" aria-hidden="true" href="#压缩节点">#</a></h3>
+<p><img loading="lazy" src="https://s2.loli.net/2022/03/26/8J1Mpl4yBt5Qojr.png" alt="image-20220326000857699"  />
+</p>
+<ul>
+<li>
+<p>previous_entry_length：表示前一个节点的长度，当前一个节点小于254长度时，该属性占用1字节，当大于254，该属性会占用5个字节，第一个字节设置为254，后面4个字节再表示长度</p>
+</li>
+<li>
+<p>encoding：记录节点的content属性所保存数据的类型以及长度。类型使用一个字节长度表示，以11开头，长度由1、2、或5字节长度表示，即当前字节<strong>数组的长度</strong></p>
+<p><img loading="lazy" src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220326232010369.png" alt="image-20220326232010369"  />
+</p>
+</li>
+</ul>
+<p>​	如：00001011，则表示这是一个字节数组，长度为1011，即11长度，content就可为“hello world”</p>
+<p>​	如：11000000，则表示一个int16_t的整数类型，content就可以为 10086。</p>
+<ul>
+<li>content：保存节点的值，节点值可以是一个字节数组或者整数，值的类型和长度，由节点的encode属性决定</li>
+</ul>
+<h3 id="连锁更新">连锁更新<a hidden class="anchor" aria-hidden="true" href="#连锁更新">#</a></h3>
+<p>当某个节点的entry为250~253字节时，后面一个节点的previous_entry_length就只占一个字节，但，当前面插入一个大于254字节的时候，这时候，这个节点的previous_entry_length就需要改成5个字节，即使大于了254，那么后面一个节点也需要改变</p>
+<p>最坏情况下，需要N次分配，每次空间重新分配都需要 O(n)，那么时间复杂度就为O(n^2)</p>
+<p>但是这种多个连续节点在250~253字节的情况并不多见，而且，只要被更新的节点数不多，也不会对性能造成什么影响</p>
+<p>因此，ziplistPush 等命令的平均复杂度还是O(n)</p>
+<h1 id="对象">对象<a hidden class="anchor" aria-hidden="true" href="#对象">#</a></h1>
+<p>在 Redis 中用对象来表示数据库中的键和值，每当创建一个键值对时，都会至少创建2个对象</p>
+<p>如</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET msg <span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就会存储2个对象，一个包含了字符串值“msg”的对象，另一个包含了字符串值“hello world”的对象</p>
+<p>而Redis中每一个对象都由 redisObject 结构表示</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> redisObject {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 类型
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> type:<span style="color:#ff0;font-weight:bold">4</span>; <span style="color:#007f7f">// 强制占4位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// 编码
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> encoding:<span style="color:#ff0;font-weight:bold">4</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指向底层实现数据结构的指针
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> *ptr;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}robj;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>类型</strong></p>
+<p>虽然对于 Redis 的键值对来说，键总是一个字符串对象，但值可以是一个字符串对象、列表对象、哈希对象、集合对象或者有序集合对象</p>
+<p>因此，当我们使用 type 命令时，命令返回的结果为值对应的对象</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; TYEP msg
+</span></span><span style="display:flex;"><span>string
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>编码和底层实现</strong></p>
+<p>对象的ptr指针指向对象的底层实现数据结构，而这些属性都是由对象的encoding属性决定的</p>
+<p>encoding所包含的属性有 long类型的整数、embstr 编码的简单动态字符串、简单动态字符串、字典、双端链表、压缩列表、整数集合、跳跃表和字典</p>
+<p>并且每种类型的对象至少使用了两种不同的编码</p>
+<p>使用 <code>OBJECT ENCODING</code>可以查看值对象的编码</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; OBJECT ENCODING msg
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;emstr&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; SET story <span style="color:#0ff;font-weight:bold">&#34;long long long long long long ago...&#34;</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>reids&gt; OBJECT ENCODING story
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;raw&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 encoding 属性，能够极大的提高 Redis 的灵活性和效率，根据不同场景来为同一个对象设置不同的编码，从而优化对象在某一场景下的效率</p>
+<p>比如：在列表元素较少时，使用压缩列表作为列表对象的底层实现</p>
+<h2 id="字符串对象">字符串对象<a hidden class="anchor" aria-hidden="true" href="#字符串对象">#</a></h2>
+<p>字符串对象可以是 int、raw或者emstr</p>
+<ol>
+<li>如果一个字符串对象保存的为整数值，并且这个值可以使用long类型来表示，那么字符串对象的编码设置为int</li>
+</ol>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET number <span style="color:#ff0;font-weight:bold">10086</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING number
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;int&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327180552328.png" alt="image-20220327180552328" style="zoom:33%;" />
+<ol start="2">
+<li>如果保存的是一个字符值，并且这个字符值的长度大于32字节，那么就会使用一个SDS来保存，并将对象的编码设置为raw</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET story <span style="color:#0ff;font-weight:bold">&#34;Long, long ago there lived a king...&#34;</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; STRLEN story
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">37</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING story
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;raw&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327181051298.png" alt="image-20220327181051298" style="zoom:50%;" />
+<ol start="3">
+<li>如果保存对象是一个字符串值，并且长度小于等于32字节，那么将会使用embstr 编码的方式来保存</li>
+</ol>
+<p>embstr编码是一个用于保存短字符串的方法，其底层也是使用redisObject和sds实现的，但是只分配一次内存空间，且redisObject和sds为连续的空间，而不用为两个分别分配</p>
+<blockquote>
+<p>使用 embstr 保存短字符串，有什么好处？</p>
+</blockquote>
+<ul>
+<li>只用分配一次内存</li>
+<li>释放也只用一次就行</li>
+<li>因为在一块连续的内存中，能更好的利用缓存</li>
+</ul>
+<ol start="4">
+<li>如果保存为 long doubule 类型的浮点数，在 Redis 中也是使用字符串来保存的。也就是，如果我们需要保存一个浮点数，那么会将其转为字符串值，再保存</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET pi 3.14
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING pi
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;embstr&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一定条件下，int编码的字符串对象和embstr 编码的字符串对象在条件满足的情况下，会被转换为raw编码的字符串对象</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET number <span style="color:#ff0;font-weight:bold">10086</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING number
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;int&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; APPEND number <span style="color:#0ff;font-weight:bold">&#34; is a number&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">23</span>
+</span></span><span style="display:flex;"><span>redis&gt; GET number
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;10086 is a number&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING number
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;raw&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外，Redis没有为embstr 编码的字符串对象编写任何相应的修改程序（只有int和raw有），所以 embstr 编码的字符串实际上是只读。</p>
+<p>所以对embstr编码的字符串对象的修改命令，都是先转换成raw，再执行，所以在对 embstr 编码的字符串对象执行修改命令后，都会变成一个 raw 编码的字符串对象</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET msg <span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING msg
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;embstr&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; APPEND msg <span style="color:#0ff;font-weight:bold">&#34; agein&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">18</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING msg
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;raw&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="列表对象">列表对象<a hidden class="anchor" aria-hidden="true" href="#列表对象">#</a></h2>
+<p>列表对象的编码可以是ziplist或者linkedlist</p>
+<p>注意，linkedlist 编码的列表在底层的双端链表结构中包含了多个字符串对象，字符串对象是 Redis 五种类型的对象中唯一一种会被其它四种类型对象嵌套的对象</p>
+<blockquote>
+<p>列表对象何时使用 ziplist 编码？</p>
+</blockquote>
+<ul>
+<li>列表对象保存的所有字符串元素的长度都小于64字节</li>
+<li>保存的元素数量小于512个</li>
+</ul>
+<p>注意：上面两个上限是可以修改的变量，list-max-ziplist-value和list-max-ziplist-entries</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; RPUSH blah <span style="color:#0ff;font-weight:bold">&#34;hello&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;world&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;again&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING blah
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;ziplist&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 将65字节长的放入</span>
+</span></span><span style="display:flex;"><span>redis&gt; RPUSH blsh <span style="color:#0ff;font-weight:bold">&#34;wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">4</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING blah
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;linkedlist&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="哈希对象">哈希对象<a hidden class="anchor" aria-hidden="true" href="#哈希对象">#</a></h2>
+<p>哈希对象的编码可以是 ziplist 或 hashtable</p>
+<p>当使用 ziplist 实现时，有新键值对要加入哈希对象时，会先将键压缩至列表尾部，然后再将值放入</p>
+<p>因此：</p>
+<ul>
+<li>压缩列表的实现的哈希的键值对是紧挨在一起</li>
+<li>先添加的就会在前面，后来的就在后面</li>
+</ul>
+<p>当使用hashtable编码是现实时，其键值对都是一个字符串对象</p>
+<img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327230702869.png" alt="image-20220327230702869" style="zoom: 33%;" />
+<blockquote>
+<p>何时为 ziplist 编码实现哈希对象？</p>
+</blockquote>
+<ul>
+<li>键值对的字符串长度都小于64字节</li>
+<li>保存的键值对数量小于512个</li>
+</ul>
+<p>当然，可以改变配置 hash-max-ziplist-value 和 hash-max-ziplist-entries</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; HSET book name <span style="color:#0ff;font-weight:bold">&#34;Mastering&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING book
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;ziplist&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; HSET book long_long_long_long_long_long_long_long_long_long_long_long_long_long_description <span style="color:#0ff;font-weight:bold">&#34;content&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING book
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;hashtable&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="集合对象">集合对象<a hidden class="anchor" aria-hidden="true" href="#集合对象">#</a></h2>
+<p>集合对象的编码可以是intset或者 hashtable</p>
+<p>intset 编码的集合对象使用整数集合作为底层实现，集合对象包含的所有元素都被保存在整数集合里面</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SADD number <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#ff0;font-weight:bold">3</span> <span style="color:#ff0;font-weight:bold">5</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">3</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327234018347.png" alt="image-20220327234018347" style="zoom:50%;" />
+<p>hashtable 编码实现时，字典的每个<strong>键都是一个字符串对象</strong>，每个字符串对象包含了一个集合元素，而字典的值则全部设为 NULL。因为 dict的table为多个entry，含有k v</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SADD Dfruits <span style="color:#0ff;font-weight:bold">&#34;apple&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;banana&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;cherry&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">3</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220327234344125.png" alt="image-20220327234344125" style="zoom:50%;" />
+<blockquote>
+<p>何时使用 intset 编码？</p>
+</blockquote>
+<ul>
+<li>集合对象保存的所有元素为整数值</li>
+<li>保存元素数量不超过 512 个</li>
+</ul>
+<p>注意：元素上限数量是可以改变的，set-max-intset-entries</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SADD numbers <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#ff0;font-weight:bold">3</span> <span style="color:#ff0;font-weight:bold">5</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING numbers
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;intset&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; SADD numbers <span style="color:#0ff;font-weight:bold">&#34;seven&#34;</span>
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING numbers
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;hashtables&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="有序集合对象">有序集合对象<a hidden class="anchor" aria-hidden="true" href="#有序集合对象">#</a></h2>
+<p>有序集合的编码可以是 ziplist 或者 skiplist</p>
+<p>ziplist 编码实现的有序集合，类似哈希。只是有序集合将成员（member）放在前面，分数（score）放在后面，而且有序集合的分值从小到大排，将分值小的放在表头，分值大的，放在表尾</p>
+<p><img loading="lazy" src="https://s2.loli.net/2022/03/28/P8IQb6xBZjRpszh.png" alt="image-20220328001406857"  />
+</p>
+<p>skiplist编码的有序集合，使用zet结构作为底层实现，一个zet包含一个字典和一个跳跃表</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>typedef struct zset{
+</span></span><span style="display:flex;"><span>	zskiplist *zsl;
+</span></span><span style="display:flex;"><span>	dict *dict;
+</span></span><span style="display:flex;"><span>}zset;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>为了什么有序集合需要同时使用跳表和字典？</p>
+</blockquote>
+<p>保证查找和排序时，都能有更好的性能。以空间换时间。并且字典和跳跃表会共享元素的成员和分值，所有不会造成数据重复，也不会浪费内存</p>
+<blockquote>
+<p>何时使用 ziplist？</p>
+</blockquote>
+<ul>
+<li>有序集合保存的元素数量小于 128 个</li>
+<li>长度都小于 64 字节</li>
+</ul>
+<p>当然，以上条件可以使用 zset-max-ziplist-entries 和 zset-max-ziplist-value 进行修改</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; EVAL <span style="color:#0ff;font-weight:bold">&#34;for i=1, 128 do redis.call(&#39;ZADD&#39;,KEYS[1],i,i) end&#34;</span> <span style="color:#ff0;font-weight:bold">1</span> numbers
+</span></span><span style="display:flex;"><span>(nil)
+</span></span><span style="display:flex;"><span>redis&gt; ZCARD numbers
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">128</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING numbers
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;ziplist&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; ZADD numbers 3.14 pi
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>redis&gt; ZCARD numbers
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">129</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT ENCODING numbers
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;skiplist&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="类型检查">类型检查<a hidden class="anchor" aria-hidden="true" href="#类型检查">#</a></h2>
+<p>Redis 的命令可以分为两种类型，一种是可以对任何类型的键执行，如：DEL、EXPRIRE、RENAME等；一种只能对特定类型的键执行，如：SET、HEDL、ZADD等</p>
+<blockquote>
+<p>如何实现的类型检查？</p>
+</blockquote>
+<p>因为对特定类型的键执行时，肯定时需要做类型检查的，也就是对 redisObject 结构的 type 属性进行检查</p>
+<blockquote>
+<p>如何实现多态命令？即根据值的对象，选择正确的编码方式</p>
+</blockquote>
+<p>比如，我们执行 LLEN 命令时，无论对象为 ziplist，还是 linkedlist，都会使用对应 API 返回相应的结果。；类似 DEL、EXPIRE等和LLEN等命令，但前者是基于类型的多态，后者是基于编码的多态</p>
+<h2 id="内存回收">内存回收<a hidden class="anchor" aria-hidden="true" href="#内存回收">#</a></h2>
+<p>Redis 的内存回收是引用技术实现的</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> redisObject{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 引用计数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> refcount;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}robj;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>计数信息如何变化？</p>
+</blockquote>
+<ul>
+<li>在创建一个新对象时，会被初始化为1</li>
+<li>在被一个新程序使用时，会+1，不再被引用时，会-1</li>
+<li>变为0时，会被释放掉</li>
+</ul>
+<h2 id="对象共享">对象共享<a hidden class="anchor" aria-hidden="true" href="#对象共享">#</a></h2>
+<p>对于redisObject，如果多个键指向的值都是一样的，那么都会指向同一个值对象。而没多一个引用，refcount就会+1</p>
+<p>一般来说，redis初始化时，会创建一万个字符串对象，包含 0~9999的所有整数。因此，当服务器需要使用时，便会直接引用，而不需要再创建</p>
+<p>注意：这个数量可以通过 redis.h/REDIS_SHARED_INTEGERS 常量来进行修改</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET A <span style="color:#ff0;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT REFCOUNT A
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span>redis&gt; SET B <span style="color:#ff0;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT REFCOUNT A
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT REFCOUNT B
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">3</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="C:/Users/yan/AppData/Roaming/Typora/typora-user-images/image-20220328181906340.png" alt="image-20220328181906340" style="zoom:50%;" />
+<p>注意：这些共享并不是只有字符串键可以使用，而只要在数据结构中嵌套了字符串对象（如：linkedlist的列表对象、hashtable编码的集合对象都行）</p>
+<blockquote>
+<p>为什么 Redis 不共享包含字符串的对象？即 raw或embstr</p>
+</blockquote>
+<p>因为在共享时，需要验证该内容是否完全一样，那么如果该结构越复杂，验证共享对象和目前对象的复杂度就会越高，进行消耗的CPU时间也会越多。如果是整数值的，那么验证操作的复杂度为O(1)；如果是字符串值得，那么复杂度就会为O(n)</p>
+<h2 id="对象空转时长">对象空转时长<a hidden class="anchor" aria-hidden="true" href="#对象空转时长">#</a></h2>
+<p>前面介绍了 redisObject 的四个属性为 type、encoding、ptr 和 refcount 。那么还存在最后一个属性，即 lru，记录 对象最后一次被命令程序访问的时间</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">typedef</span> <span style="color:#fff;font-weight:bold">struct</span> redisObject{
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 类型
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> type:<span style="color:#ff0;font-weight:bold">4</span>; <span style="color:#007f7f">// 强制占4位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// 编码
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">unsigned</span> encoding:<span style="color:#ff0;font-weight:bold">4</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指向底层实现数据结构的指针
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">void</span> *ptr;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> refcount;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">unsigned</span> lru:<span style="color:#ff0;font-weight:bold">22</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>OBJECT IDLETIME 命令打印出其空转时长，而这一空转时长是通过将当前时间减去键的值对象的lru时间得出的</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>redis&gt; SET msg <span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span>
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 等待一段时间</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT IDLETIME msg
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">20</span>
+</span></span><span style="display:flex;"><span>redis&gt; GET msg
+</span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span>
+</span></span><span style="display:flex;"><span>redis&gt; OBJECT IDLETIME msg
+</span></span><span style="display:flex;"><span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://z-anshun.github.io/en/tags/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">Redis设计与实现</a></li>
+      <li><a href="https://z-anshun.github.io/en/tags/books/">Books</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>单机数据库的实现</span>
+  </a>
+  <a class="next" href="https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E6%9E%84%E9%80%A0%E5%AE%B9%E5%99%A8%E5%92%8C%E9%95%9C%E5%83%8F/">
+    <span class="title">Next »</span>
+    <br>
+    <span>构造容器和镜像实现原理</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on x"
+            href="https://x.com/intent/tweet/?text=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84&amp;url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f&amp;hashtags=redis%e8%ae%be%e8%ae%a1%e4%b8%8e%e5%ae%9e%e7%8e%b0%2cBooks">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f&amp;title=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84&amp;summary=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84&amp;source=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f&title=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on whatsapp"
+            href="https://api.whatsapp.com/send?text=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84%20-%20https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on telegram"
+            href="https://telegram.me/share/url?text=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84&amp;url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 底层结构 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=%e5%ba%95%e5%b1%82%e7%bb%93%e6%9e%84&u=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2fredis%25E8%25AE%25BE%25E8%25AE%25A1%25E4%25B8%258E%25E5%25AE%259E%25E7%258E%25B0%2f%25E5%25BA%2595%25E5%25B1%2582%25E7%25BB%2593%25E6%259E%2584%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://z-anshun.github.io/en/">Noodles2hg的博客</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

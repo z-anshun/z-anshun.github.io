@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Redis on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/redis/</link>
+    <description>Recent content in Redis on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 01 Feb 2022 20:45:37 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>缓存穿透、雪崩、击穿</title>
+      <link>https://z-anshun.github.io/en/posts/blog/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E9%9B%AA%E5%B4%A9%E5%87%BB%E7%A9%BF/</link>
+      <pubDate>Tue, 01 Feb 2022 20:45:37 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/blog/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E9%9B%AA%E5%B4%A9%E5%87%BB%E7%A9%BF/</guid>
+      <description>缓存穿透 指查询一个不存在的数据，那么肯定缓存里没有，就会查找DB，如果DB也没有，那么就不会写入缓存，这就是会导致每次对该数据查询的时候都要</description>
+    </item>
+  </channel>
+</rss>

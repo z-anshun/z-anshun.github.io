@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>BFS on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/bfs/</link>
+    <description>Recent content in BFS on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 22 Jan 2022 22:53:29 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/bfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>跳跃游戏</title>
+      <link>https://z-anshun.github.io/en/posts/blog/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/</link>
+      <pubDate>Sat, 22 Jan 2022 22:53:29 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/blog/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/</guid>
+      <description>题目： 1345. 跳跃游戏 IV 给你一个整数数组 arr ，你一开始在数组的第一个元素处（下标为 0）。 每一步，你可以从下标 i 跳到下标： i + 1 满足：i + 1 &amp;lt; arr.length i - 1</description>
+    </item>
+  </channel>
+</rss>

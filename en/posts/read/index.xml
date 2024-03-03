@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>📕阅读 on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/posts/read/</link>
+    <description>Recent content in 📕阅读 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 09 Apr 2022 20:24:12 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/posts/read/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>独立功能的实现</title>
+      <link>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E7%8B%AC%E7%AB%8B%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Sat, 09 Apr 2022 20:24:12 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E7%8B%AC%E7%AB%8B%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
+      <description>发布与订阅 Redis 的发布和订阅功能由 PUBLISH、SUBSCRIBE、PSUBSCRIBE 等命令组成 SUBSCRIBE 和 PSUBSCRIBE的区别在于，PSUB</description>
+    </item>
+    <item>
+      <title>多机数据库</title>
+      <link>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%A4%9A%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Sat, 09 Apr 2022 01:22:12 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%A4%9A%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>复制 用户通过执行 SLAVEOF 命令或设置 slaveof 选项，会让一个服务器成为另一个服务器的从服务器 如： 1 127.0.0.1:12345&amp;gt; SLAVEOF 127.0.0.1 6379 127.0.0.1:12345 就会成为 127.0.0.1:6379 的从服务器 旧版复制功能的实现 Redis 的复制分</description>
+    </item>
+    <item>
+      <title>单机数据库的实现</title>
+      <link>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Sun, 03 Apr 2022 23:26:22 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%8D%95%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
+      <description>数据库 服务器中的数据库 Redis 服务器将所有数据库都保存在服务器状态 redis.h/redisServer 结构的 db 数组中，db 数组的每一个项都是一个 redis.h/redisDb 结构 1 2 3 4 5 6 7 8 struct redisServer{ //... // 一个数</description>
+    </item>
+    <item>
+      <title>底层结构</title>
+      <link>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Mon, 28 Mar 2022 19:12:12 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84/</guid>
+      <description>动态字符串 SDS（simple dynamic string），简单动态字符串 1 2 3 4 5 6 7 struct sdshdr{ int len; // 当前的长度 int free;// 可使用的空间 char buf[];// } 注意：SDS遵循C字符</description>
+    </item>
+    <item>
+      <title>构造容器和镜像实现原理</title>
+      <link>https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E6%9E%84%E9%80%A0%E5%AE%B9%E5%99%A8%E5%92%8C%E9%95%9C%E5%83%8F/</link>
+      <pubDate>Sat, 26 Mar 2022 22:55:02 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E6%9E%84%E9%80%A0%E5%AE%B9%E5%99%A8%E5%92%8C%E9%95%9C%E5%83%8F/</guid>
+      <description>构造实现 Linux proc 文件系统 首先，Linux 下的 /proc 文件系统 是由内核提供的，它并不是一个真正的文件系统，只包含了运行时的信息（如：系统内存、挂载信息、</description>
+    </item>
+    <item>
+      <title>基础技术</title>
+      <link>https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Thu, 10 Mar 2022 18:12:37 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/</guid>
+      <description>Docker 什么是docker？ 一个开源工具，将应用打包为镜像，并以容器方式运行 Docker 容器具有下面三个特点： 轻量级：共享内核，并且因为镜像以分层文件系统构</description>
+    </item>
+  </channel>
+</rss>

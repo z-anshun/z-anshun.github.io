@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>每日命令 on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/%E6%AF%8F%E6%97%A5%E5%91%BD%E4%BB%A4/</link>
+    <description>Recent content in 每日命令 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 03 Mar 2022 23:57:21 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/%E6%AF%8F%E6%97%A5%E5%91%BD%E4%BB%A4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>find</title>
+      <link>https://z-anshun.github.io/en/posts/tech/linux/find/</link>
+      <pubDate>Thu, 03 Mar 2022 23:57:21 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/linux/find/</guid>
+      <description>find 在指定目录下查找文件 是findutil软件包的一部分，具有非常强大的灵活性，可以指定丰富的搜索条件（如文件权限、属主、属组、文件类型、日期</description>
+    </item>
+    <item>
+      <title>xargs</title>
+      <link>https://z-anshun.github.io/en/posts/tech/linux/xargs/</link>
+      <pubDate>Wed, 02 Mar 2022 20:04:56 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/linux/xargs/</guid>
+      <description>Xargs 给其他命令传递参数的一个过滤器 擅长将标准输入数据转换成命令行格式 用法 读取输入数据重新格式化输出 1 2 3 4 5 6 7 cat test.txt a b c d e f g h i j k l m</description>
+    </item>
+    <item>
+      <title>wc</title>
+      <link>https://z-anshun.github.io/en/posts/tech/linux/wc/</link>
+      <pubDate>Mon, 28 Feb 2022 22:27:02 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/linux/wc/</guid>
+      <description>wc 统计文件的字节数、字数、行数 若不指定其文件名，或给予的文件名为“-”，则wc会从标准输入设备读取数据 语法 1 2 3 wc(选项)(参数) wc [选项</description>
+    </item>
+    <item>
+      <title>lsof</title>
+      <link>https://z-anshun.github.io/en/posts/tech/linux/lsof/</link>
+      <pubDate>Tue, 22 Feb 2022 19:42:58 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/linux/lsof/</guid>
+      <description>lsof list open file 一个查看进程打开的文件的工具 在Linux中，一切皆文件。因此，通过文件不仅可以访问常规数据，还能访问网络连接和硬件。所有lsof不仅</description>
+    </item>
+    <item>
+      <title>sort</title>
+      <link>https://z-anshun.github.io/en/posts/tech/linux/sort%E5%92%8Cuniq/</link>
+      <pubDate>Mon, 21 Feb 2022 17:17:26 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/linux/sort%E5%92%8Cuniq/</guid>
+      <description>sort 对文本文件中所以进行排序，并将排序结果标准输出。 既可从指定文件输入，也可从 stdin 中获取输入 语法 1 sort [option]... [FILE]... 选项 -b：忽略开头的空白 -d：仅考虑空白</description>
+    </item>
+  </channel>
+</rss>

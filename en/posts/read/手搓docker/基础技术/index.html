@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>基础技术 | Noodles2hg的博客</title>
+<meta name="keywords" content="docker, books">
+<meta name="description" content="Docker 什么是docker？ 一个开源工具，将应用打包为镜像，并以容器方式运行 Docker 容器具有下面三个特点： 轻量级：共享内核，并且因为镜像以分层文件系统构">
+<meta name="author" content="Noodles2hg">
+<link rel="canonical" href="https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://z-anshun.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://z-anshun.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://z-anshun.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://z-anshun.github.io/Q.gif">
+<link rel="mask-icon" href="https://z-anshun.github.io/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="基础技术" />
+<meta property="og:description" content="Docker 什么是docker？ 一个开源工具，将应用打包为镜像，并以容器方式运行 Docker 容器具有下面三个特点： 轻量级：共享内核，并且因为镜像以分层文件系统构" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-10T18:12:37+00:00" />
+<meta property="article:modified_time" content="2022-03-10T18:12:37+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="基础技术"/>
+<meta name="twitter:description" content="Docker 什么是docker？ 一个开源工具，将应用打包为镜像，并以容器方式运行 Docker 容器具有下面三个特点： 轻量级：共享内核，并且因为镜像以分层文件系统构"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://z-anshun.github.io/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "📕阅读",
+      "item": "https://z-anshun.github.io/en/posts/read/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "基础技术",
+      "item": "https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "基础技术",
+  "name": "基础技术",
+  "description": "Docker 什么是docker？ 一个开源工具，将应用打包为镜像，并以容器方式运行 Docker 容器具有下面三个特点： 轻量级：共享内核，并且因为镜像以分层文件系统构",
+  "keywords": [
+    "docker", "books"
+  ],
+  "articleBody": "Docker 什么是docker？\n一个开源工具，将应用打包为镜像，并以容器方式运行\nDocker 容器具有下面三个特点：\n轻量级：共享内核，并且因为镜像以分层文件系统构造，这使得它们可以共享相同的文件，使得磁盘使用率和镜像下载速度都提高 开放： 安全：隔离 Linux Namespace 概念 Linux Namespace 是 Kernel 的一个功能，它可以隔离一系列的系统资源，比如：PID、User ID、Network、进程资源等。既然包括了进程资源，也就是进程数、网络接口等，这里就不能使用chroot实现了（把根目录换成指定的目的目录）\n当前 Linux 实现的 6 种 Namespace\nNamespace类型 系统调用参数 内核版本 Mount Namespace CLONE_NEWNS 2.4.19 UTS Namespcae CLONE_NEWUTS 2.6.19 IPC Namespace CLONE_NEWIPC 2.6.19 PID Namespcae CLONE_NEWPID 2.6.24 Network Namespace CLONE_NEWNET 2.6.29 User Namespace CLONE_NEWUSER 3.8 Namespace 的 API 主要使用下面3个系统调用：\nclone()：创建新进程，根据系统调用参数来判断哪些类型的 Namespace 被创建，而且它们的子进程也会被包含到这些 Namespace 中 unshare()：将进程移除某个 Namespace setns()：将进程加入到 Namespace UTS Namespace UNIX Time-sharing System\n允许每个容器拥有独立的 hostname 和domain name，使其在网络上可被视作一个独立的节点而非主机上的一个进程\n简单的代码实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 package main import ( \"os/exec\" \"syscall\" \"os\" \"log\" ) func main() { // 指定被 fork 出来的新进程内的初始命令 cmd:=exec.Command(\"sh\") // 设置参数系统，使用标识去创建一个 UTS Namespace。并且 GO 封装了对 clone() 函数的调用 cmd.SysProcAttr = \u0026syscall.SysProcAttr{ Cloneflags: syscall.CLONE_NEWUTS, } cmd.Stdin = os.Stdin cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr if err := cmd.Run(); err!=nil{ log.Fatal(err) } } 启动后，验证父子进程不在同一个UST Namespace：\n使用pstree -pl查看父子进程的ID，然后使用readlink /proc/$PID/ns/uts验证得到父子进程不在同一个UTS Namespace\n修改当前启动的sh的hostname（hostname -b $name），也不会影响外部\nIPC Namespace 用来隔离 System V IPC 和 POSIX message queues。每一个 IPC Namespace 都有自己的 System V IPC 和 POSIX message queue\n代码实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 package main import ( \"os/exec\" \"syscall\" \"os\" \"log\" ) func main() { // 指定被 fork 出来的新进程内的初始命令 cmd:=exec.Command(\"sh\") cmd.SysProcAttr = \u0026syscall.SysProcAttr{ Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC, } cmd.Stdin = os.Stdin cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr if err := cmd.Run(); err!=nil{ log.Fatal(err) } } 相当于，现在多加了一个标识，表示我们希望创建 IPC Namespace\n验证：\n首先，在主机，使用ipcs查看，然后ipcmk创建消息队列，然后启动，发现新创建的sh中，查找不到该消息队列，即实现 IPC 命令空间隔离\nPID Namespace 隔离进程 ID，即同一个进程在不同的 PID Namespace 里可以拥有不同的 PID。换句话说，就是在容器内外查看同一个进程的 ID不同，比如，容器内 PID为1，但是在容器外，却不一样。\n代码实现：添加 syscall.CLONE_NEWPID标识即可\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 package main import ( \"os/exec\" \"syscall\" \"os\" \"log\" ) func main() { // 指定被 fork 出来的新进程内的初始命令 cmd:=exec.Command(\"sh\") cmd.SysProcAttr = \u0026syscall.SysProcAttr{ Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID, } cmd.Stdin = os.Stdin cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr if err := cmd.Run(); err!=nil{ log.Fatal(err) } } 验证：\n首先，运行Go文件，执行echo $$打印出当前 PID 为 1，\n然后，在外部使用 pstree -pl 查看进程树。发现 GO 对应的进程不为 1，也就是在容器内外的 PID不同，实现了 PID Namespace\nMount Namespace 隔离各进程看到的挂载点视图，即在不同容器中看到的文件系统层次是不同的。而且，在不同的容器中调用mount()和unmount只会影响当前文件系统，不会影响到其它，或者全局。\n为什么 Mount Namespace 的调用参数为 CLONE_NEWNS，而不是跟其它一样，如 CLONE_NEWPID?\n因为它是Linux实现的第一个Namespace，因此为 NEWNS（New Namespace缩写）。而且当时没并未想到后面还有许多 Namespace加入\n代码实现，跟上面类似：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 package main import ( \"os/exec\" \"syscall\" \"os\" \"log\" ) func main() { // 指定被 fork 出来的新进程内的初始命令 cmd:=exec.Command(\"sh\") cmd.SysProcAttr = \u0026syscall.SysProcAttr{ Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS, } cmd.Stdin = os.Stdin cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr if err := cmd.Run(); err!=nil{ log.Fatal(err) } os.Exit(-1) } 验证：\n运行代码，执行ls /proc查看内核和内核模块的信息。\n然后，执行mount -t proc proc /proc，即使讲当前 Namespace 的 proc挂载到 /proc，\n接着，执行ls /proc，跟一开始的信息不同，因为一开始未挂载，看的还是宿主机的，而现在挂载后，看到就是 Namespace 里的\n最后，执行ps -ef，看到sh进程的ID为1，即与外部实现隔离，mount并没有影响到外部（ps命令会使用/proc 下的内容）\nUser Namespace 隔离用户的用户组ID。也就是一个进程的 User ID 和 Group ID在User Namespace 内外是不同的。较为常用的就是宿主机上一个非 root 用户运行创建一个 User Namespace，然后在User Namespace 里却映射为 root 用户。\n也就是说，该进程在 User Namespace中有root权限，但在外面却没有root权限。\n从 Linux Kernel3.8 开始，非root进程也可以创建 User Namespace。\n代码实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 package main import ( \"os/exec\" \"syscall\" \"os\" \"log\" ) func main() { // 指定被 fork 出来的新进程内的初始命令 cmd:=exec.Command(\"sh\") cmd.SysProcAttr = \u0026syscall.SysProcAttr{ Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS | syscall.CLONE_NEWUSER, } cmd.SysProcAttr.Credential = \u0026syscall.Credential{Uid:uint32(1),Gid:uint32(1)} cmd.Stdin = os.Stdin cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr if err := cmd.Run(); err!=nil{ log.Fatal(err) } } 验证：\n首先，使用 id 查看当前是否为 root 用户，然后运行go run main.go\n然后，执行id 查看 Namespace 中的信息，其UID跟刚才不同，即证明User Namespace 生效\nNetwork Namespace 用来隔离网络设备、IP 地址端口等网络栈的Namespace。\n使每个容易拥有自己的网络设备（虚拟），而且容器内可以进行端口绑定，每个Namespace中也不会冲突（即不同容器之间可以使用相同的端口）\n代码实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 func main() { // 指定被 fork 出来的新进程内的初始命令 cmd:=exec.Command(\"sh\") cmd.SysProcAttr = \u0026syscall.SysProcAttr{ Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS | syscall.CLONE_NEWUSER | syscall.CLONE_NEWNET, } cmd.SysProcAttr.Credential = \u0026syscall.Credential{Uid:uint32(1),Gid:uint32(1)} cmd.Stdin = os.Stdin cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr if err := cmd.Run(); err!=nil{ log.Fatal(err) } } 首先，使用ifconfig查看当前的网络设备，发现有lo、eth0、eth1等\n然后，go run main.go，再在Namespace中运行ifconfig，查看什么网络设备都没有（因为这里并没有配置网桥）\nLinux Cgroups 控制组，确保每个容器所占有的资源，这样确保了当容器内的资源使用产生压力时不会连累主机系统。也就能预防 DOOS攻击\nCgroups 中的三个组件：\ncgroup：一种对进程分组管理的机制，一个cgroup就包含了一组进程，并且可以对其配置 Linux subsystem 的各种参数配置，即讲一组进程和一组 subsystem 的系统参数关联起来\nsubsystem：一组资源控制的板块，包含如下几项:\nblkio：设置对块设备（比如硬盘）输入输出的访问控制 cpu：设置cgroup中进程的 CPU 被调度的策略 cpuacct：可以统计 cgroup 中进程的CPU占用 cpuset：在多核机器上设置 cgroup 中进程可以使用的 CPU 和内存（此处内存仅用于 NUMA 架构（Non-Uniform Memory Access，非均匀内存访问架构）） devices：控制 cgroup 中进程的 CPU 占用 freezer：用于挂起（suspend）和恢复（resume）cgroup中的进程 memory：用于控制 cgroup 中进程的内存占用 net_cls：用于将 cgroup 中进程产生的网络包分类，以便 Linux 的 tc（traffic controller）可以根据分类区分出来自某个 cgroup 的包并做限制和监控 net_prio：设置 cgroup 中进程产生的网络流量的优先级 ns：管理 cgroup 中创建的 Namespace 中的新的 cgroup 也就是每个 subsystem 会关联到定义了相应限制的 cgroup 上，并对这个 cgroup 中的进程做相应的限制和控制\n如何查看当前内核支持哪些 subsystem ？\n首先，安装 cgroup （apt-get install cgroup-bin）,然后通过 lssubsys 进行查看（lssubsys -a）\nhierarchy：把一组 cgroup 串成一个树状的结构，一个这样的树，便是一个 hierarchy（等级制度）。通过这种树状结构，Cgroups 可以做到继承。如：系统对一组定时的任务进程通过 cgroup1 限制了 CPU的利用率，然后其中有个定时 dump 日志的进程还需要限制磁盘 IO，为了避免影响到之后的其它进程，就需要创建 cgroup2，使其继承 cgroup1 的限制CPU，而不基础限制 磁盘IO\n三个组件的相互关系\n很明显 Cgroups 是依靠着三个组件相互协作实现的，那么三个组件的关系是什么？\n一个系统在创建了 hierarchy 之后，系统的所有进程都会加入这个 hierarchy 的 cgroup 根节点（hierarchy 默认创建的） 一个 subsystem 只能赋值到一个 hierarchy 上 一个 hierarchy 上可以被赋值多个 subsystem 一个进程可以作为多个 cgroup 的成员，但是这些 cgroup 必须在不同的 hierarchy 上 当一个进程 fork 一个子进程后，子进程默认跟父进程在同一个 cgroup，但是也可以不同 Kernel 接口 我们要配置 Cgroups，需要调用 Kernel 的接口才行。为了使其 Cgroups的配置更直观，是通过一个虚拟的树状文件系统配置 Cgroups 的，通过层级的目录虚拟出 cgroup 树\n创建并挂载一个 hierarchy（cgroup树）\n1 2 3 4 mkdir cgroup-test # 创建挂载点 sudo mount -t cgroup -o none,name=cgroup-test cgroup-test ./cgroup-test # 挂载一个hierarchy ls ./cgroup-test # 输出根节点的配置 # 输出：cgroup.clone_children cgroup.procs cgroup.sane _behavior notify_on_release release_agent tasks cgroup.clone_children：cpuset（进程使用CPU和内存）的 subsystem 会读取这个配置文件，如果这个值是1（默认是0），子cgroup就会继承父的 cpuset 配置 cgroup.procs：树中当前节点 cgroup 中的进程组ID，当前为根节点，即文件中会有现在系统中所有进程组的ID notify_on_release 和 release_agent 会一起使用。notify_on_release标识当前的cgroup中的最后一个进程退出后，是否执行 release_agent。release_agent则是一个路径，会执行其对应的文件，通常用来清理不再使用的 cgroup tasks：标识该 cgroup 下的进程 ID，如果把一个进程ID写到 tasks 写到文件中，便会使相应的进程加入到对应的 cgroup中 在刚刚创建好的 hierarchy 上扩展两个子 cgroup\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 cd cgroup-test sudo mkdir cgroup-1 # 创建子 cgroup 'cgroup-1' sudo mkdir cgroup-2 # 创建子 cgroup 'cgroup-2' tree # 输出： :\u003c",
+  "wordCount" : "7321",
+  "inLanguage": "en",
+  "datePublished": "2022-03-10T18:12:37Z",
+  "dateModified": "2022-03-10T18:12:37Z",
+  "author":{
+    "@type": "Person",
+    "name": "Noodles2hg"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Noodles2hg的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://z-anshun.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://z-anshun.github.io/en/" accesskey="h" title="Noodles2hg&#39;s Blog (Alt + H)">
+                <img src="https://z-anshun.github.io/images/jmy.jpg" alt="" aria-label="logo"
+                    height="35">Noodles2hg&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://z-anshun.github.io/en/search/" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://z-anshun.github.io/en/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://z-anshun.github.io/en/">Home</a>&nbsp;»&nbsp;<a href="https://z-anshun.github.io/en/posts/">Posts</a>&nbsp;»&nbsp;<a href="https://z-anshun.github.io/en/posts/read/">📕阅读</a></div>
+    <h1 class="post-title entry-hint-parent">
+      基础技术
+    </h1>
+    <div class="post-meta"><span title='2022-03-10 18:12:37 +0000 UTC'>2022-03-10</span>&nbsp;·&nbsp;15 min&nbsp;·&nbsp;Noodles2hg
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#docker" aria-label="Docker">Docker</a></li>
+                <li>
+                    <a href="#linux-namespace" aria-label="Linux Namespace">Linux Namespace</a><ul>
+                        
+                <li>
+                    <a href="#%e6%a6%82%e5%bf%b5" aria-label="概念">概念</a></li>
+                <li>
+                    <a href="#uts-namespace" aria-label="UTS Namespace">UTS Namespace</a></li>
+                <li>
+                    <a href="#ipc-namespace" aria-label="IPC Namespace">IPC Namespace</a></li>
+                <li>
+                    <a href="#pid-namespace" aria-label="PID Namespace">PID Namespace</a></li>
+                <li>
+                    <a href="#mount-namespace" aria-label="Mount Namespace">Mount Namespace</a></li>
+                <li>
+                    <a href="#user-namespace" aria-label="User Namespace">User Namespace</a></li>
+                <li>
+                    <a href="#network-namespace" aria-label="Network Namespace">Network Namespace</a></li></ul>
+                </li>
+                <li>
+                    <a href="#linux-cgroups" aria-label="Linux Cgroups">Linux Cgroups</a><ul>
+                        
+                <li>
+                    <a href="#kernel-%e6%8e%a5%e5%8f%a3" aria-label="Kernel 接口">Kernel 接口</a></li>
+                <li>
+                    <a href="#docker-%e4%bd%bf%e7%94%a8-groups" aria-label="Docker 使用 Groups">Docker 使用 Groups</a></li>
+                <li>
+                    <a href="#go-%e5%ae%9e%e7%8e%b0%e9%80%9a%e8%bf%87-cgroup-%e9%99%90%e5%88%b6%e5%ae%b9%e5%99%a8%e8%b5%84%e6%ba%90" aria-label="Go 实现通过 cgroup 限制容器资源">Go 实现通过 cgroup 限制容器资源</a></li></ul>
+                </li>
+                <li>
+                    <a href="#union-file-system" aria-label="Union File System">Union File System</a><ul>
+                        
+                <li>
+                    <a href="#aufs" aria-label="AUFS">AUFS</a><ul>
+                        
+                <li>
+                    <a href="#image-layer%e5%92%8caufs" aria-label="image layer和AUFS">image layer和AUFS</a></li>
+                <li>
+                    <a href="#container-layer-%e5%92%8c-aufs" aria-label="container layer 和 AUFS">container layer 和 AUFS</a></li>
+                <li>
+                    <a href="#%e6%89%8b%e5%8a%a8%e5%ae%9e%e7%8e%b0-aufs" aria-label="手动实现 AUFS">手动实现 AUFS</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="docker">Docker<a hidden class="anchor" aria-hidden="true" href="#docker">#</a></h1>
+<blockquote>
+<p>什么是docker？</p>
+</blockquote>
+<p>一个开源工具，将应用打包为镜像，并以容器方式运行</p>
+<p>Docker 容器具有下面三个特点：</p>
+<ul>
+<li>轻量级：共享内核，并且因为镜像以分层文件系统构造，这使得它们可以共享相同的文件，使得磁盘使用率和镜像下载速度都提高</li>
+<li>开放：</li>
+<li>安全：隔离</li>
+</ul>
+<h1 id="linux-namespace">Linux Namespace<a hidden class="anchor" aria-hidden="true" href="#linux-namespace">#</a></h1>
+<h2 id="概念">概念<a hidden class="anchor" aria-hidden="true" href="#概念">#</a></h2>
+<p>Linux Namespace 是 Kernel 的一个功能，它可以隔离一系列的系统资源，比如：PID、User ID、Network、进程资源等。既然包括了进程资源，也就是进程数、网络接口等，这里就不能使用<code>chroot</code>实现了（把根目录换成指定的目的目录）</p>
+<p>当前 Linux 实现的 6 种 Namespace</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Namespace类型</th>
+<th style="text-align:center">系统调用参数</th>
+<th style="text-align:center">内核版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Mount Namespace</td>
+<td style="text-align:center">CLONE_NEWNS</td>
+<td style="text-align:center">2.4.19</td>
+</tr>
+<tr>
+<td style="text-align:center">UTS Namespcae</td>
+<td style="text-align:center">CLONE_NEWUTS</td>
+<td style="text-align:center">2.6.19</td>
+</tr>
+<tr>
+<td style="text-align:center">IPC Namespace</td>
+<td style="text-align:center">CLONE_NEWIPC</td>
+<td style="text-align:center">2.6.19</td>
+</tr>
+<tr>
+<td style="text-align:center">PID Namespcae</td>
+<td style="text-align:center">CLONE_NEWPID</td>
+<td style="text-align:center">2.6.24</td>
+</tr>
+<tr>
+<td style="text-align:center">Network Namespace</td>
+<td style="text-align:center">CLONE_NEWNET</td>
+<td style="text-align:center">2.6.29</td>
+</tr>
+<tr>
+<td style="text-align:center">User Namespace</td>
+<td style="text-align:center">CLONE_NEWUSER</td>
+<td style="text-align:center">3.8</td>
+</tr>
+</tbody>
+</table>
+<p>Namespace 的 API 主要使用下面3个系统调用：</p>
+<ul>
+<li><code>clone()</code>：创建新进程，根据系统调用参数来判断哪些类型的 Namespace 被创建，而且它们的子进程也会被包含到这些 Namespace 中</li>
+<li><code>unshare()</code>：将进程移除某个 Namespace</li>
+<li><code>setns()</code>：将进程加入到 Namespace</li>
+</ul>
+<h2 id="uts-namespace">UTS Namespace<a hidden class="anchor" aria-hidden="true" href="#uts-namespace">#</a></h2>
+<p>UNIX Time-sharing System</p>
+<p>允许每个容器拥有独立的 hostname 和domain name，使其在网络上可被视作<strong>一个独立的节点</strong>而非主机上的一个进程</p>
+<p>简单的代码实现：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os/exec&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定被 fork 出来的新进程内的初始命令
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd:=exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 设置参数系统，使用标识去创建一个 UTS Namespace。并且 GO 封装了对 clone() 函数的调用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags: syscall.CLONE_NEWUTS,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>    cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>    cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err!=<span style="color:#fff;font-weight:bold">nil</span>{
+</span></span><span style="display:flex;"><span>        log.Fatal(err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动后，验证父子进程不在同一个UST Namespace：</p>
+<ul>
+<li>
+<p>使用<code>pstree -pl</code>查看父子进程的ID，然后使用<code>readlink /proc/$PID/ns/uts</code>验证得到父子进程不在同一个UTS Namespace</p>
+</li>
+<li>
+<p>修改当前启动的sh的hostname（<code>hostname -b $name</code>），也不会影响外部</p>
+</li>
+</ul>
+<h2 id="ipc-namespace">IPC Namespace<a hidden class="anchor" aria-hidden="true" href="#ipc-namespace">#</a></h2>
+<p>用来隔离 System V IPC 和 POSIX message queues。每一个 IPC Namespace 都有自己的 System V IPC 和 POSIX message queue</p>
+<p>代码实现：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os/exec&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定被 fork 出来的新进程内的初始命令
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd:=exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>    cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>    cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err!=<span style="color:#fff;font-weight:bold">nil</span>{
+</span></span><span style="display:flex;"><span>        log.Fatal(err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>相当于，现在多加了一个标识，表示我们希望创建 IPC Namespace</p>
+<p>验证：</p>
+<p>首先，在主机，使用<code>ipcs</code>查看，然后<code>ipcmk</code>创建消息队列，然后启动，发现新创建的sh中，查找不到该消息队列，即实现 IPC 命令空间隔离</p>
+<h2 id="pid-namespace">PID Namespace<a hidden class="anchor" aria-hidden="true" href="#pid-namespace">#</a></h2>
+<p>隔离进程 ID，即同一个进程在不同的 PID Namespace 里可以拥有不同的 PID。换句话说，就是在容器内外查看同一个进程的 ID不同，比如，容器内 PID为1，但是在容器外，却不一样。</p>
+<p>代码实现：添加 <code>syscall.CLONE_NEWPID</code>标识即可</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os/exec&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定被 fork 出来的新进程内的初始命令
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd:=exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>    cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>    cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err!=<span style="color:#fff;font-weight:bold">nil</span>{
+</span></span><span style="display:flex;"><span>        log.Fatal(err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证：</p>
+<p>首先，运行Go文件，执行<code>echo $$</code>打印出当前 PID 为 1，</p>
+<p>然后，在外部使用 <code>pstree -pl</code> 查看进程树。发现 GO 对应的进程不为 1，也就是在容器内外的 PID不同，实现了 PID Namespace</p>
+<h2 id="mount-namespace">Mount Namespace<a hidden class="anchor" aria-hidden="true" href="#mount-namespace">#</a></h2>
+<p>隔离各进程看到的挂载点视图，即在不同容器中看到的文件系统层次是不同的。而且，在不同的容器中调用<code>mount()</code>和<code>unmount</code>只会影响当前文件系统，不会影响到其它，或者全局。</p>
+<blockquote>
+<p>为什么 Mount Namespace 的调用参数为 CLONE_NEWNS，而不是跟其它一样，如 CLONE_NEWPID?</p>
+</blockquote>
+<p>因为它是Linux实现的第一个Namespace，因此为 NEWNS（New Namespace缩写）。而且当时没并未想到后面还有许多 Namespace加入</p>
+<p>代码实现，跟上面类似：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os/exec&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定被 fork 出来的新进程内的初始命令
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd:=exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>    cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>    cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err!=<span style="color:#fff;font-weight:bold">nil</span>{
+</span></span><span style="display:flex;"><span>        log.Fatal(err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    os.Exit(-<span style="color:#ff0;font-weight:bold">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证：</p>
+<p>运行代码，执行<code>ls /proc</code>查看内核和内核模块的信息。</p>
+<p>然后，执行<code>mount -t proc proc /proc</code>，即使讲当前 Namespace 的 proc挂载到 /proc，</p>
+<p>接着，执行<code>ls /proc</code>，跟一开始的信息不同，因为一开始未挂载，看的还是宿主机的，而现在挂载后，看到就是 Namespace 里的</p>
+<p>最后，执行<code>ps -ef</code>，看到sh进程的ID为1，即与外部实现隔离，mount并没有影响到外部（<code>ps</code>命令会使用/proc 下的内容）</p>
+<h2 id="user-namespace">User Namespace<a hidden class="anchor" aria-hidden="true" href="#user-namespace">#</a></h2>
+<p>隔离用户的用户组ID。也就是一个进程的 User ID 和 Group ID在User Namespace 内外是不同的。较为常用的就是宿主机上一个非 root 用户运行创建一个 User Namespace，然后在User Namespace 里却映射为 root 用户。</p>
+<p>也就是说，该进程在 User Namespace中有root权限，但在外面却没有root权限。</p>
+<p>从 Linux Kernel3.8 开始，非root进程也可以创建 User Namespace。</p>
+<p>代码实现：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os/exec&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0ff;font-weight:bold">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定被 fork 出来的新进程内的初始命令
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd:=exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS | syscall.CLONE_NEWUSER,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr.Credential = &amp;syscall.Credential{Uid:<span style="color:#fff;font-weight:bold">uint32</span>(<span style="color:#ff0;font-weight:bold">1</span>),Gid:<span style="color:#fff;font-weight:bold">uint32</span>(<span style="color:#ff0;font-weight:bold">1</span>)}
+</span></span><span style="display:flex;"><span>    cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>    cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>    cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err!=<span style="color:#fff;font-weight:bold">nil</span>{
+</span></span><span style="display:flex;"><span>        log.Fatal(err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证：</p>
+<p>首先，使用 <code>id</code> 查看当前是否为 root 用户，然后运行<code>go run main.go</code></p>
+<p>然后，执行<code>id</code> 查看 Namespace 中的信息，其UID跟刚才不同，即证明User Namespace 生效</p>
+<h2 id="network-namespace">Network Namespace<a hidden class="anchor" aria-hidden="true" href="#network-namespace">#</a></h2>
+<p>用来隔离网络设备、IP 地址端口等网络栈的Namespace。</p>
+<p>使每个容易拥有自己的网络设备（虚拟），而且容器内可以进行端口绑定，每个Namespace中也不会冲突（即不同容器之间可以使用相同的端口）</p>
+<p>代码实现：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定被 fork 出来的新进程内的初始命令
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    cmd:=exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWIPC | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS | syscall.CLONE_NEWUSER | syscall.CLONE_NEWNET,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    cmd.SysProcAttr.Credential = &amp;syscall.Credential{Uid:<span style="color:#fff;font-weight:bold">uint32</span>(<span style="color:#ff0;font-weight:bold">1</span>),Gid:<span style="color:#fff;font-weight:bold">uint32</span>(<span style="color:#ff0;font-weight:bold">1</span>)}
+</span></span><span style="display:flex;"><span>    cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>    cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>    cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err!=<span style="color:#fff;font-weight:bold">nil</span>{
+</span></span><span style="display:flex;"><span>        log.Fatal(err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>首先，使用<code>ifconfig</code>查看当前的网络设备，发现有lo、eth0、eth1等</p>
+<p>然后，<code>go run main.go</code>，再在Namespace中运行<code>ifconfig</code>，查看什么网络设备都没有（因为这里并没有配置网桥）</p>
+<h1 id="linux-cgroups">Linux Cgroups<a hidden class="anchor" aria-hidden="true" href="#linux-cgroups">#</a></h1>
+<p>控制组，确保每个容器所占有的资源，这样<strong>确保了当容器内的资源使用产生压力时不会连累主机系统</strong>。也就能预防 DOOS攻击</p>
+<p>Cgroups 中的三个组件：</p>
+<ul>
+<li>
+<p>cgroup：一种对进程分组管理的机制，一个cgroup就包含了一组进程，并且可以对其配置 Linux subsystem 的各种参数配置，即讲一组进程和一组 subsystem 的系统参数关联起来</p>
+</li>
+<li>
+<p>subsystem：一组资源控制的板块，包含如下几项:</p>
+<ul>
+<li>blkio：设置对块设备（比如硬盘）输入输出的访问控制</li>
+<li>cpu：设置cgroup中进程的 CPU 被调度的策略</li>
+<li>cpuacct：可以统计 cgroup 中进程的CPU占用</li>
+<li>cpuset：在多核机器上设置 cgroup 中进程可以使用的 CPU 和内存（此处内存仅用于 NUMA 架构（Non-Uniform Memory Access，非均匀内存访问架构））</li>
+<li>devices：控制 cgroup 中进程的 CPU 占用</li>
+<li>freezer：用于挂起（suspend）和恢复（resume）cgroup中的进程</li>
+<li>memory：用于控制 cgroup 中进程的内存占用</li>
+<li>net_cls：用于将 cgroup 中进程产生的网络包分类，以便 Linux 的 tc（traffic controller）可以根据分类区分出来自某个 cgroup 的包并做限制和监控</li>
+<li>net_prio：设置 cgroup 中进程产生的网络流量的优先级</li>
+<li>ns：管理 cgroup 中创建的 Namespace 中的新的 cgroup</li>
+</ul>
+<p>也就是每个 subsystem 会关联到定义了相应限制的 cgroup 上，并对这个 cgroup 中的进程做相应的限制和控制</p>
+<blockquote>
+<p>如何查看当前内核支持哪些 subsystem ？</p>
+</blockquote>
+<p>首先，安装 cgroup （<code>apt-get install cgroup-bin</code>）,然后通过 lssubsys 进行查看（<code>lssubsys -a</code>）</p>
+</li>
+<li>
+<p>hierarchy：把一组 cgroup 串成一个树状的结构，一个这样的树，便是一个 hierarchy（等级制度）。通过这种树状结构，Cgroups 可以做到继承。如：系统对一组定时的任务进程通过 cgroup1 限制了 CPU的利用率，然后其中有个定时 dump 日志的进程还需要限制磁盘 IO，为了避免影响到之后的其它进程，就需要创建 cgroup2，使其继承 cgroup1 的限制CPU，而不基础限制 磁盘IO</p>
+</li>
+</ul>
+<p><strong>三个组件的相互关系</strong></p>
+<blockquote>
+<p>很明显 Cgroups 是依靠着三个组件相互协作实现的，那么三个组件的关系是什么？</p>
+</blockquote>
+<ol>
+<li>一个系统在创建了 hierarchy 之后，系统的所有进程都会加入这个 hierarchy 的 cgroup 根节点（hierarchy 默认创建的）</li>
+<li>一个 subsystem 只能赋值到一个 hierarchy 上</li>
+<li>一个 hierarchy 上可以被赋值多个 subsystem</li>
+<li>一个进程可以作为多个 cgroup 的成员，但是这些 cgroup 必须在不同的 hierarchy 上</li>
+<li>当一个进程 fork 一个子进程后，子进程默认跟父进程在同一个 cgroup，但是也可以不同</li>
+</ol>
+<h2 id="kernel-接口">Kernel 接口<a hidden class="anchor" aria-hidden="true" href="#kernel-接口">#</a></h2>
+<p>我们要配置 Cgroups，需要调用 Kernel 的接口才行。为了使其 Cgroups的配置更直观，是通过一个虚拟的树状文件系统配置 Cgroups 的，通过层级的目录虚拟出 cgroup 树</p>
+<ol>
+<li>
+<p>创建并挂载一个 hierarchy（cgroup树）</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir cgroup-test <span style="color:#007f7f"># 创建挂载点</span>
+</span></span><span style="display:flex;"><span>sudo mount -t cgroup -o none,name=cgroup-test cgroup-test ./cgroup-test <span style="color:#007f7f"># 挂载一个hierarchy</span>
+</span></span><span style="display:flex;"><span>ls ./cgroup-test <span style="color:#007f7f"># 输出根节点的配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 输出：cgroup.clone_children cgroup.procs cgroup.sane _behavior notify_on_release release_agent tasks</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>cgroup.clone_children：cpuset（进程使用CPU和内存）的 subsystem 会读取这个配置文件，如果这个值是1（默认是0），子cgroup就会继承父的 cpuset 配置</li>
+<li>cgroup.procs：树中当前节点 cgroup 中的进程组ID，当前为根节点，即文件中会有现在系统中所有进程组的ID</li>
+<li>notify_on_release 和 release_agent 会一起使用。notify_on_release标识当前的cgroup中的最后一个进程退出后，是否执行 release_agent。release_agent则是一个路径，会执行其对应的文件，通常用来清理不再使用的 cgroup</li>
+<li>tasks：标识该 cgroup 下的进程 ID，如果把一个进程ID写到 tasks 写到文件中，便会使相应的进程加入到对应的 cgroup中</li>
+</ul>
+</li>
+<li>
+<p>在刚刚创建好的 hierarchy 上扩展两个子 cgroup</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> cgroup-test
+</span></span><span style="display:flex;"><span>sudo mkdir cgroup-1 <span style="color:#007f7f"># 创建子 cgroup &#39;cgroup-1&#39;</span>
+</span></span><span style="display:flex;"><span>sudo mkdir cgroup-2 <span style="color:#007f7f"># 创建子 cgroup &#39;cgroup-2&#39;</span>
+</span></span><span style="display:flex;"><span>tree
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 输出：</span>
+</span></span><span style="display:flex;"><span>:<span style="color:#0ff;font-weight:bold">&lt;&lt;eof
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">.
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|-- cgroup-1
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	|-- cgroup.clone_children
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	|-- cgroup.procs
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	|-- notify_on_release
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	‘ -- tasks
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|-- cgroup-2
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	|-- cgroup.clone_children
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	|-- cgroup.procs
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	|-- notify_on_release
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|	‘ -- tasks
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|-- cgroup.clone_children
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|-- cgroup.procs
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|-- notify_on_release
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">|-- release_agent
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">‘ -- tasks
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">eof</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>在 cgroup 中添加和移动进程</p>
+<p>一个进程在 hierarchy 树上，只能在一个 cgroup 节点上。默认都在根节点。若要移动到其它节点，将其进程 ID 移动到对应 cgroup 节点的 tasks 文件中即可</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>[cgroup-1] <span style="color:#fff;font-weight:bold">echo</span> $$
+</span></span><span style="display:flex;"><span><span style="color:#ff0;font-weight:bold">462</span>
+</span></span><span style="display:flex;"><span>[cgroup-1] sudo sh -c <span style="color:#0ff;font-weight:bold">&#34;echo </span>$$<span style="color:#0ff;font-weight:bold"> &gt;&gt; tasks&#34;</span> <span style="color:#007f7f"># 将在终端的进程移动到 cgroup-1</span>
+</span></span><span style="display:flex;"><span>[cgroup-1] cat /proc/462/cgroup
+</span></span><span style="display:flex;"><span>13:name=cgroup-test:/cgroup-1 
+</span></span><span style="display:flex;"><span>11:perf_event:/ 
+</span></span><span style="display:flex;"><span>10:cpu,cpuacct:/user.slice 
+</span></span><span style="display:flex;"><span>9:freezer:/ 
+</span></span><span style="display:flex;"><span>8:blkio:/user.slice 
+</span></span><span style="display:flex;"><span>7:devices:/user.slice 
+</span></span><span style="display:flex;"><span>6:cpuset:/ 
+</span></span><span style="display:flex;"><span>S:hugetlb:/ 
+</span></span><span style="display:flex;"><span>4:pids:/user.slice/user-1000.slice 
+</span></span><span style="display:flex;"><span>3:memory:/user.slice 
+</span></span><span style="display:flex;"><span>2:net_cls,net_prio:/ 
+</span></span><span style="display:flex;"><span>l:name=systemd:/user.slice/user-1000.slice/session-19.scope
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到该进程被加入了 cgroup-test:/cgroup-1</p>
+</li>
+<li>
+<p>通过 subsystem 管理 cgroup 中进程的资源</p>
+<p>系统为每个 subsystem 创建了一个默认的 hierarchy。如 memory 的 hierarchy</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mount | grep memory
+</span></span><span style="display:flex;"><span>cgroup on /sys/fs/cgroup/memory <span style="color:#fff;font-weight:bold">type</span> cgroup 
+</span></span><span style="display:flex;"><span>(rw,nosuid,nodev,noexec,relatime,memory,nsroot=/)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里，/sys/fs/cgroup/memory 目录便挂在了 memory subsystem 的 hierarchy 上。下面，通过这个  hierarchy 创建 cgroup，进而限制进程占用的内存</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>[memory] stress -vm-bytes 200m --vm-keep -m <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#007f7f"># 在不限制的情况下，启动一个占用内存的stress内存</span>
+</span></span><span style="display:flex;"><span>[memory] sudo mkdir test-limit-memory &amp;&amp; <span style="color:#fff;font-weight:bold">cd</span> test-limit-memory <span style="color:#007f7f"># 创建一个 cgroup</span>
+</span></span><span style="display:flex;"><span>[memory] sudo sh -c <span style="color:#0ff;font-weight:bold">&#34;echo &#34;</span>100m<span style="color:#0ff;font-weight:bold">&#34; &gt; memory.limit_in_bytes&#34;</span> <span style="color:#007f7f"># 设置最大 cgroup 的最大内存占用用100MB</span>
+</span></span><span style="display:flex;"><span>[memory] sudo sh -c <span style="color:#0ff;font-weight:bold">&#34;echo </span>$$<span style="color:#0ff;font-weight:bold"> &gt; tasks&#34;</span> <span style="color:#007f7f"># 将当前进程移动到这个cgroup中</span>
+</span></span><span style="display:flex;"><span>[memory] stress --vm-bytes 200m --vm-keep -m <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#007f7f"># 再次尝试占用200MB的进程</span>
+</span></span><span style="display:flex;"><span>[memory] top
+</span></span><span style="display:flex;"><span>＃限制后内存占用约100MB (2GB*5%）
+</span></span><span style="display:flex;"><span>PID PPID  TIME+   %CPU %MEM PR NI S VIRT      RES UID COMMAND 
+</span></span><span style="display:flex;"><span><span style="color:#ff0;font-weight:bold">8310</span> <span style="color:#ff0;font-weight:bold">8309</span> 0:01.17  7.6  5.0 <span style="color:#ff0;font-weight:bold">20</span> <span style="color:#ff0;font-weight:bold">0</span>  R <span style="color:#ff0;font-weight:bold">212284</span> <span style="color:#ff0;font-weight:bold">102056</span> <span style="color:#ff0;font-weight:bold">1000</span> stress 
+</span></span><span style="display:flex;"><span><span style="color:#ff0;font-weight:bold">8309</span> <span style="color:#ff0;font-weight:bold">7475</span> 0:00.00  0.0  0.0 <span style="color:#ff0;font-weight:bold">20</span> <span style="color:#ff0;font-weight:bold">0</span>  S <span style="color:#ff0;font-weight:bold">7480</span>      <span style="color:#ff0;font-weight:bold">796</span> <span style="color:#ff0;font-weight:bold">1000</span> stress
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="docker-使用-groups">Docker 使用 Groups<a hidden class="anchor" aria-hidden="true" href="#docker-使用-groups">#</a></h2>
+<p>Docker 通过 Groups 实现容器资源限制和监控</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#007f7f"># docker run -m 设置内存</span>
+</span></span><span style="display:flex;"><span>sudo docker run -itd -m 128m ubuntu
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#输出：957459145e9092618837cf94alcb356e206f2f0da560b40cb31035e442d3dfll</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># docker 会为每个容器在系统的 hierarchy 中创建 cgroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> /sys/fs/cgroup/memory/docker/{{刚刚生成的docker}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#查看 cgroup 的内存限制</span>
+</span></span><span style="display:flex;"><span>cat memory.limit_in_bytes
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#输出：134217728</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#查看 cgroup 中进程所使用的内存大小</span>
+</span></span><span style="display:flex;"><span>cat memory.usage_in_bytes
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#输出：430080</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是，容器会创建 cgroup，然后通过 cgroup 去配置资源限制和资源监控</p>
+<h2 id="go-实现通过-cgroup-限制容器资源">Go 实现通过 cgroup 限制容器资源<a hidden class="anchor" aria-hidden="true" href="#go-实现通过-cgroup-限制容器资源">#</a></h2>
+<p>在上述的 Namespace 的基础上，加上 cgroup 的限制</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;io/ioutil&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;os/exec&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;path&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0ff;font-weight:bold">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 挂载了 memory subsystem 的 hierarchy 的根目录位置
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">const</span> cgroupMemoryHierarchyMount = <span style="color:#0ff;font-weight:bold">&#34;/sys/fs/cgroup/memory&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> main() {
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span> os.Args[<span style="color:#ff0;font-weight:bold">0</span>] == <span style="color:#0ff;font-weight:bold">&#34;/proc/self/exe&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#007f7f">// 容器进程
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>		fmt.Printf(<span style="color:#0ff;font-weight:bold">&#34;current pid %d\n&#34;</span>, syscall.Getpid())
+</span></span><span style="display:flex;"><span>		cmd := exec.Command(<span style="color:#0ff;font-weight:bold">&#34;sh&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;-c&#34;</span>, <span style="color:#0ff;font-weight:bold">`stress --vm-bytes 200m --vm-keep -m 1`</span>)
+</span></span><span style="display:flex;"><span>		cmd.SysProcAttr = &amp;syscall.SysProcAttr{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>		cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>		cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span> err := cmd.Run(); err != <span style="color:#fff;font-weight:bold">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#fff;font-weight:bold">panic</span>(err)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	cmd := exec.Command(<span style="color:#0ff;font-weight:bold">&#34;/proc/self/exe&#34;</span>)
+</span></span><span style="display:flex;"><span>	cmd.SysProcAttr = &amp;syscall.SysProcAttr{
+</span></span><span style="display:flex;"><span>        Cloneflags : syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>	cmd.Stdin = os.Stdin
+</span></span><span style="display:flex;"><span>	cmd.Stdout = os.Stdout
+</span></span><span style="display:flex;"><span>	cmd.Stderr = os.Stderr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span> err := cmd.Start(); err != <span style="color:#fff;font-weight:bold">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">panic</span>(err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#007f7f">// 被 fork 出来进程映射到外部命名空间的 pid
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>	fmt.Printf(<span style="color:#0ff;font-weight:bold">&#34;%v&#34;</span>, cmd.Process.Pid)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#007f7f">// 在系统默认创建挂载了 memory subsystem 的 hierarchy 上创建 cgroup
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>	os.Mkdir(path.Join(cgroupMemoryHierarchyMount, <span style="color:#0ff;font-weight:bold">&#34;testmemorylimit&#34;</span>), <span style="color:#ff0;font-weight:bold">0755</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#007f7f">// 将容器进程加入到这个 cgroup 中
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>	ioutil.WriteFile(path.Join(cgroupMemoryHierarchyMount, <span style="color:#0ff;font-weight:bold">&#34;testmemorylimit&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;tasks&#34;</span>),
+</span></span><span style="display:flex;"><span>		[]<span style="color:#fff;font-weight:bold">byte</span>(strconv.Itoa(cmd.Process.Pid)), <span style="color:#ff0;font-weight:bold">0644</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#007f7f">// 限制 cgroup 进程使用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>	ioutil.WriteFile(path.Join(cgroupMemoryHierarchyMount, <span style="color:#0ff;font-weight:bold">&#34;testmemorylimit&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;memory.limit_in_bytes&#34;</span>),
+</span></span><span style="display:flex;"><span>		[]<span style="color:#fff;font-weight:bold">byte</span>(<span style="color:#0ff;font-weight:bold">&#34;100m&#34;</span>), <span style="color:#ff0;font-weight:bold">0644</span>)
+</span></span><span style="display:flex;"><span>	cmd.Process.Wait()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="union-file-system">Union File System<a hidden class="anchor" aria-hidden="true" href="#union-file-system">#</a></h1>
+<p>简称 UnionFS，一种为 Linux、FreeBSD 和 NetBSD 操作系统设计的，把<strong>其他文件系统联合到一个挂载点</strong>的<strong>文件系统服务</strong></p>
+<p>使用branch 把不同文件系统的文件和目录”透明的覆盖“，形成一个单一一致的文件系统。也就是不会存在多多，在不同的文件下。而且，这些branch会被限制权限，即 read-only 或者 read-write的。</p>
+<p>其具有一个重要的资源管理技术，叫 写时复制（copy-on-write，简称 CoW），也被称为隐式共享，是一种对资源实现高效复制的资源管理技术。思想为，若一个资源的利用为重复的，且未被修改，就不需要新创建，这个资源可被新旧实例共享，何是创建？当发送第一次写操作时。很明显，这样可以带来未修改资源复制带来的消耗，但也会在进行资源修改时增加小部分的开销。</p>
+<p>换句话说，在虚拟联合文件系统中，我们对文件进行改动，看似对原文件进行了改动，实则是写入到了一个新的文件中。</p>
+<h2 id="aufs">AUFS<a hidden class="anchor" aria-hidden="true" href="#aufs">#</a></h2>
+<p>Advanced Multi-Layered Unification Filesyetem，完全重写了早起的 UnionFS 1.x，主要目的为了可靠性和性能，并且引入了一些新的功能，比如可写分支的负载均衡</p>
+<p>主要功能为把多个目录结合成一个目录，对外使用</p>
+<p>把多个目录 mount 成一个，读写操作步骤如下：</p>
+<ol>
+<li>默认情况下，最上层的目录为读写层，只能有一个</li>
+<li>下面可以有一个或者多个只读层读文件</li>
+<li>读文件，从最上面一个开始往下逐层去找，打开第一个找到的文件，读取其中的内容</li>
+<li>写文件，如果在最上层找到了该文件，直接打开
+否则，从上往下开始查找，找到文件后，把文件复制到最上层，然后再打开这个 copy</li>
+<li>删除文件：在最上层创建一个 whiteout 文件，.wh.&lt;origin_file_name&gt;，就是在原来的文件名字前面加上 .wh</li>
+</ol>
+<blockquote>
+<p>Docker 如何使用 AUFS？</p>
+</blockquote>
+<p>AUFS 具有<strong>快速启动容器</strong>、<strong>高效利用存储</strong>和<strong>内存</strong>的优点。因此，直到现在为止，AUFS也是Docker支持的一种存储驱动类型</p>
+<h3 id="image-layer和aufs"><strong>image layer和AUFS</strong><a hidden class="anchor" aria-hidden="true" href="#image-layer和aufs">#</a></h3>
+<p>每一个 Docker image 都是由一系列 read-only layer 组成的。image layer的内容都存储在Docker hosts filesystem 的 /var/lib/docker/aufs/diff 目录下。而/var/lib/docker/aufs/layers 目录，则存储着 image layer如何堆栈这些layer的metadata</p>
+<p>在 Docker 1.11.2 版本下，没有任何镜像，启动容器，然后执行<code>ls /var/lib/docker/aufs/diff</code>查看为空</p>
+<p>然后</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#007f7f"># 拉取 Ubuntu:15.04 镜像</span>
+</span></span><span style="display:flex;"><span>$ docker pull ubuntu:15.04
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ ls /var/lib/docker/aufs/diff 
+</span></span><span style="display:flex;"><span>208319b22189a2c3841bc4a4ef0df9f9238a3e832dc403133fb8ad4a6c22b01b 
+</span></span><span style="display:flex;"><span>9c444e426a4a0aa3ad8ff162dd7bcd 4dcbb2e55bdec26Bb24666171904cl7573 
+</span></span><span style="display:flex;"><span>6bb19cb345da470e015ba3flca049alc27d2c57ebc205ecl65d2ad8a44e14Bea 
+</span></span><span style="display:flex;"><span>f193107618deb441376a54901bc9115f30473clec792b7fb3e73a98119e2cf77
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ ls /var/lib/docker/aufs/mnt
+</span></span><span style="display:flex;"><span>208319b22189a2c384lbc4a4ef0df9f923Ba3e832dc4031 33fb8ad4a6c22b01b 
+</span></span><span style="display:flex;"><span>9c444e426a4a0aa3ad8ff162dd7bcd4dcbb2e55bdec268b24666171904cl7573 
+</span></span><span style="display:flex;"><span>6bb19cb345da470e015ba3flca049alc27d2c57ebc205ecl65d2ad8a44el48ea 
+</span></span><span style="display:flex;"><span>f193107618deb441376a54901bc9115f30473clec792b7fb3e73a98119e2cf77
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 查看某个layer下的layer</span>
+</span></span><span style="display:flex;"><span>$ cat /var/lib/docker/aufs/layers/6bb19cb345da470e015ba3flca049alc27d2c57ebc205ecl65d2ad8a44el48ea 
+</span></span><span style="display:flex;"><span>9c444e426a4a0aa3ad8ff162dd7bcd4dcbb2e55bdec268b24666171904cl7573 
+</span></span><span style="display:flex;"><span>fl93107618deb441376a54901bc9115f30473clec792b7fb3e73a98119e2cf77 
+</span></span><span style="display:flex;"><span>208319b22189a2c384lbc4 a4 ef0df9f9238a3e832dc403133fb8ad4a6c22b01b
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>很明显，ubuntu:15.04一共有4个layer，也就在执行命令的结果中也有4个对应的文件存储目录(<code>ls /var/lib/docker/aufs/diff</code>)</p>
+<p>补充：在 Docker 1.10 之后，diff目录下存储镜像 layer 文件夹不再与镜像 ID 相同了</p>
+<blockquote>
+<p>AUFS 如何节省空间？</p>
+</blockquote>
+<p>首先，创建一个 Dockerfile</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">From</span><span style="color:#0ff;font-weight:bold"> ubuntu:15.04</span><span style="color:#f00">
+</span></span></span><span style="display:flex;"><span><span style="color:#f00">
+</span></span></span><span style="display:flex;"><span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">RUN</span> <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span> &gt; /tmp/newfile<span style="color:#f00">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行如下命令：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#007f7f"># 创建image</span>
+</span></span><span style="display:flex;"><span>$ docker build -t change-ubuntu .
+</span></span><span style="display:flex;"><span>$ docker <span style="color:#fff;font-weight:bold">history</span> change-ubuntu:latest 
+</span></span><span style="display:flex;"><span>IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+</span></span><span style="display:flex;"><span>e7b7fc3bc0d0   <span style="color:#ff0;font-weight:bold">18</span> seconds ago   /bin/sh -c <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span> &gt; /tmp/newfile    12B       
+</span></span><span style="display:flex;"><span>d1b55fd07600   <span style="color:#ff0;font-weight:bold">6</span> years ago      /bin/sh -c <span style="color:#007f7f">#(nop) CMD [&#34;/bin/bash&#34;]             0B        </span>
+</span></span><span style="display:flex;"><span>&lt;missing&gt;      <span style="color:#ff0;font-weight:bold">6</span> years ago      /bin/sh -c sed -i <span style="color:#0ff;font-weight:bold">&#39;s/^#\s*\(deb.*universe\)$…   1.88kB    
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&lt;missing&gt;      6 years ago      /bin/sh -c echo &#39;</span><span style="color:#007f7f">#!/bin/sh&#39; &gt; /usr/sbin/poli…   701B      </span>
+</span></span><span style="display:flex;"><span>&lt;missing&gt;      <span style="color:#ff0;font-weight:bold">6</span> years ago      /bin/sh -c <span style="color:#007f7f">#(nop) ADD file:3f4708cf445dc1b53…   131MB  </span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从上面的结果看出来，e7b7fc3bc0d0 image layer位于最上层，只有12B的大小，也就是<code>echo &quot;hello world&quot; &gt; /tmp/newfile</code>造成的。而下面的四层image layer，则是共享地构成 ubuntu:15.04 镜像的4个image layer。实际上，最上层的layer，也只是有一个 /tmp/newfile文件，内容为 &ldquo;Hello world&rdquo;</p>
+<blockquote>
+<p>为什么出现了 missing 标记？</p>
+</blockquote>
+<p>自 Docker 1.10 之后，一个镜像的 image layer的 image history 数据都存储在同一个文件中导致的，</p>
+<h3 id="container-layer-和-aufs">container layer 和 AUFS<a hidden class="anchor" aria-hidden="true" href="#container-layer-和-aufs">#</a></h3>
+<p>首先，对于容器而言，每个image layer最多只需要复制一次，后续的改动都会在第一次拷贝的 container layer 上进行。也就是，在改动容器内容的时候，只会复制一次镜像层的内容进行改动</p>
+<p>每次启动一个 container的时候，Docker会为其创建一个 read-only 的 init layer，用来存储与这个容器内环境相关的内容；Docker 还会为其创建一个 read-write 的 layer 来执行所有写操作。这两个文件都在/var/lib/docker/aufs/diff 下，read-only为<container-id>-init，write-only为<container-id></p>
+<p>另外，container layer的 mount目录也是 /var/lib/docker/aufs/mnt。</p>
+<p>container 的 metadata （元数据）和配置文件都放在 /var/lib/docker/containers/<container-id> 目录中。</p>
+<p>container 的 read-write layer 存储在/var/lib/docker/aufs/diss/目录下，这样，就是容器停止了，也不会因为重启容器而导致数据丢失，只有当容器被删除时，这个读写层才会被一起删除</p>
+<p>container 删除一个文件时，假设为删除file1，会在 read-write 层生成一个 .wh.file1 的文件来隐藏所有read-only 层 file1的文件。跟上述的AUFS简介类似</p>
+<h3 id="手动实现-aufs">手动实现 AUFS<a hidden class="anchor" aria-hidden="true" href="#手动实现-aufs">#</a></h3>
+<p>首先，先执行如下操作</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ <span style="color:#fff;font-weight:bold">cd</span> /home/anshun &amp;&amp; mkdir aufs
+</span></span><span style="display:flex;"><span>$ <span style="color:#fff;font-weight:bold">cd</span> aufs
+</span></span><span style="display:flex;"><span>$ mkdir container-layer mnt &amp;&amp; touch container-layer/container-layer.txt
+</span></span><span style="display:flex;"><span>$ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;I am container layer&#34;</span> &gt; container-layer/container-layer.txt
+</span></span><span style="display:flex;"><span>$ <span style="color:#fff;font-weight:bold">for</span> i in {1..4}; <span style="color:#fff;font-weight:bold">do</span> mkdir image-layer$i; <span style="color:#fff;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#fff;font-weight:bold">for</span> i in {1..4}
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#fff;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>&gt; touch image-layer$i/image-layer$i.txt
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;I am image layer </span><span style="color:#0ff;font-weight:bold">${</span>i<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> &gt; image-layer$i/image-layer$i.txt
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#fff;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>$ tree
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>├── container-layer
+</span></span><span style="display:flex;"><span>│   └── container-layer.txt
+</span></span><span style="display:flex;"><span>├── image-layer1
+</span></span><span style="display:flex;"><span>│   └── image-layer1.txt
+</span></span><span style="display:flex;"><span>├── image-layer2
+</span></span><span style="display:flex;"><span>│   └── image-layer2.txt
+</span></span><span style="display:flex;"><span>├── image-layer3
+</span></span><span style="display:flex;"><span>│   └── image-layer3.txt
+</span></span><span style="display:flex;"><span>├── image-layer4
+</span></span><span style="display:flex;"><span>│   └── image-layer4.txt
+</span></span><span style="display:flex;"><span>└── mnt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0;font-weight:bold">5</span> directories, <span style="color:#ff0;font-weight:bold">5</span> files
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后，把 container-layer 和 其它4个文件挂载到 mnt 目录下</p>
+<p>在<code>mount aufs</code>命令中，若没有指定待挂载的文件的权限，默认为 dirs 指定的左边第一个目录为 read-write权限，后面都是 read-only 权限</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ mount -t aufs -o dirs=./container-layer:./image-layer4:./image-layer3:./image-layer2:./image-layer1 none ./mnt
+</span></span><span style="display:flex;"><span>$ tree mnt
+</span></span><span style="display:flex;"><span>mnt
+</span></span><span style="display:flex;"><span>├── container-layer.txt
+</span></span><span style="display:flex;"><span>├── image-layer1.txt
+</span></span><span style="display:flex;"><span>├── image-layer2.txt
+</span></span><span style="display:flex;"><span>├── image-layer3.txt
+</span></span><span style="display:flex;"><span>└── image-layer4.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0;font-weight:bold">0</span> directories, <span style="color:#ff0;font-weight:bold">5</span> files
+</span></span><span style="display:flex;"><span>$ <span style="color:#fff;font-weight:bold">echo</span> -e <span style="color:#0ff;font-weight:bold">&#34;\nwrite to mnt&#39;s image-layer1.txt&#34;</span> &gt;&gt; ./mnt/image-layer4.txt 
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 查看虚拟挂载点的文件</span>
+</span></span><span style="display:flex;"><span>$ cat ./mnt/image-layer4.txt 
+</span></span><span style="display:flex;"><span>I am image layer <span style="color:#ff0;font-weight:bold">4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>write to mnt<span style="color:#0ff;font-weight:bold">&#39;s image-layer1.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold"># 查看原文件
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">$ cat image-layer4/image-layer4.txt 
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">I am image layer 4
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold"># 查看 container-layer，多了一个image-layer4.txt文件
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">$ ll container-layer/
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">总用量 24
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">drwxr-xr-x 4 root root 4096 3月  13 18:59 ./
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">drwxr-xr-x 8 root root 4096 3月  13 18:31 ../
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">-rw-r--r-- 1 root root   21 3月  13 18:17 container-layer.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">-rw-r--r-- 1 root root   52 3月  13 18:59 image-layer4.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">-r--r--r-- 1 root root    0 3月  13 18:57 .wh..wh.aufs
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">drwx------ 2 root root 4096 3月  13 18:57 .wh..wh.orph/
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">drwx------ 2 root root 4096 3月  13 18:57 .wh..wh.plnk/
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">$ cat container-layer/image-layer4.txt 
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">I am image layer 4
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">write to mnt&#39;</span>s image-layer1.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是，在尝试对mnt/image-layer4.txt的文件进行写操作时，系统会先在mnt目录下找到对应的文件，然后将其拷贝到 read-write 层的目录中（这里为container-layer），接着对其拷贝的文件进行操作，而不对原文件进行更改。由此，也证明了上面所说的lazy的思想</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://z-anshun.github.io/en/tags/docker/">Docker</a></li>
+      <li><a href="https://z-anshun.github.io/en/tags/books/">Books</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://z-anshun.github.io/en/posts/read/%E6%89%8B%E6%90%93docker/%E6%9E%84%E9%80%A0%E5%AE%B9%E5%99%A8%E5%92%8C%E9%95%9C%E5%83%8F/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>构造容器和镜像实现原理</span>
+  </a>
+  <a class="next" href="https://z-anshun.github.io/en/posts/tech/linux/grep/">
+    <span class="title">Next »</span>
+    <br>
+    <span>grep</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on x"
+            href="https://x.com/intent/tweet/?text=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af&amp;url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f&amp;hashtags=docker%2cbooks">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f&amp;title=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af&amp;summary=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af&amp;source=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f&title=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on whatsapp"
+            href="https://api.whatsapp.com/send?text=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af%20-%20https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on telegram"
+            href="https://telegram.me/share/url?text=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af&amp;url=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 基础技术 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=%e5%9f%ba%e7%a1%80%e6%8a%80%e6%9c%af&u=https%3a%2f%2fz-anshun.github.io%2fen%2fposts%2fread%2f%25E6%2589%258B%25E6%2590%2593docker%2f%25E5%259F%25BA%25E7%25A1%2580%25E6%258A%2580%25E6%259C%25AF%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://z-anshun.github.io/en/">Noodles2hg的博客</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

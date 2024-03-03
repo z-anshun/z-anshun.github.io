@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>滑动窗口 on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</link>
+    <description>Recent content in 滑动窗口 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 02 Feb 2022 17:56:45 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>乘积小于K的子数组</title>
+      <link>https://z-anshun.github.io/en/posts/blog/%E4%B9%98%E7%A7%AF%E5%B0%8F%E4%BA%8Ek%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Wed, 02 Feb 2022 17:56:45 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/blog/%E4%B9%98%E7%A7%AF%E5%B0%8F%E4%BA%8Ek%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/</guid>
+      <description>剑指 Offer II 009. 乘积小于 K 的子数组 给定一个正整数数组 nums和整数 k ，请找出该数组内乘积小于 k 的连续的子数组的个数。 示例 1: 1 2 3 4 输入: nums = [10,5,2,6], k =</description>
+    </item>
+  </channel>
+</rss>

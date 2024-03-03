@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Golang on Noodles2hg的博客</title>
+    <link>https://z-anshun.github.io/en/tags/golang/</link>
+    <description>Recent content in Golang on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 06 Dec 2021 12:03:53 +0000</lastBuildDate>
+    <atom:link href="https://z-anshun.github.io/en/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>sync.Map原理</title>
+      <link>https://z-anshun.github.io/en/posts/tech/golang/sync.map%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Mon, 06 Dec 2021 12:03:53 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/golang/sync.map%E5%8E%9F%E7%90%86/</guid>
+      <description>数据结构 Map 1 2 3 4 5 6 7 8 9 10 type Map struct{ // 加锁保护，用于dirty字段 mu Mutex // 只读数据，实际类型为readOnly，为原子操作 read atomic.Value // 原子操作实现的</description>
+    </item>
+    <item>
+      <title>关于Golang的指针传递</title>
+      <link>https://z-anshun.github.io/en/posts/tech/golang/golangcall/</link>
+      <pubDate>Mon, 20 Sep 2021 11:27:53 +0000</pubDate>
+      <guid>https://z-anshun.github.io/en/posts/tech/golang/golangcall/</guid>
+      <description>首先，我们先来看一段代码 1 2 3 4 5 6 7 8 9 10 11 12 13 package main import &amp;#34;fmt&amp;#34; func main(){ var i []int try(i) fmt.Println(i) //[] } func try(i []int){ i = append(i, 1) } 在这里，理论上来说本应该打印[1]，因为切片为一</description>
+    </item>
+  </channel>
+</rss>
