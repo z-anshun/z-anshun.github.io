@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>动归 on Noodles2hg的博客</title>
+    <link>http://localhost:1313/z-anshun/en/tags/%E5%8A%A8%E5%BD%92/</link>
+    <description>Recent content in 动归 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 22 Jan 2022 22:29:51 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/z-anshun/en/tags/%E5%8A%A8%E5%BD%92/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>最长重复子数组</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Sat, 22 Jan 2022 22:29:51 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E6%95%B0%E7%BB%84/</guid>
+      <description>题目：718. 最长重复子数组 给两个整数数组 A 和 B ，返回两个数组中公共的、长度最长的子数组的长度。 示例： 1 2 3 4 5 6 输入： A: [1,2,3,2,1] B: [3,2,1,4,7] 输出：3 解释</description>
+    </item>
+    <item>
+      <title>最多牌组数</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E5%A4%9A%E7%89%8C%E7%BB%84%E6%95%B0/</link>
+      <pubDate>Sat, 09 Oct 2021 18:13:45 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E5%A4%9A%E7%89%8C%E7%BB%84%E6%95%B0/</guid>
+      <description>题目：麻将的游戏规则中，共有两种方式凑成「一组牌」： 顺子：三张牌面数字连续的麻将，例如 [4,5,6] 刻子：三张牌面数字相同的麻将，例如 [10,10,10] 给定若干数字作为</description>
+    </item>
+    <item>
+      <title>最低加油次数</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E4%BD%8E%E5%8A%A0%E6%B2%B9%E6%AC%A1%E6%95%B0/</link>
+      <pubDate>Sat, 09 Oct 2021 18:12:46 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E4%BD%8E%E5%8A%A0%E6%B2%B9%E6%AC%A1%E6%95%B0/</guid>
+      <description>题目：汽车从起点出发驶向目的地，该目的地位于出发位置东面 target 英里处。 沿途有加油站，每个 station[i] 代表一个加油站，它位于出发位置东面 station[i][0] 英里处，并且有 station[i][1] 升</description>
+    </item>
+    <item>
+      <title>劲爆金曲</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E5%8A%B2%E7%88%86%E9%87%91%E6%9B%B2/</link>
+      <pubDate>Fri, 01 Oct 2021 18:21:43 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E5%8A%B2%E7%88%86%E9%87%91%E6%9B%B2/</guid>
+      <description>剩下n首歌，t秒时间，问最多能唱几首的前提下，最长时间 输出最多歌数和最长时间 思路： 典型的动归问题，假设我们现在要唱j秒，然后当我们新加入一首</description>
+    </item>
+  </channel>
+</rss>

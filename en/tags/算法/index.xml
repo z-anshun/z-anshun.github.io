@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>算法 on Noodles2hg的博客</title>
+    <link>http://localhost:1313/z-anshun/en/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 13 Feb 2022 20:01:55 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/z-anshun/en/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>部分排序</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E9%83%A8%E5%88%86%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Sun, 13 Feb 2022 20:01:55 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E9%83%A8%E5%88%86%E6%8E%92%E5%BA%8F/</guid>
+      <description>题目： 面试题 16.16. 部分排序 给定一个整数数组，编写一个函数，找出索引m和n，只要将索引区间[m,n]的元素排好序，整个数组就是有序的。注意：n-m</description>
+    </item>
+    <item>
+      <title>最长的美好子字符串</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E9%95%BF%E7%9A%84%E7%BE%8E%E5%A5%BD%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Tue, 01 Feb 2022 20:00:01 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E6%9C%80%E9%95%BF%E7%9A%84%E7%BE%8E%E5%A5%BD%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>最长美好子字符串 1763. 最长的美好子字符串 当一个字符串 s 包含的每一种字母的大写和小写形式 同时 出现在 s 中，就称这个字符串 s 是 美好 字符串。比方说，&amp;q</description>
+    </item>
+    <item>
+      <title>最大公约数</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/gcb/</link>
+      <pubDate>Mon, 13 Dec 2021 15:48:17 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/gcb/</guid>
+      <description>最大公约数即为 Greatest Common Divisor，常缩写为 gcd 欧几里得算法 $$ 若x=cn,y=cm，c为最大公约数\ 那么当x&amp;gt;y时，即n&amp;gt;m时\ 令x</description>
+    </item>
+    <item>
+      <title>并查集</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E5%B9%B6%E6%9F%A5%E9%9B%86/</link>
+      <pubDate>Thu, 30 Sep 2021 23:08:29 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E5%B9%B6%E6%9F%A5%E9%9B%86/</guid>
+      <description>对于一组数据，当要求我们检查某两个数据是否在同一集合内时，就需要并查集去实现了 如：&amp;lt;a,b&amp;gt;,&amp;lt;b,c&amp;gt;，那么很明显</description>
+    </item>
+    <item>
+      <title>Manacher</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/manacher/</link>
+      <pubDate>Mon, 27 Sep 2021 22:56:33 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/manacher/</guid>
+      <description>题目：给定一段字符串，求该其最长的回文子串 主要思路： 我们创建一个将目标字符穿进行扩充，然后使用#进行填充，并在前后分别添加^和$方便后续操作</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>面经 on Noodles2hg的博客</title>
+    <link>http://localhost:1313/z-anshun/en/categories/%E9%9D%A2%E7%BB%8F/</link>
+    <description>Recent content in 面经 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 07 Feb 2022 20:43:46 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/z-anshun/en/categories/%E9%9D%A2%E7%BB%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>拥塞控制协议</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE/</link>
+      <pubDate>Mon, 07 Feb 2022 20:43:46 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE/</guid>
+      <description>流量控制 什么是流量控制？目的？ 发送者发送的数据过快，接受者来不及接受，那么就会有分组丢失的情况。为了避免这种情况，我们就需要控制发送者的速度</description>
+    </item>
+    <item>
+      <title>缓存穿透、雪崩、击穿</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E9%9B%AA%E5%B4%A9%E5%87%BB%E7%A9%BF/</link>
+      <pubDate>Tue, 01 Feb 2022 20:45:37 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E9%9B%AA%E5%B4%A9%E5%87%BB%E7%A9%BF/</guid>
+      <description>缓存穿透 指查询一个不存在的数据，那么肯定缓存里没有，就会查找DB，如果DB也没有，那么就不会写入缓存，这就是会导致每次对该数据查询的时候都要</description>
+    </item>
+    <item>
+      <title>CA证书</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/ca%E8%AF%81%E4%B9%A6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/ca%E8%AF%81%E4%B9%A6/</guid>
+      <description>认证中心CA Certificate Authority，证书认证中心 流程： 服务端S会向第三方CA提交公钥（记住不是私钥，私钥自己留着）、组织信息、个人信息（域名）</description>
+    </item>
+  </channel>
+</rss>

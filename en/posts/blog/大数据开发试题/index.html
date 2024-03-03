@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/z-anshun/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=z-anshun/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>大数据开发试题 | Noodles2hg的博客</title>
+<meta name="keywords" content="大数据">
+<meta name="description" content="基础概念 大数据带来思维方式的三个转变是 相关而非因果 全样而非抽样 效率而非精准 精准而非全面 大数据发展的三个阶段是 低谷期 萌芽期 成熟期 大规模应用期 每">
+<meta name="author" content="Noodles2hg">
+<link rel="canonical" href="http://localhost:1313/z-anshun/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/">
+<link crossorigin="anonymous" href="/z-anshun/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/z-anshun/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/z-anshun/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/z-anshun/img/Q.gif">
+<link rel="apple-touch-icon" href="http://localhost:1313/z-anshun/Q.gif">
+<link rel="mask-icon" href="http://localhost:1313/z-anshun/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/z-anshun/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="大数据开发试题" />
+<meta property="og:description" content="基础概念 大数据带来思维方式的三个转变是 相关而非因果 全样而非抽样 效率而非精准 精准而非全面 大数据发展的三个阶段是 低谷期 萌芽期 成熟期 大规模应用期 每" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/z-anshun/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-29T21:13:36+00:00" />
+<meta property="article:modified_time" content="2022-06-29T21:13:36+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="大数据开发试题"/>
+<meta name="twitter:description" content="基础概念 大数据带来思维方式的三个转变是 相关而非因果 全样而非抽样 效率而非精准 精准而非全面 大数据发展的三个阶段是 低谷期 萌芽期 成熟期 大规模应用期 每"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/z-anshun/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "大数据开发试题",
+      "item": "http://localhost:1313/z-anshun/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "大数据开发试题",
+  "name": "大数据开发试题",
+  "description": "基础概念 大数据带来思维方式的三个转变是 相关而非因果 全样而非抽样 效率而非精准 精准而非全面 大数据发展的三个阶段是 低谷期 萌芽期 成熟期 大规模应用期 每",
+  "keywords": [
+    "大数据"
+  ],
+  "articleBody": "基础概念 大数据带来思维方式的三个转变是\n相关而非因果 全样而非抽样 效率而非精准 精准而非全面 大数据发展的三个阶段是\n低谷期\n萌芽期\n成熟期\n大规模应用期\n每种大数据产品都有特定的应用场景，以下哪个产品是用于批处理的\nMapReduce\n数据产生方式大致经历了三个阶段，包括\n运营式系统阶段 感知式系统阶段 用户原创内容阶段 移动互联网数据阶段 图领奖获得者、著名数据库专家Jim Gray博士认为，人类自古以来在科学研究上先后经历了四种范式，具体包括：\n计算科学 实验科学 理论科学 数据科学 大数据的四种主要计算模式包括：\n流计算 查询分析计算 批处理计算 图计算 框计算 用于流计算的是：\nS4\n大数据处理的数据都是非结构化数据，这种数据更难处理，因此需要使用大数据技术。\n错\nScala 语言基础 C++、Java等面向对象程序编程语言属于 命令式编程范式；\nHaskell、Erlang和Lisp等语言属于 函数式 编程范式\nfor (变量 \u003c- 表达式) {语句块}，其中，“变量\u003c-表达式”被称为 生成器\nScala用了三个包来组织容器类，分别是\nscala.collection scala.collection.mutable scala.collection.immutable scala.collection.contains Scala类中所有成员的默认可见性为 公有\nScala中类的方法，如果方法返回类型为 Unit，可以同时省略返回结果类型和等号，但不能省略大括号\nScala采用单例对象（singleton object）来实现与Java静态成员同样的功能；使用 object关键字定义单例对象\n当一个单例对象和它的同名类一起出现时，这时的单例对象被称为这个同名类的“ 伴生对象”（companion object）。相应的类被称为这个单例对象的“ 伴生类”。\nScala中如果一个类包含没有实现的成员，则必须使用 abstract关键词进行修饰，定义为 抽象类\n只能重载var类型的字段，而不能重载val类型的字段。因为var类型本身就是可变的，所以，可以直接修改它的值，无需重载。\n错\nScala中没有接口的概念，而是提供了“ 特质( trait)”，它不仅实现了接口的功能，还具备了很多其他的特性\nSpark 的设计和运行原理 Spark SQL 目前暂时不支持哪种语言？\nMatlab\nApache软件基金会最重要的三大分布式计算系统开源项目包括\nHadoop Spark Storm MapReduce（用于批处理） Spark 的主要特点包括？\n运行模式多样 运行速度快 容易使用 通用性好 Spark 支持三种不同类型的部署方式\nStandalone Spark on Mesos Spark on YARN Spark on Hive Spark在2014年打破了Hadoop保持的基准排序纪录，Spark用十分之 一的计算资源，获得了比Hadoop快 3倍的速度。\nSpark容易使用：支持使用Scala、Java、Python和R语言进行编程，可以通过 spark shell 进行交互式编程\nSpark生态圈即BDAS（伯克利数据分析栈）包含了Spark Core、Spark SQL、Spark Streaming、MLLib和GraphX等组件， Spark Core提供内存计算框架、 Spark Streaming提供实时处理、 Spark SQL提供即席查询、 MLlib提供机器学习库、 GraphX提供图处理，它们都是由AMP实验室提供，能够无缝的集成并提供一站式解决平台\nRDD，全称是 Resilient Distributed Dataset，中文名称是 弹性分布式数据集，是分布式内存的一个抽象概念,提供了一种高度受限的共享内存模型\nDAG：是 Directed Acyclic Graph（有向无环图）的简称，反应RDD之间的 依赖关系\nSpark中一个作业会分为多组任务，每组任务被称为 阶段，或者也被称为任务集合，代表了一组关联的、相互之间没有Shuffle依赖关系的任务组成的任务集\nSpark的一个应用由一个 Driver和若干个 作业构成，一个作业由多个阶段构成，一个阶段由多个没有Shuffle关系的任务组成。\nSpark的运行流程中，首先为应用构建起基本的运行环境，即由Driver创建一个 SparkContext，进行资源的申请、任务的分配和监控。\nRDD提供了一组丰富的操作以支持常见的数据运算，分为“动作”（ Action）和“转换”（ Transformation）两种类型。\n是否包含Shuffle操作是区分 窄依赖和 宽依赖的根据\nSpark通过分析各个RDD的依赖关系生成了DAG，再通过分析各个RDD中的分区之间的依赖关系来决定如何划分Stage，具体划分方法是：在DAG中进行反向解析，遇到 宽依赖就断开；遇到 窄依赖就把当前的RDD加入到Stage中；将 窄依赖尽量划分在同一个Stage中，可以实现流水线计算\nRDD典型的执行过程如下：\n（1）RDD读入 外部数据进行创建；\n（2）RDD经过一系列的 转换（Transformation）操作，每一次都会产生不同的RDD，供给下一个转换操作使用；\n（3）最后一个RDD经过 动作（Action）操作进行转换，并输出到外部数据源\nSpark环境搭建和使用方法 1、Spark 部署模式包括：\nLocal 模式：单机模式 Standalone 模式：使用 Spark 自带的简单集群管理器 YARN 模式：使用 YARN 作为集群管理器 Mesos 模式：使用 Mesos 作为集群管理器 2、Hadoop 和 Spark 可以相互协作，由 Hadoop 的 HDFS、HBase 等组件负责数据的存储和管理，由 Spark 负责数据的 计算\n3、Spark Shell 支持 Scala 和 Python\n4、Spark的运行模式取决于传递给SparkContext的Master URL的值。Master URL是yarn-client，表示 以 客户端模式连接YARN集群。集群的位置可以在HADOOP_CONF_DIR 环境变量中找到。Master URL是yarn-cluster，表示以 集群模式连接YARN集群。集群的位置可以在HADOOP_CONF_DIR 环境变量中找到\n5、在Spark中采用本地模式启动Spark Shell的命令主要包含以下参数：\n–master：这个参数表示当前的Spark Shell要连接到哪个master，如果是local[*]，就是使用本地模式启动spark-shell，其中，中括号内的星号表示需要使用几个CPU核心(core)，也就是启动几个 线程 模拟Spark集群；\n–jars： 这个参数用于把相关的JAR包添加到 类路径/classpath中；如果有多个jar包，可以使用逗号分隔符连接它们\n6、可以使用命令“:quit”退出Spark Shell；或者，也可以直接使用“ Ctrl+D”组合键，退出Spark Shell\n7、可以通过spark-submit提交应用程序，该命令的格式如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 ./bin/spark-submit --class //需要运行的程序的主类，应用程序的 入口点 --master //Master URL --deploy-mode //部署模式 ... # other options //其他参数 //应用程序JAR包 [application-arguments] //传递给主类的 主方法 的参数 8、在Master节点主机上运行脚本 start-master.sh可以启动Master节点；在Master节点主机上运行脚本 start-slaves.sh 可以启动所有Slaver节点。\n9、用户在独立集群管理Web界面查看应用的运行情况，即：http://master: 8080/；\n用户在Hadoop Yarn集群管理Web界面查看所有应用的运行情况，即：http://master: 8088/cluster\nRDD 编程 1、RDD 创建的方式主要有两种方式，可以从 文件系统 创建，也可以用Scala 并行集合/集合/数组/列表/数组和列表/数组、列表/scala集合 创建\n2、RDD 分区的作用有：增加 并行度 ，减少 开销\n3、对于RDD而言，每一次转换操作都会产生 不同 的RDD，供给下一个 转换 使用\n4、转换得到的RDD是 惰性 求值的，也就是说，整个转换过程只是记录了 转换的轨迹，并不会发生真正的计算，只有遇到 行动操作 时，才会发生真正的计算，开始从 血缘关系 源头开始，进行物理的转换操作\n5、flatMap(func)，与map()相似，但每个输入元素都可以映射到 0或多个 输出结果\n6、一般而言，使用 cache() 方法时，会调用 Persist(MEMORY_ONLY)\n7、persist()的圆括号中包含的是持久化级别参数，**persist(MEMORY_AND_DISK）**表示将RDD作为反序列化的对象存储在JVM中，如果内存不足，超出的分区将会被存放在硬盘上\n8、RDD分区的一个原则是使得分区的个数尽量等于集群中的 CPU核心（core）数目。\n9、在调用textFile()和parallelize()方法的时候手动指定分区个数即可，语法格式如下：\nsc.textFile(path, partitionNum)\n其中，path参数用于指定要加载的文件的地址，partitionNum参数用于指定 分区个数\n10、groupByKey也是对每个key进行操作，但只生成一个 序列，groupByKey本身不能自定义函数，需要先用groupByKey生成RDD，然后才能对此RDD通过map进行自定义函数操作。\n11、HBase是一个稀疏、多维度、排序的映射表，这张表的索引是行键、列族、列限定符 和 时间戳\n12、HBase的表在水平方向由一个或者多个 列族 组成，一个列族中可以包含 任意多个 列，同一个列族里面的数据存储在一起\n13、HBase中执行更新操作时，并不会删除数据旧的版本，而是生成一个新的版本，旧有的版本仍然 保留（这是和HDFS只允许追加不允许修改的特性相关的\n14、Spark可以使用 saveAsNewAPIHadoopDataset 这个API将RDD输出到HBase的表中。\n15、如果要让Spark读取HBase，就需要使用SparkContext提供的 newAPIHadoopRDD 这个API将表的内容以RDD的形式加载到Spark中\nSpark-SQL 1、Spark SQL 是 Spark 中的一个子模块，主要用于操作结构化数据。它具有以下特点：\n能够将SQL查询与Spark程序无缝混合，允许您使用SQL或DataFrame API对结构化数据进行查询，支持多种开发语言 支持够达上百种的外部数据源，包括Hive, Avro, Parquet, ORC, JSON 和JDBC等 支持HiveQL语法以及Hive SerDes和UDF，允许你访问现有的Hive库,支持标准的JDBC和ODBC连接 支持优化器，列式存储和代码生成等特性,支持扩展并能保证容错 2、关于 DataFrame、DateSet、RDD 正确的是\nRDDs适合非结构化数据的处理,而DataFrame \u0026 DataSet更适合结构化数据和半结构化的处理 DataFrame \u0026 DataSet可以通过统-的Structured API进行访问，而RDDs则更适合函数式编程的场景 相比于DataFrame而言，DataSet 是强类型的(Typed)，有着更为严格的静态类型检查 DataSets、DataFrames的底层都依赖了 RDDs API,并对外提供结构化的访问接口 3、Spark SQL 产生原因\n关系数据库在大数据时代下不再满足需求，朋要从不同的数据源操作不同的数据，包含结构化和非结构化 用户需要执行高级分析,比如机器学习和图形处理等 大数据时代经常需要融合关系查询和复杂粉析算法 关系数据库已经很流行 4、2014年6月1日Shark项目和Spark SQL项目的主持人Reynold Xin宣布：停止对Shark的开发，团队将所有资源放在Spark SQL项目上，至此，Shark的发展画上了句话，但也因此发展出两个直线： Spark SQL和 Hive on Spark\n5、Spark SQL增加了 DataFrame（即带有Schema信息的RDD），使用户可以在Spark SQL中执行SQL语句，数据既可以来自RDD，也可以是Hive、HDFS、Cassandra等 外部数据源，还可以是JSON格式的数据\n6、从Spark2.0以上版本开始，Spark使用全新的 SparkSession接口替代Spark1.6中的SQLContext及HiveContext接口来实现其对数据加载、转换、处理等功能。SparkSession实现了SQLContext及HiveContext所有功能\n7、Spark SQL在Hive兼容层面仅依赖 HiveQL解析、 Hive元数据，也就是说，从HiveQL被解析成抽象语法树（AST）起，就全部由Spark SQL接管了。Spark SQL执行计划生成和优化都由 Catalyst（函数式关系查询优化框架）负责。\n8、Spark SQL目前支持 Scala、 JAVA、 Python三种语言，支持SQL-92规范\n9、可以通过如下语句创建一个SparkSession对象：\nscala\u003e import org.apache.spark.sql.SparkSession\nscala\u003e val spark= SparkSession.builder().getOrCreate()\n10、在创建DataFrame之前，为了支持RDD转换为DataFrame及后续的SQL操作，需要通过import语句（即 import spark.implicits._）导入相应的包，启用隐式转换\n11、Spark官网提供了两种方法来实现从RDD转换得到DataFrame：\n第一种方法是，利用 反射来推断包含特定类型对象的RDD的schema，适用对已知数据结构的RDD转换\n第二种方法是，使用 编程接口，构造一个schema并将其应用在已知的RDD上\n12、在利用反射机制推断RDD模式时，需要首先定义一个 case class，因为，只有 case class才能被Spark隐式地转换为DataFrame\n13、scala\u003e peopleDF.createOrReplaceTempView(\"\") //必须注册为临时表才能供下面的查询使用\n14、要读取people.json文件生成DataFrame，可以使用下面哪些命令：\nspark.read.json(“people.json”) spark.read.format(“json”).load(“people.json”) spark.read.parquet(“people.json”) 15、从RDD转换得到DataFrame包含两种典型方法，分别是：\n利用反射机制推断RDD模式 利用编程方式定义RDD模式 利用投影机制推断RDD模式 利用互联机制推断RDD模式 16、使用编程方式定义RDD模式时，主要包括哪三个步骤：\n制作\"表头\" 制作\"表中的记录\" 把\"表头\"和\"表中的记录\"拼装在一起 制作映射表 Spark-Steaming 1、对于一个流系统来讲，其应该达到下列要求：\n高性能、海量式 实时性、分布式 易用性、可靠性 通用性、智能性 2、流系统的处理流程包括三个阶段: 数据实时采集； 数据实时计算； 实时查询服务\n3、Spark Streaming和Storm的最大区别在于，Spark Streaming 无法实现 毫秒级的流计算。\n4、Spark Streaming 的基本输入源： 文件流、 套接字流、 RDD队列流\n5、编写Spark Streaming程序的基本步骤是\n通过创建输入DStream来定义输入源 通过对DStream应用转换操作和输出操作来定义流计算 用streamingContext.start()来开始接收数据和处理流程 通过streamingContext.awaitTermination()方法来等待处理结束（手动结束或因为错误而结束） 可以通过streamingContext.stop()来手动结束流计算进程 6、流处理系统无需用户主动发出查询，实时查询服务可以主动将实时结果 推送给用户。\n7、在Spark Streaming中，会有一个组件 Receiver，作为一个长期运行的task跑在一个Executor上\n8、DStream有状态转换操作中， 滑动窗口转换操作中：\n窗口长度L表示： 运算的数据量/持续时间\n滑动时间间隔G表示： 控制每隔多长时间做一次运算/间隔时间\n每隔G秒表示： 统计最近L秒的数据/最近L秒\n9、DSream 代表了一系列连续的RDD，DStream中每个RDD包含特定时间间隔的数据，一个DStream 对应了时间维度上的 多个RDD；DStream 作为Spark Stream的一个基本抽象，提供了高层的API来进行Spark Streaming 程序开发\n10、如果是编写一个独立的Spark Streaming程序，而不是在spark-shell中运行，则需要通过如下方式创建StreamingContext对象（1秒作为窗口计算时间）：\n1 2 3 4 5 6 7 import org.apache.spark._ import org.apache.spark.streaming._ val conf = new SparkConf().setAppName(\"TestDStream\").setMaster(\"local[2]\") val ssc = new StreamingContext(conf,Seconds(1)) 11、Kafka是一种高吞吐量的分布式 发布订阅消息系统，用户通过Kafka系统可以发布大量的消息，同时也能实时订阅消费消息。\n12、DStream有状态转换操作包括哪两种：\n滑动窗口转换操作 updateStateByKey 操作 update操作 reduceByKey操作 Spark-MLib 1、机器学习强调三个关键词： 算法； 经验； 性能。\n2、MLlib目前支持4种常见的机器学习问题: 分类； 回归； 聚类； 协同过滤\n3、Spark MLlib主要包含的四种数据类型是： 本地向量集/vector ；向量标签/LabeledPoint； 本地矩阵/Matrix； 分布式矩阵/DistributedMatrix\n4、MLlib 由 4 部分组成： 数据类型； 数学统计计算库； 算法评测； 机器学习算法\n5、下面论述中错误的是：A\nA. 机器学习和人工智能是不存在关联关系的两个独立领域\nB. 机器学习强调三个关键词：算法、经验、性能\nC. 推荐系统、金融反欺诈、语音识别、自然语言处理和机器翻译、模式识别、智能控制等领域，都用到了机器学习的知识\nD. 机器学习可以看作是一门人工智能的科学，该领域的主要研究对象是人工智能\n6、下面关于机器学习处理过程的描述，错误的是：D\nA. 在数据的基础上，通过算法构建出模型并对模型进行评估\nB. 评估的性能如果达到要求，就用该模型来测试其他的数据\nC. 评估的性能如果达不到要求，就要调整算法来重新建立模型，再次进行评估\nD. 通过算法构建出的模型不需要评估就可以用于其他数据的测试\n7、下面关于机器学习流水线(PipeLine)的描述，错误的是：D\nA. 流水线将多个工作流阶段（转换器和评估器）连接在一起，形成机器学习的工作流，并获得结果输出\nB. 要构建一个机器学习流水线，首先需要定义流水线中的各个PipelineStage\nC. PipelineStage称为工作流阶段，包括转换器和评估器，比如指标提取和转换模型训练等\nD. 流水线构建好以后，就是一个转换器（Transformer）\n8、下面关于评估器（Estimator）的描述错误的是：C\nA. 评估器是学习算法或在训练数据上的训练方法的概念抽象\nB. 在机器学习流水线里，评估器通常是被用来操作 DataFrame数据并生成一个转换器\nC. 评估器实现了方法transfrom()，它接受一个DataFrame并产生一个转换器\nD. 评估器实现了方法fit()，它接受一个DataFrame并产生一个转换器\n9、下面关于转换器（Transformer）的描述错误的是：B\nA. 转换器是一种可以将一个DataFrame转换为另一个DataFrame的算法\nB. 技术上，转换器实现了一个方法fit()，它通过附加一个或多个列，将一个DataFrame转换为另一个DataFrame\nC. 一个模型就是一个转换器，它把一个不包含预测标签的测试数据集DataFrame打上标签，转化成另一个包含预测标签的 DataFrame\nD. 技术上，转换器实现了一个方法transform()，它通过附加一个或多个列，将一个DataFrame转换为另一个DataFrame\n10、下面的论述中，正确的是：AB\nA. 传统的机器学习算法，由于技术和单机存储的限制，大多只能在少量数据上使用\nB. 利用MapReduce框架在全量数据上进行机器学习，这在一定程度上解决了统计随机性的问题，提高了机器学习的精度\nC. MapReduce可以高效支持迭代计算\nD. Spark无法高效支持迭代计算\n11、下面关于Spark MLlib库的描述正确的是：AC\nA. MLlib库从1.2版本以后分为两个包：spark.mllib和spark.ml\nB. spark.mllib包含基于DataFrame的原始算法API\nC. spark.mllib包含基于RDD的原始算法API\nD. spark.ml则提供了基于RDD的、高层次的API\n12、下面论述中正确的是：ABC\nA. DataFrame可容纳各种数据类型，与RDD数据集相比，它包含了模式（schema）信息，类似于传统数据库中的二维表格\nB. 流水线用DataFrame来存储源数据\nC. 转换器（Transformer）是一种可以将一个DataFrame转换为另一个DataFrame的算法\nD. 评估器（Estimator）是一种可以将一个DataFrame转换为另一个DataFrame的算法\n",
+  "wordCount" : "7899",
+  "inLanguage": "en",
+  "datePublished": "2022-06-29T21:13:36Z",
+  "dateModified": "2022-06-29T21:13:36Z",
+  "author":{
+    "@type": "Person",
+    "name": "Noodles2hg"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/z-anshun/en/posts/blog/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BC%80%E5%8F%91%E8%AF%95%E9%A2%98/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Noodles2hg的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/z-anshun/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/z-anshun/en/" accesskey="h" title="Noodles2hg&#39;s Blog (Alt + H)">
+                <img src="https://www.sulvblog.cn/Q.gif" alt="" aria-label="logo"
+                    height="35">Noodles2hg&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/search/" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/z-anshun/en/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/z-anshun/en/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/z-anshun/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      大数据开发试题
+    </h1>
+    <div class="post-meta"><span title='2022-06-29 21:13:36 +0000 UTC'>2022-06-29</span>&nbsp;·&nbsp;16 min&nbsp;·&nbsp;Noodles2hg
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%9f%ba%e7%a1%80%e6%a6%82%e5%bf%b5" aria-label="基础概念">基础概念</a></li>
+                <li>
+                    <a href="#scala-%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80" aria-label="Scala 语言基础">Scala 语言基础</a></li>
+                <li>
+                    <a href="#spark-%e7%9a%84%e8%ae%be%e8%ae%a1%e5%92%8c%e8%bf%90%e8%a1%8c%e5%8e%9f%e7%90%86" aria-label="Spark 的设计和运行原理">Spark 的设计和运行原理</a></li>
+                <li>
+                    <a href="#spark%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba%e5%92%8c%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95" aria-label="Spark环境搭建和使用方法">Spark环境搭建和使用方法</a></li>
+                <li>
+                    <a href="#rdd-%e7%bc%96%e7%a8%8b" aria-label="RDD 编程">RDD 编程</a></li>
+                <li>
+                    <a href="#spark-sql" aria-label="Spark-SQL">Spark-SQL</a></li>
+                <li>
+                    <a href="#spark-steaming" aria-label="Spark-Steaming">Spark-Steaming</a></li>
+                <li>
+                    <a href="#spark-mlib" aria-label="Spark-MLib">Spark-MLib</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="基础概念">基础概念<a hidden class="anchor" aria-hidden="true" href="#基础概念">#</a></h2>
+<blockquote>
+<p>大数据带来思维方式的三个转变是</p>
+</blockquote>
+<ul>
+<li>相关而非因果</li>
+<li>全样而非抽样</li>
+<li>效率而非精准</li>
+<li><del>精准而非全面</del></li>
+</ul>
+<blockquote>
+<p>大数据发展的三个阶段是</p>
+</blockquote>
+<ul>
+<li>
+<p><del>低谷期</del></p>
+</li>
+<li>
+<p>萌芽期</p>
+</li>
+<li>
+<p>成熟期</p>
+</li>
+<li>
+<p>大规模应用期</p>
+</li>
+</ul>
+<blockquote>
+<p>每种大数据产品都有特定的应用场景，以下哪个产品是用于批处理的</p>
+</blockquote>
+<p>MapReduce</p>
+<blockquote>
+<p>数据产生方式大致经历了三个阶段，包括</p>
+</blockquote>
+<ul>
+<li>运营式系统阶段</li>
+<li>感知式系统阶段</li>
+<li>用户原创内容阶段</li>
+<li><del>移动互联网数据阶段</del></li>
+</ul>
+<blockquote>
+<p>图领奖获得者、著名数据库专家Jim Gray博士认为，人类自古以来在科学研究上先后经历了四种范式，具体包括：</p>
+</blockquote>
+<ul>
+<li>计算科学</li>
+<li>实验科学</li>
+<li>理论科学</li>
+<li>数据科学</li>
+</ul>
+<blockquote>
+<p>大数据的四种主要计算模式包括：</p>
+</blockquote>
+<ul>
+<li>流计算</li>
+<li>查询分析计算</li>
+<li>批处理计算</li>
+<li>图计算</li>
+<li><del>框计算</del></li>
+</ul>
+<blockquote>
+<p>用于流计算的是：</p>
+</blockquote>
+<p>S4</p>
+<blockquote>
+<p>大数据处理的数据都是非结构化数据，这种数据更难处理，因此需要使用大数据技术。</p>
+</blockquote>
+<p>错</p>
+<h2 id="scala-语言基础">Scala 语言基础<a hidden class="anchor" aria-hidden="true" href="#scala-语言基础">#</a></h2>
+<p>C++、Java等面向对象程序编程语言属于 <strong>命令式</strong>编程范式；</p>
+<p>Haskell、Erlang和Lisp等语言属于 <strong>函数式</strong> 编程范式</p>
+<p>for (变量 &lt;- 表达式) {语句块}，其中，“变量&lt;-表达式”被称为 <strong>生成器</strong></p>
+<blockquote>
+<p>Scala用了三个包来组织容器类，分别是</p>
+</blockquote>
+<ul>
+<li>scala.collection</li>
+<li>scala.collection.mutable</li>
+<li>scala.collection.immutable</li>
+<li><del>scala.collection.contains</del></li>
+</ul>
+<p>Scala类中所有成员的默认可见性为 <strong>公有</strong></p>
+<p>Scala中类的方法，如果方法返回类型为 <strong>Unit</strong>，可以同时省略返回结果类型和等号，但不能省略大括号</p>
+<p>Scala采用单例对象（singleton object）来实现与Java静态成员同样的功能；使用 <strong>object</strong>关键字定义单例对象</p>
+<p>当一个单例对象和它的同名类一起出现时，这时的单例对象被称为这个同名类的“ 伴生对象”（companion object）。相应的类被称为这个单例对象的“ <strong>伴生类</strong>”。</p>
+<p>Scala中如果一个类包含没有实现的成员，则必须使用 <strong>abstract</strong>关键词进行修饰，定义为 <strong>抽象类</strong></p>
+<blockquote>
+<p>只能重载var类型的字段，而不能重载val类型的字段。因为var类型本身就是可变的，所以，可以直接修改它的值，无需重载。</p>
+</blockquote>
+<p>错</p>
+<p>Scala中没有接口的概念，而是提供了“ <strong>特质( trait)</strong>”，它不仅实现了接口的功能，还具备了很多其他的特性</p>
+<h2 id="spark-的设计和运行原理">Spark 的设计和运行原理<a hidden class="anchor" aria-hidden="true" href="#spark-的设计和运行原理">#</a></h2>
+<blockquote>
+<p>Spark SQL 目前暂时不支持哪种语言？</p>
+</blockquote>
+<p>Matlab</p>
+<blockquote>
+<p>Apache软件基金会最重要的三大分布式计算系统开源项目包括</p>
+</blockquote>
+<ul>
+<li>Hadoop</li>
+<li>Spark</li>
+<li>Storm</li>
+<li><del>MapReduce</del>（用于批处理）</li>
+</ul>
+<blockquote>
+<p>Spark 的主要特点包括？</p>
+</blockquote>
+<ul>
+<li>运行模式多样</li>
+<li>运行速度快</li>
+<li>容易使用</li>
+<li>通用性好</li>
+</ul>
+<blockquote>
+<p>Spark 支持三种不同类型的部署方式</p>
+</blockquote>
+<ul>
+<li>Standalone</li>
+<li>Spark on Mesos</li>
+<li>Spark on YARN</li>
+<li><del>Spark on Hive</del></li>
+</ul>
+<p>Spark在2014年打破了Hadoop保持的基准排序纪录，Spark用<strong>十分之 一</strong>的计算资源，获得了比Hadoop快 <strong>3</strong>倍的速度。</p>
+<p>Spark容易使用：支持使用Scala、Java、Python和R语言进行编程，可以通过 <strong>spark shell</strong> 进行交互式编程</p>
+<p>Spark生态圈即BDAS（伯克利数据分析栈）包含了Spark Core、Spark SQL、Spark Streaming、MLLib和GraphX等组件， <strong>Spark Core</strong>提供内存计算框架、 <strong>Spark Streaming</strong>提供实时处理、 <strong>Spark SQL</strong>提供即席查询、 <strong>MLlib</strong>提供机器学习库、 <strong>GraphX</strong>提供图处理，它们都是由AMP实验室提供，能够无缝的集成并提供一站式解决平台</p>
+<p>RDD，全称是 <strong>Resilient Distributed Dataset</strong>，中文名称是 <strong>弹性分布式数据集</strong>，是分布式内存的一个抽象概念,提供了一种高度受限的共享内存模型</p>
+<p>DAG：是 Directed Acyclic Graph（有向无环图）的简称，反应RDD之间的 <strong>依赖关系</strong></p>
+<p>Spark中一个作业会分为多组任务，每组任务被称为 <strong>阶段</strong>，或者也被称为任务集合，代表了一组关联的、相互之间没有Shuffle依赖关系的任务组成的任务集</p>
+<p>Spark的一个应用由一个 <strong>Driver</strong>和若干个 <strong>作业</strong>构成，一个作业由多个阶段构成，一个阶段由多个没有Shuffle关系的任务组成。</p>
+<p>Spark的运行流程中，首先为应用构建起基本的运行环境，即由Driver创建一个 <strong>SparkContext</strong>，进行资源的申请、任务的分配和监控。</p>
+<p>RDD提供了一组丰富的操作以支持常见的数据运算，分为“<strong>动作</strong>”（ Action）和“<strong>转换</strong>”（ Transformation）两种类型。</p>
+<p>是否包含Shuffle操作是区分 <strong>窄依赖</strong>和 <strong>宽依赖</strong>的根据</p>
+<p>Spark通过分析各个RDD的依赖关系生成了DAG，再通过分析各个RDD中的分区之间的依赖关系来决定如何划分Stage，具体划分方法是：在DAG中进行反向解析，遇到 <strong>宽依赖</strong>就断开；遇到 <strong>窄依赖</strong>就把当前的RDD加入到Stage中；将 <strong>窄依赖</strong>尽量划分在同一个Stage中，可以实现流水线计算</p>
+<p>RDD典型的执行过程如下：</p>
+<p>（1）RDD读入 <strong>外部数据</strong>进行创建；</p>
+<p>（2）RDD经过一系列的 <strong>转换</strong>（Transformation）操作，每一次都会产生不同的RDD，供给下一个转换操作使用；</p>
+<p>（3）最后一个RDD经过 <strong>动作</strong>（Action）操作进行转换，并输出到外部数据源</p>
+<h2 id="spark环境搭建和使用方法">Spark环境搭建和使用方法<a hidden class="anchor" aria-hidden="true" href="#spark环境搭建和使用方法">#</a></h2>
+<blockquote>
+<p>1、Spark 部署模式包括：</p>
+</blockquote>
+<ul>
+<li>Local 模式：单机模式</li>
+<li>Standalone 模式：使用 Spark 自带的简单集群管理器</li>
+<li>YARN 模式：使用 YARN 作为集群管理器</li>
+<li>Mesos 模式：使用 Mesos 作为集群管理器</li>
+</ul>
+<p>2、Hadoop 和 Spark 可以相互协作，由 Hadoop 的 <strong>HDFS</strong>、<strong>HBase</strong> 等组件负责数据的存储和管理，由 Spark 负责数据的 <strong>计算</strong></p>
+<p>3、Spark Shell 支持 <strong>Scala</strong> 和 <strong>Python</strong></p>
+<p>4、Spark的运行模式取决于传递给SparkContext的Master URL的值。Master URL是yarn-client，表示 以 <strong>客户端模式</strong>连接YARN集群。集群的位置可以在HADOOP_CONF_DIR 环境变量中找到。Master URL是yarn-cluster，表示以 <strong>集群模式</strong>连接YARN集群。集群的位置可以在HADOOP_CONF_DIR 环境变量中找到</p>
+<p>5、在Spark中采用本地模式启动Spark Shell的命令主要包含以下参数：</p>
+<p>&ndash;master：这个参数表示当前的Spark Shell要连接到哪个master，如果是local[*]，就是使用本地模式启动spark-shell，其中，中括号内的星号表示需要使用几个CPU核心(core)，也就是启动几个 <strong>线程</strong> 模拟Spark集群；</p>
+<p>&ndash;jars： 这个参数用于把相关的JAR包添加到 <strong>类路径/classpath</strong>中；如果有多个jar包，可以使用逗号分隔符连接它们</p>
+<p>6、可以使用命令“<strong>:quit</strong>”退出Spark Shell；或者，也可以直接使用“ <strong>Ctrl+D</strong>”组合键，退出Spark Shell</p>
+<p>7、可以通过spark-submit提交应用程序，该命令的格式如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>./bin/spark-submit 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> --class &lt;main-class&gt; //需要运行的程序的主类，应用程序的 入口点
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> --master &lt;master-url&gt; //Master URL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> --deploy-mode &lt;deploy-mode&gt;  //部署模式
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ... <span style="color:#007f7f"># other options //其他参数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> &lt;application-jar&gt; //应用程序JAR包
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> [application-arguments] //传递给主类的 主方法 的参数
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>8、在Master节点主机上运行脚本 <strong>start-master.sh</strong>可以启动Master节点；在Master节点主机上运行脚本 <strong>start-slaves.sh</strong> 可以启动所有Slaver节点。</p>
+<p>9、用户在独立集群管理Web界面查看应用的运行情况，即：http://master: 8080/；</p>
+<p>用户在Hadoop Yarn集群管理Web界面查看所有应用的运行情况，即：http://master: 8088/cluster</p>
+<h2 id="rdd-编程">RDD 编程<a hidden class="anchor" aria-hidden="true" href="#rdd-编程">#</a></h2>
+<p>1、RDD 创建的方式主要有两种方式，可以从 <strong>文件系统</strong> 创建，也可以用Scala <strong>并行集合/集合/数组/列表/数组和列表/数组、列表/scala集合</strong> 创建</p>
+<p>2、RDD 分区的作用有：增加 <strong>并行度</strong> ，减少 <strong>开销</strong></p>
+<p>3、对于RDD而言，每一次转换操作都会产生 <strong>不同</strong> 的RDD，供给下一个 <strong>转换</strong> 使用</p>
+<p>4、转换得到的RDD是 <strong>惰性</strong> 求值的，也就是说，整个转换过程只是记录了 <strong>转换的轨迹</strong>，并不会发生真正的计算，只有遇到 <strong>行动操作</strong> 时，才会发生真正的计算，开始从 <strong>血缘关系</strong> 源头开始，进行物理的转换操作</p>
+<p>5、flatMap(func)，与map()相似，但每个输入元素都可以映射到 <strong>0或多个</strong> 输出结果</p>
+<p>6、一般而言，使用 cache() 方法时，会调用 <strong>Persist(MEMORY_ONLY)</strong></p>
+<p>7、persist()的圆括号中包含的是持久化级别参数，**persist(MEMORY_AND_DISK）**表示将RDD作为反序列化的对象存储在JVM中，如果内存不足，超出的分区将会被存放在硬盘上</p>
+<p>8、RDD分区的一个原则是使得分区的个数尽量等于集群中的 <strong>CPU核心</strong>（core）数目。</p>
+<p>9、在调用textFile()和parallelize()方法的时候手动指定分区个数即可，语法格式如下：</p>
+<p><code>sc.textFile(path, partitionNum)</code></p>
+<p>其中，path参数用于指定要加载的文件的地址，partitionNum参数用于指定 <strong>分区个数</strong></p>
+<p>10、groupByKey也是对每个key进行操作，但只生成一个 <strong>序列</strong>，groupByKey本身不能自定义函数，需要先用groupByKey生成RDD，然后才能对此RDD通过map进行自定义函数操作。</p>
+<p>11、HBase是一个稀疏、多维度、排序的映射表，这张表的索引是行键、列族、<strong>列限定符</strong> 和 <strong>时间戳</strong></p>
+<p>12、HBase的表在水平方向由一个或者多个 <strong>列族</strong> 组成，一个列族中可以包含 <strong>任意多个</strong> 列，同一个列族里面的数据存储在一起</p>
+<p>13、HBase中执行更新操作时，并不会删除数据旧的版本，而是生成一个新的版本，旧有的版本仍然 <strong>保留</strong>（这是和HDFS只允许追加不允许修改的特性相关的</p>
+<p>14、Spark可以使用 <strong>saveAsNewAPIHadoopDataset</strong> 这个API将RDD输出到HBase的表中。</p>
+<p>15、如果要让Spark读取HBase，就需要使用SparkContext提供的 <strong>newAPIHadoopRDD</strong> 这个API将表的内容以RDD的形式加载到Spark中</p>
+<h2 id="spark-sql">Spark-SQL<a hidden class="anchor" aria-hidden="true" href="#spark-sql">#</a></h2>
+<blockquote>
+<p>1、Spark SQL 是 Spark 中的一个子模块，主要用于操作结构化数据。它具有以下特点：</p>
+</blockquote>
+<ul>
+<li>能够将SQL查询与Spark程序无缝混合，允许您使用SQL或DataFrame API对结构化数据进行查询，支持多种开发语言</li>
+<li>支持够达上百种的外部数据源，包括Hive, Avro, Parquet, ORC, JSON 和JDBC等</li>
+<li>支持HiveQL语法以及Hive SerDes和UDF，允许你访问现有的Hive库,支持标准的JDBC和ODBC连接</li>
+<li>支持优化器，列式存储和代码生成等特性,支持扩展并能保证容错</li>
+</ul>
+<blockquote>
+<p>2、关于 DataFrame、DateSet、RDD 正确的是</p>
+</blockquote>
+<ul>
+<li>RDDs适合非结构化数据的处理,而DataFrame &amp; DataSet更适合结构化数据和半结构化的处理</li>
+<li>DataFrame &amp; DataSet可以通过统-的Structured API进行访问，而RDDs则更适合函数式编程的场景</li>
+<li>相比于DataFrame而言，DataSet 是强类型的(Typed)，有着更为严格的静态类型检查</li>
+<li>DataSets、DataFrames的底层都依赖了 RDDs API,并对外提供结构化的访问接口</li>
+</ul>
+<blockquote>
+<p>3、Spark SQL 产生原因</p>
+</blockquote>
+<ul>
+<li>关系数据库在大数据时代下不再满足需求，朋要从不同的数据源操作不同的数据，包含结构化和非结构化</li>
+<li>用户需要执行高级分析,比如机器学习和图形处理等</li>
+<li>大数据时代经常需要融合关系查询和复杂粉析算法</li>
+<li>关系数据库已经很流行</li>
+</ul>
+<p>4、2014年6月1日Shark项目和Spark SQL项目的主持人Reynold Xin宣布：停止对Shark的开发，团队将所有资源放在Spark SQL项目上，至此，Shark的发展画上了句话，但也因此发展出两个直线： <strong>Spark SQL</strong>和 <strong>Hive on Spark</strong></p>
+<p>5、Spark SQL增加了 <strong>DataFrame</strong>（即带有Schema信息的RDD），使用户可以在Spark SQL中执行SQL语句，数据既可以来自RDD，也可以是Hive、HDFS、Cassandra等 <strong>外部数据源</strong>，还可以是JSON格式的数据</p>
+<p>6、从Spark2.0以上版本开始，Spark使用全新的 <strong>SparkSession</strong>接口替代Spark1.6中的SQLContext及HiveContext接口来实现其对数据加载、转换、处理等功能。SparkSession实现了SQLContext及HiveContext所有功能</p>
+<p>7、Spark SQL在Hive兼容层面仅依赖 <strong>HiveQL解析</strong>、 <strong>Hive元数据</strong>，也就是说，从HiveQL被解析成抽象语法树（AST）起，就全部由Spark SQL接管了。Spark SQL执行计划生成和优化都由 <strong>Catalyst</strong>（函数式关系查询优化框架）负责。</p>
+<p>8、Spark SQL目前支持 <strong>Scala</strong>、 <strong>JAVA</strong>、 <strong>Python</strong>三种语言，支持SQL-92规范</p>
+<p>9、可以通过如下语句创建一个SparkSession对象：</p>
+<p><code>scala&gt; import org.apache.spark.sql.SparkSession</code></p>
+<p><code>scala&gt; val spark= SparkSession.builder().getOrCreate()</code></p>
+<p>10、在创建DataFrame之前，为了支持RDD转换为DataFrame及后续的SQL操作，需要通过import语句（即 <strong>import spark.implicits._</strong>）导入相应的包，启用隐式转换</p>
+<p>11、Spark官网提供了两种方法来实现从RDD转换得到DataFrame：</p>
+<p>第一种方法是，利用 <strong>反射</strong>来推断包含特定类型对象的RDD的schema，适用对已知数据结构的RDD转换</p>
+<p>第二种方法是，使用 <strong>编程接口</strong>，构造一个schema并将其应用在已知的RDD上</p>
+<p>12、在利用反射机制推断RDD模式时，需要首先定义一个 <strong>case class</strong>，因为，只有 <strong>case class</strong>才能被Spark隐式地转换为DataFrame</p>
+<p>13、<code>scala&gt; peopleDF.createOrReplaceTempView(&quot;&quot;) //必须注册为临时表才能供下面的查询使用</code></p>
+<blockquote>
+<p>14、要读取people.json文件生成DataFrame，可以使用下面哪些命令：</p>
+</blockquote>
+<ul>
+<li>spark.read.json(&ldquo;people.json&rdquo;)</li>
+<li>spark.read.format(&ldquo;json&rdquo;).load(&ldquo;people.json&rdquo;)</li>
+<li><del>spark.read.parquet(&ldquo;people.json&rdquo;)</del></li>
+</ul>
+<blockquote>
+<p>15、从RDD转换得到DataFrame包含两种典型方法，分别是：</p>
+</blockquote>
+<ul>
+<li>利用反射机制推断RDD模式</li>
+<li>利用编程方式定义RDD模式</li>
+<li><del>利用投影机制推断RDD模式</del></li>
+<li><del>利用互联机制推断RDD模式</del></li>
+</ul>
+<blockquote>
+<p>16、使用编程方式定义RDD模式时，主要包括哪三个步骤：</p>
+</blockquote>
+<ul>
+<li>制作&quot;表头&quot;</li>
+<li>制作&quot;表中的记录&quot;</li>
+<li>把&quot;表头&quot;和&quot;表中的记录&quot;拼装在一起</li>
+<li><del>制作映射表</del></li>
+</ul>
+<h2 id="spark-steaming">Spark-Steaming<a hidden class="anchor" aria-hidden="true" href="#spark-steaming">#</a></h2>
+<p>1、对于一个流系统来讲，其应该达到下列要求：</p>
+<ul>
+<li>高性能、海量式</li>
+<li>实时性、分布式</li>
+<li>易用性、可靠性</li>
+<li><del>通用性、智能性</del></li>
+</ul>
+<p>2、流系统的处理流程包括三个阶段: <strong>数据实时采集</strong>； <strong>数据实时计算</strong>； <strong>实时查询服务</strong></p>
+<p>3、Spark Streaming和Storm的最大区别在于，Spark Streaming 无法实现 <strong>毫秒</strong>级的流计算。</p>
+<p>4、Spark Streaming 的基本输入源： <strong>文件流</strong>、 <strong>套接字流</strong>、 <strong>RDD队列流</strong></p>
+<p>5、编写Spark Streaming程序的基本步骤是</p>
+<ol>
+<li>通过创建输入DStream来定义输入源</li>
+<li>通过对DStream应用转换操作和输出操作来定义流计算</li>
+<li>用streamingContext.start()来开始接收数据和处理流程</li>
+<li>通过streamingContext.awaitTermination()方法来等待处理结束（手动结束或因为错误而结束）</li>
+<li>可以通过streamingContext.stop()来手动结束流计算进程</li>
+</ol>
+<p>6、流处理系统无需用户主动发出查询，实时查询服务可以主动将实时结果 <strong>推送</strong>给用户。</p>
+<p>7、在Spark Streaming中，会有一个组件 <strong>Receiver</strong>，作为一个长期运行的task跑在一个Executor上</p>
+<p>8、DStream有状态转换操作中， 滑动窗口转换操作中：</p>
+<p>窗口长度L表示： <strong>运算的数据量/持续时间</strong></p>
+<p>滑动时间间隔G表示： <strong>控制每隔多长时间做一次运算/间隔时间</strong></p>
+<p>每隔G秒表示： <strong>统计最近L秒的数据/最近L秒</strong></p>
+<p>9、DSream 代表了一系列连续的RDD，DStream中每个RDD包含特定时间间隔的数据，一个DStream 对应了时间维度上的 <strong>多个</strong>RDD；DStream 作为Spark Stream的一个基本抽象，提供了高层的API来进行Spark Streaming 程序开发</p>
+<p>10、如果是编写一个独立的Spark Streaming程序，而不是在spark-shell中运行，则需要通过如下方式创建StreamingContext对象（1秒作为窗口计算时间）：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.apache.spark._
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.apache.spark.streaming._
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">val</span> conf <span style="color:#fff;font-weight:bold">=</span> <span style="color:#fff;font-weight:bold">new</span> SparkConf().setAppName(<span style="color:#0ff;font-weight:bold">&#34;TestDStream&#34;</span>).setMaster(<span style="color:#0ff;font-weight:bold">&#34;local[2]&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">val</span> ssc <span style="color:#fff;font-weight:bold">=</span> <span style="color:#fff;font-weight:bold">new</span> StreamingContext(conf,Seconds(<span style="color:#ff0;font-weight:bold">1</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>11、Kafka是一种高吞吐量的分布式 <strong>发布订阅消息系统</strong>，用户通过Kafka系统可以发布大量的消息，同时也能实时订阅消费消息。</p>
+<p>12、DStream有状态转换操作包括哪两种：</p>
+<ul>
+<li>滑动窗口转换操作</li>
+<li>updateStateByKey 操作</li>
+<li><del>update操作</del></li>
+<li><del>reduceByKey操作</del></li>
+</ul>
+<h2 id="spark-mlib">Spark-MLib<a hidden class="anchor" aria-hidden="true" href="#spark-mlib">#</a></h2>
+<p>1、机器学习强调三个关键词： <strong>算法</strong>； <strong>经验</strong>； <strong>性能</strong>。</p>
+<p>2、MLlib目前支持4种常见的机器学习问题: <strong>分类</strong>； <strong>回归</strong>； <strong>聚类</strong>； <strong>协同过滤</strong></p>
+<p>3、Spark MLlib主要包含的四种数据类型是：  <strong>本地向量集/vector</strong> ；<strong>向量标签/LabeledPoint</strong>； <strong>本地矩阵/Matrix</strong>； <strong>分布式矩阵/DistributedMatrix</strong></p>
+<p>4、MLlib 由 4 部分组成： <strong>数据类型</strong>； <strong>数学统计计算库</strong>； <strong>算法评测</strong>； <strong>机器学习算法</strong></p>
+<p>5、下面论述中错误的是：A</p>
+<p><strong>A</strong>. 机器学习和人工智能是不存在关联关系的两个独立领域</p>
+<p>B. 机器学习强调三个关键词：算法、经验、性能</p>
+<p>C. 推荐系统、金融反欺诈、语音识别、自然语言处理和机器翻译、模式识别、智能控制等领域，都用到了机器学习的知识</p>
+<p>D. 机器学习可以看作是一门人工智能的科学，该领域的主要研究对象是人工智能</p>
+<p>6、下面关于机器学习处理过程的描述，错误的是：D</p>
+<p>A. 在数据的基础上，通过算法构建出模型并对模型进行评估</p>
+<p>B. 评估的性能如果达到要求，就用该模型来测试其他的数据</p>
+<p>C. 评估的性能如果达不到要求，就要调整算法来重新建立模型，再次进行评估</p>
+<p><strong>D</strong>. 通过算法构建出的模型不需要评估就可以用于其他数据的测试</p>
+<p>7、下面关于机器学习流水线(PipeLine)的描述，错误的是：D</p>
+<p>A. 流水线将多个工作流阶段（转换器和评估器）连接在一起，形成机器学习的工作流，并获得结果输出</p>
+<p>B. 要构建一个机器学习流水线，首先需要定义流水线中的各个PipelineStage</p>
+<p>C. PipelineStage称为工作流阶段，包括转换器和评估器，比如指标提取和转换模型训练等</p>
+<p><strong>D</strong>. 流水线构建好以后，就是一个转换器（Transformer）</p>
+<p>8、下面关于评估器（Estimator）的描述错误的是：C</p>
+<p>A. 评估器是学习算法或在训练数据上的训练方法的概念抽象</p>
+<p>B. 在机器学习流水线里，评估器通常是被用来操作 DataFrame数据并生成一个转换器</p>
+<p><strong>C</strong>. 评估器实现了方法transfrom()，它接受一个DataFrame并产生一个转换器</p>
+<p>D. 评估器实现了方法fit()，它接受一个DataFrame并产生一个转换器</p>
+<p>9、下面关于转换器（Transformer）的描述错误的是：B</p>
+<p>A. 转换器是一种可以将一个DataFrame转换为另一个DataFrame的算法</p>
+<p><strong>B</strong>. 技术上，转换器实现了一个方法fit()，它通过附加一个或多个列，将一个DataFrame转换为另一个DataFrame</p>
+<p>C. 一个模型就是一个转换器，它把一个不包含预测标签的测试数据集DataFrame打上标签，转化成另一个包含预测标签的 DataFrame</p>
+<p>D. 技术上，转换器实现了一个方法transform()，它通过附加一个或多个列，将一个DataFrame转换为另一个DataFrame</p>
+<p>10、下面的论述中，正确的是：AB</p>
+<p><strong>A</strong>. 传统的机器学习算法，由于技术和单机存储的限制，大多只能在少量数据上使用</p>
+<p><strong>B.</strong> 利用MapReduce框架在全量数据上进行机器学习，这在一定程度上解决了统计随机性的问题，提高了机器学习的精度</p>
+<p>C. MapReduce可以高效支持迭代计算</p>
+<p>D. Spark无法高效支持迭代计算</p>
+<p>11、下面关于Spark MLlib库的描述正确的是：AC</p>
+<p><strong>A</strong>. MLlib库从1.2版本以后分为两个包：spark.mllib和spark.ml</p>
+<p>B. spark.mllib包含基于DataFrame的原始算法API</p>
+<p><strong>C</strong>. spark.mllib包含基于RDD的原始算法API</p>
+<p>D. spark.ml则提供了基于RDD的、高层次的API</p>
+<p>12、下面论述中正确的是：ABC</p>
+<p><strong>A</strong>. DataFrame可容纳各种数据类型，与RDD数据集相比，它包含了模式（schema）信息，类似于传统数据库中的二维表格</p>
+<p><strong>B</strong>. 流水线用DataFrame来存储源数据</p>
+<p><strong>C</strong>. 转换器（Transformer）是一种可以将一个DataFrame转换为另一个DataFrame的算法</p>
+<p>D. 评估器（Estimator）是一种可以将一个DataFrame转换为另一个DataFrame的算法</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/z-anshun/en/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/z-anshun/en/posts/read/redis%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/%E7%8B%AC%E7%AB%8B%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+    <span class="title">Next »</span>
+    <br>
+    <span>独立功能的实现</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on x"
+            href="https://x.com/intent/tweet/?text=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98&amp;url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f&amp;hashtags=%e5%a4%a7%e6%95%b0%e6%8d%ae">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f&amp;title=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98&amp;summary=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98&amp;source=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on reddit"
+            href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f&title=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on whatsapp"
+            href="https://api.whatsapp.com/send?text=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98%20-%20http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on telegram"
+            href="https://telegram.me/share/url?text=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98&amp;url=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 大数据开发试题 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e8%af%95%e9%a2%98&u=http%3a%2f%2flocalhost%3a1313%2fz-anshun%2fen%2fposts%2fblog%2f%25E5%25A4%25A7%25E6%2595%25B0%25E6%258D%25AE%25E5%25BC%2580%25E5%258F%2591%25E8%25AF%2595%25E9%25A2%2598%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="http://localhost:1313/z-anshun/en/">Noodles2hg的博客</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

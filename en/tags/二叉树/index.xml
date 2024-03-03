@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>二叉树 on Noodles2hg的博客</title>
+    <link>http://localhost:1313/z-anshun/en/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+    <description>Recent content in 二叉树 on Noodles2hg的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 06 Feb 2022 18:52:02 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/z-anshun/en/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>二叉树转双向链表</title>
+      <link>http://localhost:1313/z-anshun/en/posts/blog/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BD%AC%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</link>
+      <pubDate>Sun, 06 Feb 2022 18:52:02 +0000</pubDate>
+      <guid>http://localhost:1313/z-anshun/en/posts/blog/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BD%AC%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</guid>
+      <description>剑指 Offer 36. 二叉搜索树与双向链表 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的</description>
+    </item>
+  </channel>
+</rss>
